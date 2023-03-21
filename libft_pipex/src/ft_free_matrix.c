@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_free_matrix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 18:34:37 by ggiannit          #+#    #+#             */
-/*   Updated: 2022/10/08 11:35:50 by ggiannit         ###   ########.fr       */
+/*   Created: 2022/12/30 12:19:48 by ggiannit          #+#    #+#             */
+/*   Updated: 2023/01/03 20:14:46 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*ft_free_matrix(char **matrix)
 {
-	size_t	k;
+	int	i;
 
-	k = 0;
-	while (k < n && (s1[k] != '\0' || s2[k] != '\0'))
-	{
-		if (((unsigned char *)s1)[k] < ((unsigned char *)s2)[k])
-			return (-1);
-		if (((unsigned char *)s1)[k] > ((unsigned char *)s2)[k])
-			return (1);
-		k++;
-	}
-	return (0);
+	i = 0;
+	while (matrix[i])
+		ft_free_null(&matrix[i++]);
+	free(matrix);
+	return (NULL);
+}
+
+char	*ft_free_matrix_nomat(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i])
+		ft_free_null(&matrix[i++]);
+	return (NULL);
 }

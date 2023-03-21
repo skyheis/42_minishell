@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2022/11/15 23:20:07 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/03/21 12:45:40 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ FLSRCS = ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
        ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c \
        ft_lstnew.c ft_lstadd_front.c ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c \
        ft_lstsize.c ft_lstlast.c ft_lstiter.c ft_lstmap.c \
+	   ft_free_matrix.c
 
 PF_DIRSRCS = pfsrc/
 
@@ -114,14 +115,12 @@ ${NAME}: starting ${OBJS}
 
 clean:
 	@echo "$(WHITE)\"wait.. is $(CYAN)${PRNAME}$(WHITE) all trash? 🧹\" $(DEF_COLOR)"
-	@sleep 0.5
 	@${RM} ${OBJS} 
 	@echo "$(RED)All objects removed with $(WHITE)${RM}$(DEF_COLOR)"
 	@echo ""
 
 fclean: clean
 	@echo "$(WHITE)\"...it's always as been 🚮\" $(DEF_COLOR)"
-	@sleep 0.5
 	@echo "$(RED)..and $(CYAN)${ARNAME} $(RED)as been removed$(DEF_COLOR)"
 	@echo ""
 
@@ -129,7 +128,6 @@ re: fclean all
 
 starting:
 	@echo "$(WHITE)👷🦺\"Let's build somre real $(CYAN)${PRNAME}$(WHITE) sh3t!\"🔨🔧$(DEF_COLOR)"
-	@sleep 0.4
 
 .PHONY: all clean fclean re starting .c.o
 .SUFFIXES: .c .o 

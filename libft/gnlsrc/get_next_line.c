@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:45:52 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/01/03 19:50:18 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:15:16 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,13 +121,39 @@ int	ft_fill_buff_read(int fd, char **buff_read)
 
 char	*get_next_line(int fd)
 {
+	static char	*buff_read;
+	char		*line;
+	int			flag_going;
+
+	line = NULL;
+	if (fd == -42)
+		return (ft_free_null(&buff_read));
+	if (fd < 0)
+		return (NULL);
+	if (!buff_read || !ft_search_bsn(buff_read))
+		flag_going = ft_fill_buff_read(fd, &buff_read);
+	if (ft_search_bsn(buff_read))
+		line = ft_substr_read(&buff_read);
+	else if (!flag_going)
+	{
+		line = ft_substr_read(&buff_read);
+		ft_free_null(&buff_read);
+		return (line);
+	}
+	else if (flag_going == -1)
+		return (ft_free_null(&buff_read));
+	return (line);
+}
+
+/*char	*get_next_line(int fd)
+{
 	static char	*buff_read[4096];
 	char		*line;
 	int			flag_going;
 
 	line = NULL;
 	if (fd == -42)
-		return (ft_free_matrix_nomat(buff_read));
+		return (ft_free_matrix_nomat(buff_read, 4096));
 	if (fd < 0)
 		return (NULL);
 	if (!buff_read[fd] || !ft_search_bsn(buff_read[fd]))
@@ -143,4 +169,4 @@ char	*get_next_line(int fd)
 	else if (flag_going == -1)
 		return (ft_free_null(&buff_read[fd]));
 	return (line);
-}
+}*/

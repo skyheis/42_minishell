@@ -6,13 +6,13 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/07 21:43:20 by ggiannit          #+#    #+#             */
-/*   Updated: 2022/11/15 23:04:54 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:29:18 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+/*void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*cmem;
 	size_t	k;
@@ -28,7 +28,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	while (k < tot_size)
 		cmem[k++] = '\0';
 	return (cmem);
-}
+}*/
 
 size_t	ft_strlen_gnl(char *str)
 {

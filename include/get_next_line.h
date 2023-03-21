@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:42:14 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/01/03 19:42:58 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/01/14 23:21:44 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "libft.h"
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 1000
 # endif
 
 char	*get_next_line(int fd);

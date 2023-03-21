@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/03/21 12:35:26 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/03/21 15:10:07 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE = include
 DIRSRCS =
 DIROBJS = obj/
 
-FLSRCS = main.c pipex_utils.c handle_fd_utils.c use_heredoc.c
+FLSRCS = main.c # pipex_utils.c handle_fd_utils.c use_heredoc.c
 
 FLOBJS = ${FLSRCS:.c=.o}
 

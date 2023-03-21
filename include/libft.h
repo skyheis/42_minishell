@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 23:27:15 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/01/04 14:10:19 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:48:50 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,14 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 /* more custom functions */
-char	*ft_free_matrix(char **matrix);
-char	*ft_free_matrix_nomat(char **matrix);
+int		ft_iswhite(char c);
+char	*ft_free_matrix(char ***matrix);
+char	*ft_free_matrix_nomat(char **matrix, int i);
+char	*ft_free_matrix_xy(char ***matrix, int x, int y);
 void	ft_sleep_kinda(size_t k);
+int		ft_atoi_hex(char *str);
+int		ft_ishex(char *str);
+int		ft_count_in_str(char *str, char c);
+char	*ft_strjoin_free(char *s1, char *s2);
 
 #endif
