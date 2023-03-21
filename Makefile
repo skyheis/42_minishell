@@ -88,6 +88,7 @@ all: libft ${NAME}
 	echo "(ง ͠ಥ_ಥ)ง"
 	sleep 2.05
 	clear
+	./minishell
 ${NAME}: ${OBJS}
 	@echo "$(YELLOW)- Program Name: $(WHITE)${NAME}$(DEF_COLOR)"
 	@echo "$(YELLOW)- Compiler: $(WHITE)${CC}$(DEF_COLOR)"
