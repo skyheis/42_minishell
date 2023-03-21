@@ -10,3 +10,7 @@
 <li> tcsetattr : https://www.ibm.com/docs/en/zos/2.2.0?topic=functions-tcsetattr-set-attributes-terminal </li>
 <li> tcgetattr : https://www.ibm.com/docs/en/zos/2.1.0?topic=functions-tcgetattr-get-attributes-terminal </li>
 <li> tgetent e tgetnum esempio pratico: https://www.badprog.com/unix-gnu-linux-system-calls-using-tgetent </li>
+
+
+pid_t wait3(int* status, int options, struct rusage* rusage);
+pid_t wait4(pid_t pid, int* status, int options, struct rusage* rusage);
