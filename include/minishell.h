@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/22 11:43:49 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/22 12:18:08 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <readline/history.h>
 
 # define READ_SIZE 420
+
+# define SQUT 39
+# define DQUT 34
 
 // la home con il / e' stata usata una volta, se viene riusata
 // conveniene metterla nella struct?

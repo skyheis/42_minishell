@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/06 21:46:56 by ggiannit          #+#    #+#             */
-/*   Updated: 2022/10/08 10:10:36 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:54:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,17 @@
 
 char	*ft_strdup(const char *s)
 {
-	char	*t;
-	size_t	siz_s;
+	int		i;
+	char	*newstr;
 
-	siz_s = ft_strlen(s) + 1;
-	t = (char *) malloc(siz_s * sizeof(char));
-	if (t == NULL)
-	{
+	i = 0;
+	newstr = (char *) ft_calloc(ft_strlen(s) + 1, sizeof(char));
+	if (!newstr)
 		return (NULL);
+	while (s[i])
+	{
+		newstr[i] = s[i];
+		i++;
 	}
-	ft_strlcpy(t, s, siz_s);
-	return (t);
+	return (newstr);
 }
