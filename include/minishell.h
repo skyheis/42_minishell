@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/21 17:51:09 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/22 10:35:00 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@
 // la home con il / e' stata usata una volta, se viene riusata
 // conveniene metterla nella struct?
 
+typedef struct	s_cmd
+{
+	char			**pot; //matrix of line no pipe ([0] is command)
+	struct s_cmd	*next; //ogni nodo un pipe :D
+}				t_cmd;
+
 typedef struct	s_mish
 {
 	char	*line;
@@ -40,6 +46,7 @@ typedef struct	s_mish
 	char	*path_history;
 	int		exit_code;
 	char	**env;
+	t_cmd	*cmd;
 }				t_mish;
 
 #endif
