@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/21 16:41:36 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/21 17:51:09 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,18 @@
 
 # define READ_SIZE 420
 
+// la home con il / e' stata usata una volta, se viene riusata
+// conveniene metterla nella struct?
+
 typedef struct	s_mish
 {
 	char	*line;
 	char	*user;
 	char	*context;
 	int		fd_history;
+	char	*path_history;
 	int		exit_code;
+	char	**env;
 }				t_mish;
 
 #endif
