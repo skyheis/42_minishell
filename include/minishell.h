@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/22 10:35:00 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:43:49 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,12 @@ typedef struct	s_mish
 	char	**env;
 	t_cmd	*cmd;
 }				t_mish;
+
+/* cmd_list */
+void	ft_cmdlst_iterstr(t_cmd *cmd,
+		void(*parse)(char *, t_mish *), t_mish *meta);
+void	ft_cmdlst_clear(t_cmd **cmd);
+void	ft_cmdlst_addfront(t_cmd **cmd, t_cmd *new);
+t_cmd	*ft_cmdlst_new(char **pot);
 
 #endif
