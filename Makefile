@@ -67,22 +67,43 @@ $(DIROBJS)%.o: $(DIRSRCS)%.c
 ####### RULES ########
 
 all: libft ${NAME}
-
+# coool Script #
+	clear
+	for i in 1 2 3 ; do \
+	echo "$(YELLOW)音Welcome to Minishell音$(DEF_COLOR)" \
+	&& sleep 0.5 \
+	&& clear \
+	&& echo "$(GREEN)音Welcome to Minishell音$(DEF_COLOR)" \
+	&& sleep 0.5 \
+	&& clear ; done
+	echo "READY"
+	sleep 0.8
+	echo "-"
+	sleep 0.5
+	echo "--"
+	sleep 0.5
+	echo "---"
+	sleep 1.1
+	clear
+	echo "(ง ͠ಥ_ಥ)ง"
+	sleep 2.05
+	clear
+	./minishell
 ${NAME}: ${OBJS}
 	@echo "$(YELLOW)- Program Name: $(WHITE)${NAME}$(DEF_COLOR)"
 	@echo "$(YELLOW)- Compiler: $(WHITE)${CC}$(DEF_COLOR)"
 	@echo "$(YELLOW)- Flags: $(WHITE)${CFLAGS} ${MINIFLAGS}$(DEF_COLOR)"
-	@${CC} ${CFLAGS} -L $(ARUSDDIR) -I $(INCLUDE) -o $(NAME) $(OBJS) $(ARINC) $(MINIFLAGS) 
-
+	@${CC} ${CFLAGS} -L $(ARUSDDIR) -I $(INCLUDE) -o $(NAME) $(OBJS) $(ARINC) $(MINIFLAGS)
+	
 clean:
 	@make -sC libft clean
 	@${RM} ${OBJS} 
-	@echo "$(RED)All $(CYAN)$(NAME)$(RED)'s objects removed with $(WHITE)${RM}$(DEF_COLOR) 🧹" 
+	@echo "$(RED)All $(CYAN)$(NAME)$(RED)'s objects removed with $(WHITE)${RM}$(DEF_COLOR) ☯" 
 
 fclean: clean
 	@make -sC libft fclean
 	@${RM} ${NAME} 
-	@echo "$(RED)..and $(CYAN)${NAME} $(RED)as been removed$(DEF_COLOR) 🚮"
+	@echo "$(RED)..and $(CYAN)${NAME} $(RED)as been removed$(DEF_COLOR) ⛩️"
 
 libft:
 	@make -sC libft
@@ -96,4 +117,5 @@ libftfclean:
 re: fclean all
 
 .PHONY: all clean fclean re starting .c.o libft libftclean libftfclean
-.SUFFIXES: .c .o 
+.SUFFIXES: .c .o
+.SILENT:

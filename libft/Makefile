@@ -108,11 +108,11 @@ ${NAME}: ${OBJS}
 
 clean:
 	@${RM} ${OBJS} 
-	@echo "$(RED)All $(CYAN)$(PRNAME)$(RED)'s objects removed with $(WHITE)${RM}$(DEF_COLOR) 🧹" 
+	@echo "$(RED)All $(CYAN)$(PRNAME)$(RED)'s objects removed with $(WHITE)${RM}$(DEF_COLOR) ⛩️" 
 
 fclean: clean
 	@${RM} ${NAME} 
-	@echo "$(RED)..and $(CYAN)${ARNAME} $(RED)as been removed$(DEF_COLOR) 🚮"
+	@echo "$(RED)..and $(CYAN)${ARNAME} $(RED)as been removed$(DEF_COLOR) ☯"
 
 re: fclean all
 
