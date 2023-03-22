@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/03/21 15:10:07 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/03/22 09:26:47 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,29 +66,8 @@ $(DIROBJS)%.o: $(DIRSRCS)%.c
 
 ####### RULES ########
 
-all: libft ${NAME}
-# coool Script #
-	clear
-	for i in 1 2 3 ; do \
-	echo "$(YELLOW)音Welcome to Minishell音$(DEF_COLOR)" \
-	&& sleep 0.5 \
-	&& clear \
-	&& echo "$(GREEN)音Welcome to Minishell音$(DEF_COLOR)" \
-	&& sleep 0.5 \
-	&& clear ; done
-	echo "READY"
-	sleep 0.8
-	echo "-"
-	sleep 0.5
-	echo "--"
-	sleep 0.5
-	echo "---"
-	sleep 1.1
-	clear
-	echo "(ง ͠ಥ_ಥ)ง"
-	sleep 2.05
-	clear
-	./minishell
+all: libft ${NAME} #cool
+
 ${NAME}: ${OBJS}
 	@echo "$(YELLOW)- Program Name: $(WHITE)${NAME}$(DEF_COLOR)"
 	@echo "$(YELLOW)- Compiler: $(WHITE)${CC}$(DEF_COLOR)"
@@ -116,6 +95,30 @@ libftfclean:
 
 re: fclean all
 
-.PHONY: all clean fclean re starting .c.o libft libftclean libftfclean
+cool:
+# coool Script #
+	clear
+	for i in 1 2 3 ; do \
+	echo "$(YELLOW)音Welcome to Minishell音$(DEF_COLOR)" \
+	&& sleep 0.4 \
+	&& clear \
+	&& echo "$(GREEN)音Welcome to Minishell音$(DEF_COLOR)" \
+	&& sleep 0.4 \
+	&& clear ; done
+	echo "READY"
+	sleep 0.3
+	echo "-"
+	sleep 0.2
+	echo "--"
+	sleep 0.2
+	echo "---"
+	sleep 0.5
+	clear
+	echo "ᕙ( ︡’︡ 益 ’︠)ง▬▬█"
+	sleep 2.05
+	clear
+
+
+.PHONY: all clean fclean re starting .c.o cool libft libftclean libftfclean
 .SUFFIXES: .c .o
 .SILENT:
