@@ -87,22 +87,60 @@ void	ft_history(t_mish *meta)
 	char	*hline;
 
 	i = 1;
-	close(meta->fd_history);
-	meta->fd_history = open(meta->path_history,
-			O_RDWR | O_CREAT | O_APPEND, 0644);
-	hline = get_next_line(meta->fd_history);
-	while (hline)
+	if (meta->line[6] == 'y' && (meta->line[7] == 32 || meta->line[7] == '\0'))
 	{
-		printf("%4i %s", i, hline);
-		i++;
-		ft_free((void **)&hline);
+		if (meta->line[7] == 32 && meta->line[8] != '\0')
+			return ;
+		close(meta->fd_history);
+		meta->fd_history = open(meta->path_history,
+				O_RDWR | O_CREAT | O_APPEND, 0644);
 		hline = get_next_line(meta->fd_history);
+		while (hline)
+		{
+			printf("%4i %s", i, hline);
+			i++;
+			ft_free((void **)&hline);
+			hline = get_next_line(meta->fd_history);
+		}
 	}
 }
 
 void	ft_reset_line(t_mish *meta)
 {
 	ft_free((void **) &(meta->line));
+}
+
+void	ft_echo(t_mish *meta)
+{
+	int	i;
+
+	if (meta->line[4] == 32 && meta->line[5] == '-' && meta->line[6] == 'n'
+		&& meta->line[7] == 32)
+	{
+		i = 8;
+		while (meta->line[i])
+			printf("%c", meta->line[i++]);
+	}
+	else if (meta->line[4] == 32)
+	{
+		i = 5;
+		while (meta->line[i])
+			printf("%c", meta->line[i++]);
+		if (meta->line[5])
+			printf("\n");
+	}
+}
+
+void	ft_pwd(t_mish *meta)
+{
+	if (meta->line[3] == 32)
+		printf("%s\n", getenv("PWD"));
+}
+
+void	ft_exit(t_mish *meta)
+{
+	if (meta->line[4] == 32 || meta->line[5] == '\0')
+		exit (0);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -125,13 +163,20 @@ int	main(int ac, char **av, char **envp)
 		// tutta questa parte va fatta dopo, con molti piu check.
 		// farei gia' tutto in matrice, quindi line viene sistemata contando
 		// '' "" e $, poi splitti tutto con ft_split tipo
-		if (!ft_strncmp(meta.line, "history", 5))
+		if (!ft_strncmp(meta.line, "exit", 4))
+			ft_exit(&meta);
+		else if (!ft_strncmp(meta.line, "history", 7))
 			ft_history(&meta);
 		else if (!ft_strncmp(meta.line, "quit", 5))
 			break ;
+		else if (!ft_strncmp(meta.line, "pwd", 3))
+			ft_pwd(&meta);
+		else if (!ft_strncmp(meta.line, "echo", 4))
+			ft_echo(&meta);
 		else
 			printf("daje!\n");
-		//readline va freeata?
+		//readline va freeata? --- >  Note that you must free the memory 
+		//allocated by readline using the free function.
 		ft_reset_line(&meta);
 	}
 	//getname
