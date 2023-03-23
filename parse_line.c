@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/23 12:45:18 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:12:31 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,69 @@ char	*ft_linejoin(char *line, char *piece, int n)
 	return (newline);
 }
 
-char	*ft_get_env_value(char	*key, char **env)
+char	*ft_env_value(char	*line_key, char **env)
 {
+	int		i;
+	char	*key;
+	char	*value;
 
+	i = 0;
+	key = ft_strdup(line_key);
+	while (ft_isalnum(key[i]))
+		i++;
+	key[i] = '\0';
+	i = 0;
+	while (env[i])
+	{
+		if (env[i][ft_strlen(key)] == '=' && !ft_strncmp(env[i], key, ft_strlen(key))) //err if USERR lol
+		{
+			value = ft_substr(env[i], ft_strlen(key)+1, ft_strlen(env[i]));
+			ft_free((void **) &key);
+			return(value);
+		}
+		i++;
+	}
+	value = ft_calloc(2, sizeof(char));
+	ft_free((void **) &key);
+	return (value);
 }
 
-char	*ft_parse_line(char *line)//, t_mish *meta)
+char	*ft_parse_word(char *line, char **env)//, t_mish *meta)
 {
 	//itera, se trova '' fa cose, se trova "" fa cose, se trova $ fa cose
-	int	i;
-	int	n;
-	char *newline;
+	int		i;
+	int		n;
+	char	*newline;
+	char	*value;
 
 	i = 0;
 	newline = NULL;
 	while (line[i])
 	{
 		n = 0;
-		while (line[i + n] && line[i + n] != SQUT && line[i + n] != DQUT)
+		while (line[i + n] && line[i + n] != SQUT && line[i + n] != DQUT && line[i + n] != '$')
 			n++;
 		newline = ft_linejoin(newline, &line[i], n);
 		if (!line[i + n])
 			break ;
 		i += n;
 		n = 0;
-		if (line[i] == SQUT)
+		if (line[i] == '$' && ft_isalnum(line[i + n + 1]))
+		{
+			i++;
+			value = ft_env_value(&line[i], env);
+			newline = ft_linejoin(newline, value, ft_strlen(value)); 
+			while (line[i] && ft_isalnum(line[i]))
+				i++;
+		}
+		else if (line[i] == SQUT)
 		{
 			i++;
 			while (line[i + n] && line[i + n] != SQUT)
 				n++;
 			newline = ft_linejoin(newline, &line[i], n);
-			i += n + 1;
+			i += n;// + 1;
+			i++;
 		}
 		else if (line[i] == DQUT)
 		{
@@ -82,14 +114,18 @@ char	*ft_parse_line(char *line)//, t_mish *meta)
 					newline = ft_linejoin(newline, &line[i], n);
 					i += n;
 					n = 0;
-					newline = ft_linejoin(newline, THEENV, n);
+					i++;
+					value = ft_env_value(&line[i], env);
+					newline = ft_linejoin(newline, value, ft_strlen(value)); 
 					while (line[i] && ft_isalnum(line[i]))
 						i++;
 				}
-				n++;
+				else
+					n++;
 			}
 			newline = ft_linejoin(newline, &line[i], n);
-			i += n + 1;
+			i += n;// + 1;
+			i++;
 		}
 		else
 			i++;
@@ -98,7 +134,8 @@ char	*ft_parse_line(char *line)//, t_mish *meta)
 	return (newline);
 }
 
-/*int main(int argc, char **argv)
+/*
+int main(int argc, char **argv, char **envp)
 {
 	char *lol;
 
@@ -106,7 +143,9 @@ char	*ft_parse_line(char *line)//, t_mish *meta)
 	{
 		lol = readline("suca: ");
 		add_history(lol);
-		printf("%s\n", ft_parse_line(lol));
+		printf("%s\n", ft_parse_word(lol, envp));
 	}
+	//printf("%s\n", ft_parse_line(lol, envp));
 	return 0;
-}*/
+}
+*/

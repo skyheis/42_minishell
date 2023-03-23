@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:07:12 by ggiannit          #+#    #+#             */
-/*   Updated: 2022/10/08 18:47:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/23 14:52:18 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (start >= ft_strlen(s))
 		len = 0;
-	sub_str = (char *) malloc((len + 1) * sizeof(char));
+	sub_str = (char *) ft_calloc((len + 1), sizeof(char));
 	if (sub_str == NULL)
 		return (NULL);
 	ft_strlcpy(sub_str, &s[start], len + 1);
