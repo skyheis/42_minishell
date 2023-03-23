@@ -6,11 +6,15 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/23 17:12:31 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/23 17:32:06 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* parse_word verra' usata ogni volta che viene creato un nodo, tramite
+ * la funzione ft_cmdlst_iterstr
+ * */
 
 char	*ft_linejoin(char *line, char *piece, int n)
 {
@@ -54,7 +58,8 @@ char	*ft_env_value(char	*line_key, char **env)
 	i = 0;
 	while (env[i])
 	{
-		if (env[i][ft_strlen(key)] == '=' && !ft_strncmp(env[i], key, ft_strlen(key))) //err if USERR lol
+		if (env[i][ft_strlen(key)] == '=' &&
+			!ft_strncmp(env[i], key, ft_strlen(key)))
 		{
 			value = ft_substr(env[i], ft_strlen(key)+1, ft_strlen(env[i]));
 			ft_free((void **) &key);
@@ -67,30 +72,35 @@ char	*ft_env_value(char	*line_key, char **env)
 	return (value);
 }
 
-char	*ft_parse_word(char *line, char **env)//, t_mish *meta)
+char	*ft_parse_word(char *line, t_mish *meta)
 {
 	//itera, se trova '' fa cose, se trova "" fa cose, se trova $ fa cose
 	int		i;
 	int		n;
 	char	*newline;
-	char	*value;
 
 	i = 0;
 	newline = NULL;
 	while (line[i])
 	{
 		n = 0;
-		while (line[i + n] && line[i + n] != SQUT && line[i + n] != DQUT && line[i + n] != '$')
+		while (line[i + n] && line[i + n] != SQUT &&
+				line[i + n] != DQUT && line[i + n] != '$')
 			n++;
 		newline = ft_linejoin(newline, &line[i], n);
 		if (!line[i + n])
 			break ;
 		i += n;
-		n = 0;
+
+		//ft_parse_word_cond(int *i, char *line, char **newline)
+		//int	n;
+		char	*value;
+		//
+		//n = 0;
 		if (line[i] == '$' && ft_isalnum(line[i + n + 1]))
 		{
 			i++;
-			value = ft_env_value(&line[i], env);
+			value = ft_env_value(&line[i], meta->env);
 			newline = ft_linejoin(newline, value, ft_strlen(value)); 
 			while (line[i] && ft_isalnum(line[i]))
 				i++;
@@ -101,8 +111,7 @@ char	*ft_parse_word(char *line, char **env)//, t_mish *meta)
 			while (line[i + n] && line[i + n] != SQUT)
 				n++;
 			newline = ft_linejoin(newline, &line[i], n);
-			i += n;// + 1;
-			i++;
+			i += (n + 1);
 		}
 		else if (line[i] == DQUT)
 		{
@@ -115,7 +124,7 @@ char	*ft_parse_word(char *line, char **env)//, t_mish *meta)
 					i += n;
 					n = 0;
 					i++;
-					value = ft_env_value(&line[i], env);
+					value = ft_env_value(&line[i], meta->env);
 					newline = ft_linejoin(newline, value, ft_strlen(value)); 
 					while (line[i] && ft_isalnum(line[i]))
 						i++;
@@ -124,13 +133,14 @@ char	*ft_parse_word(char *line, char **env)//, t_mish *meta)
 					n++;
 			}
 			newline = ft_linejoin(newline, &line[i], n);
-			i += n;// + 1;
-			i++;
+			i += (n + 1);
 		}
 		else
 			i++;
+		//endfun
+
 	}
-	//ft_free((void **) &line);
+	ft_free((void **) &line); //occhio per test
 	return (newline);
 }
 

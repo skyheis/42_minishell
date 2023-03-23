@@ -1,8 +1,21 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_splitt.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
+/*   Updated: 2023/03/23 17:33:21 by ggiannit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+/*#include <stdio.h>
 #include <stdlib.h>
 
 #define SQUT 39
-#define DQUT 34
+#define DQUT 34*/
 
 int	ft_iscut(char c)
 {
