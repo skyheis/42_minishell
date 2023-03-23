@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/22 12:18:08 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:42:02 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,12 @@ void	ft_cmdlst_iterstr(t_cmd *cmd,
 void	ft_cmdlst_clear(t_cmd **cmd);
 void	ft_cmdlst_addfront(t_cmd **cmd, t_cmd *new);
 t_cmd	*ft_cmdlst_new(char **pot);
+
+/* custom_env */
+int		ft_matrixlen(char **mat);
+char	**ft_matrixdel(char	**mat, char	*str);
+char	**ft_matrixadd(char	**mat, char	*str);
+char	**ft_replace_add_env(char **mat, char *str);
+char	**ft_set_newenv(char **envp);
 
 #endif

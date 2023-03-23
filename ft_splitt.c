@@ -112,5 +112,9 @@ int		main()
 	//str = ft_splitermux(" \"ciao ");
 	//str = ft_splitermux(" 'ciao ");
 	str = ft_splitermux("ech'o' cas\"a '\" ");
-	printf("%s\n", str[1]);
+
+	int i = 0;
+
+	while (str[i]) 
+		printf("%s\n", str[i++]);
 }

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/22 11:46:03 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/23 11:35:59 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 //tutte da testare
 
+/* esegue una funzine su tutte le stringhe */
 void	ft_cmdlst_iterstr(t_cmd *cmd,
 		void(*parse)(char *, t_mish *), t_mish *meta)
 {
@@ -31,6 +32,7 @@ void	ft_cmdlst_iterstr(t_cmd *cmd,
 	}
 }
 
+/* pulisce tutta la lista */
 void	ft_cmdlst_clear(t_cmd **cmd)
 {
 	t_cmd	*tmp;
@@ -45,12 +47,14 @@ void	ft_cmdlst_clear(t_cmd **cmd)
 	}
 }
 
+/* aggiunge nodo davanti */
 void	ft_cmdlst_addfront(t_cmd **cmd, t_cmd *new)
 {
 	new->next = *cmd;
 	*cmd = new;
 }
 
+/* crea nuovo nodo */
 t_cmd	*ft_cmdlst_new(char **pot)
 {
 	t_cmd	*new;

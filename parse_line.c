@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/22 15:30:51 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/23 12:45:18 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ char	*ft_linejoin(char *line, char *piece, int n)
 	return (newline);
 }
 
+char	*ft_get_env_value(char	*key, char **env)
+{
+
+}
+
 char	*ft_parse_line(char *line)//, t_mish *meta)
 {
 	//itera, se trova '' fa cose, se trova "" fa cose, se trova $ fa cose
@@ -71,7 +76,18 @@ char	*ft_parse_line(char *line)//, t_mish *meta)
 		{
 			i++;
 			while (line[i + n] && line[i + n] != DQUT)
+			{
+				if (line[i + n] == '$' && ft_isalnum(line[i + n + 1]))
+				{
+					newline = ft_linejoin(newline, &line[i], n);
+					i += n;
+					n = 0;
+					newline = ft_linejoin(newline, THEENV, n);
+					while (line[i] && ft_isalnum(line[i]))
+						i++;
+				}
 				n++;
+			}
 			newline = ft_linejoin(newline, &line[i], n);
 			i += n + 1;
 		}
