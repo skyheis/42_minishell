@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 12:05:11 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:24:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_linejoin(char *line, char *piece, int n)
 	return (newline);
 }
 
-char	*ft_env_value(char	*line_key, char **env)
+char	*ft_env_value(char	*line_key, char **env)// t_mish *meta);
 {
 	int		i;
 	char	*key;
@@ -52,11 +52,11 @@ char	*ft_env_value(char	*line_key, char **env)
 
 	i = 0;
 	key = ft_strdup(line_key);
-	while (ft_isalnum(key[i]))
+	while (ft_isenv(key[i]))
 		i++;
 	key[i] = '\0';
-	i = 0;
-	while (env[i])
+	i = -1;
+	while (env[++i])
 	{
 		if (env[i][ft_strlen(key)] == '=' &&
 			!ft_strncmp(env[i], key, ft_strlen(key)))
@@ -65,9 +65,10 @@ char	*ft_env_value(char	*line_key, char **env)
 			ft_free((void **) &key);
 			return(value);
 		}
-		i++;
 	}
-	value = ft_calloc(2, sizeof(char));
+	//value = ft_envlst_retvalue(meta->exenv, key);
+	if (!value)
+		value = ft_calloc(2, sizeof(char));
 	ft_free((void **) &key);
 	return (value);
 }
@@ -97,12 +98,13 @@ char	*ft_parse_word(char *line, t_mish *meta)
 		char	*value;
 		//
 		//n = 0;
-		if (line[i] == '$' && ft_isalnum(line[i + n + 1])) //isenv
+		//else if ( $ && $ + 1 == ?)
+		if (line[i] == '$' && ft_isenv(line[i + n + 1])) //isenv
 		{
 			i++;
 			value = ft_env_value(&line[i], meta->env);
 			newline = ft_linejoin(newline, value, ft_strlen(value)); 
-			while (line[i] && ft_isalnum(line[i]))
+			while (line[i] && ft_isenv(line[i]))
 				i++;
 		}
 		else if (line[i] == SQUT)
@@ -118,7 +120,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 			i++;
 			while (line[i + n] && line[i + n] != DQUT)
 			{
-				if (line[i + n] == '$' && ft_isalnum(line[i + n + 1]))
+				if (line[i + n] == '$' && ft_isenv(line[i + n + 1]))
 				{
 					newline = ft_linejoin(newline, &line[i], n);
 					i += n;
@@ -126,7 +128,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 					i++;
 					value = ft_env_value(&line[i], meta->env);
 					newline = ft_linejoin(newline, value, ft_strlen(value));
-					while (line[i] && ft_isalnum(line[i]))
+					while (line[i] && ft_isenv(line[i]))
 						i++;
 				}
 				else

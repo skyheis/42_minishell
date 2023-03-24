@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:31:29 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 12:21:00 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 16:11:19 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char	**ft_matrixdel(char	**mat, char	*str)
 	return (newmat);
 }
 
+/* se str non e' dal nodocmd, ricordarsi di freeare */
 char	**ft_matrixadd(char	**mat, char	*str)
 {
 	int		i;
@@ -93,6 +94,7 @@ char	**ft_matrixadd(char	**mat, char	*str)
 	return (newmat);
 }
 
+/* se str non e' dal nodocmd, ricordarsi di freeare */
 char	**ft_replace_add_env(char **mat, char *str)
 {
 	int		i;

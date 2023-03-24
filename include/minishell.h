@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 12:04:17 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 15:42:25 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef struct	s_cmd
 	struct s_cmd	*next; //ogni nodo un pipe :D
 }				t_cmd;
 
+typedef struct	s_exenv
+{
+	char			*key;
+	char			*value;
+	struct s_exenv	*next;
+}				t_exenv;
+
 typedef struct	s_mish
 {
 	char	*line;
@@ -65,5 +72,10 @@ char	**ft_matrixdel(char	**mat, char	*str);
 char	**ft_matrixadd(char	**mat, char	*str);
 char	**ft_replace_add_env(char **mat, char *str);
 char	**ft_set_newenv(char **envp);
+
+/* parse_line */
+char	*ft_linejoin(char *line, char *piece, int n);
+char	*ft_env_value(char	*line_key, char **env);
+char	*ft_parse_word(char *line, t_mish *meta);
 
 #endif
