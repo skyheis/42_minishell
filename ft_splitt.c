@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// gestire < >
+
 /*#include <stdio.h>
 #include <stdlib.h>
 
@@ -113,7 +116,7 @@ char	**ft_splitermux(char *s)
 	return (new);
 }
 
-int		main()
+/*int		main()
 {
 	char **str;
 
@@ -131,3 +134,4 @@ int		main()
 	while (str[i]) 
 		printf("%s\n", str[i++]);
 }
+*/
