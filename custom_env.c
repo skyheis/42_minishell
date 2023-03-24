@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:31:29 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/23 11:41:31 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:21:00 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,23 +96,23 @@ char	**ft_matrixadd(char	**mat, char	*str)
 char	**ft_replace_add_env(char **mat, char *str)
 {
 	int		i;
-	char	*strcut;
+	char	*key;
 
 	i = 0;
-	strcut = ft_strdup(str);
-	strcut[ft_findchar(str, '=')] = '\0';
+	key = ft_strdup(str);
+	key[ft_findchar(str, '=')] = '\0';
 	while (mat[i])
 	{
-		if (!ft_strncmp(mat[i], strcut, ft_strlen(strcut)))
+		if (!ft_strncmp(mat[i], key, ft_strlen(key)))
 		{
-			ft_free((void **) &(strcut));
+			ft_free((void **) &(key));
 			ft_free((void **) &(mat[i]));
 			mat[i] = ft_strdup(str);
 			return (mat);
 		}
 		i++;
 	}
-	ft_free((void **) &(strcut));
+	ft_free((void **) &(key));
 	return (ft_matrixadd(mat, str));
 }
 
@@ -139,6 +139,8 @@ char	**ft_set_newenv(char **envp)
 	}
 	return (newenv);
 }
+
+char	*ft_parse_env();
 
 /*int main(int ac, char **av, char **envp)
 {

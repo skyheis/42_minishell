@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/22 10:19:20 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 09:04:33 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,12 +131,14 @@ void	ft_echo(t_mish *meta)
 	}
 }
 
+//dobbiamo gestire i pwd
 void	ft_pwd(t_mish *meta)
 {
 	if (meta->line[3] == 32)
 		printf("%s\n", getenv("PWD"));
 }
 
+//bisogna chiamare la funzione free_all
 void	ft_exit(t_mish *meta)
 {
 	if (meta->line[4] == 32 || meta->line[5] == '\0')

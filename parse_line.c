@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/23 17:32:06 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:05:11 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 		char	*value;
 		//
 		//n = 0;
-		if (line[i] == '$' && ft_isalnum(line[i + n + 1]))
+		if (line[i] == '$' && ft_isalnum(line[i + n + 1])) //isenv
 		{
 			i++;
 			value = ft_env_value(&line[i], meta->env);
@@ -125,7 +125,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 					n = 0;
 					i++;
 					value = ft_env_value(&line[i], meta->env);
-					newline = ft_linejoin(newline, value, ft_strlen(value)); 
+					newline = ft_linejoin(newline, value, ft_strlen(value));
 					while (line[i] && ft_isalnum(line[i]))
 						i++;
 				}

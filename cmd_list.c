@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/23 11:35:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 12:02:28 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 /* esegue una funzine su tutte le stringhe */
 void	ft_cmdlst_iterstr(t_cmd *cmd,
-		void(*parse)(char *, t_mish *), t_mish *meta)
+		char *(*parse)(char *, t_mish *), t_mish *meta)
 {
 	int i;
 
@@ -25,7 +25,7 @@ void	ft_cmdlst_iterstr(t_cmd *cmd,
 		i = 0;
 		while (cmd->pot[i])
 		{
-			(*parse)(cmd->pot[i], meta);
+			cmd->pot[i] = (*parse)(cmd->pot[i], meta);
 			i++;
 		}
 		cmd = cmd->next;
