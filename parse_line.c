@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 16:24:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 18:47:31 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*ft_env_value(char	*line_key, char **env)// t_mish *meta);
 	char	*value;
 
 	i = 0;
+	value = NULL;
 	key = ft_strdup(line_key);
 	while (ft_isenv(key[i]))
 		i++;
@@ -97,9 +98,9 @@ char	*ft_parse_word(char *line, t_mish *meta)
 		//int	n;
 		char	*value;
 		//
-		//n = 0;
+		n = 0;
 		//else if ( $ && $ + 1 == ?)
-		if (line[i] == '$' && ft_isenv(line[i + n + 1])) //isenv
+		if (line[i] == '$' && ft_isenv(line[i + 1]))
 		{
 			i++;
 			value = ft_env_value(&line[i], meta->env);

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 15:42:25 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 18:17:24 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct	s_mish
 	char	*path_history;
 	int		exit_code;
 	char	**env;
+	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;
 }				t_mish;
 
@@ -78,5 +79,13 @@ char	**ft_set_newenv(char **envp);
 char	*ft_linejoin(char *line, char *piece, int n);
 char	*ft_env_value(char	*line_key, char **env);
 char	*ft_parse_word(char *line, t_mish *meta);
+
+/* handle_realine */
+void	ft_handle_line(t_mish *meta);
+
+/* ft_splitermux */
+char	**ft_splitermux(char *s, t_mish *meta);
+
+/* env_list */
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_splitt.c                                        :+:      :+:    :+:   */
+/*   splitermux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/23 17:33:21 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 19:08:06 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,12 @@ int	ft_iscut(char c)
 	return (0);
 }
 
-int	ft_strleny(const char *s)
-{
-	int	k;
-
-	k = 0;
-	if (!s)
-		return (0);
-	while (s[k] != '\0')
-	{
-		k++;
-	}
-	return (k);
-}
-
 int	ft_strlen_pez(char *s)
 {
 	static int	i;
 
+	if (!s[i])
+		i = 0;
 	if (s[0] == 32)
 		i++;
 	while (s[i])
@@ -71,9 +59,9 @@ int	ft_strlen_pez(char *s)
 	return (i - 1);
 }
 
-char	**ft_splitermux(char *s)
+char	**ft_splitermux(char *s, t_mish *meta)
 {
-	int		i;
+	size_t	i;
 	int		j;
 	int		k;
 	int		flag;
@@ -85,9 +73,9 @@ char	**ft_splitermux(char *s)
 	i = 0;
 	if (s[i] == 32)
 		i++;
-	new = (char **) malloc (sizeof(char *) * (ft_strleny(s))); // al posto di strleny usa strlen
-	new[0] = (char *) malloc (sizeof(char) * (ft_strlen_pez(s)));
-	while (i < ft_strleny(s) && s[i] != '|')
+	new = (char **) ft_calloc (ft_strlen(s) + 1, sizeof(char *));
+	new[0] = (char *) ft_calloc (ft_strlen_pez(s) + 1, sizeof(char));
+	while (i < ft_strlen(s) && s[i] != '|')
 	{
 		while (s[i] == 32)
 			i++;
@@ -109,10 +97,15 @@ char	**ft_splitermux(char *s)
 		}
 		new[k][j] = '\0';
 		k++;
-		new[k] = (char *) malloc (sizeof(char) * (ft_strlen_pez(s)));
+		new[k] = (char *) ft_calloc (ft_strlen_pez(s) + 1, sizeof(char));
 		flag = 0;
 		j = 0;
+		if (s[i] == '|')
+			break ;
 	}
+	new[k] = NULL;
+	if (s[i] == '|')
+		meta->flag = 1;
 	return (new);
 }
 

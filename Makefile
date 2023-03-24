@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/03/22 09:26:47 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/03/24 18:19:04 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ INCLUDE = include
 DIRSRCS =
 DIROBJS = obj/
 
-FLSRCS = main.c # pipex_utils.c handle_fd_utils.c use_heredoc.c
+FLSRCS = main.c splitermux.c cmd_list.c custom_env.c parse_line.c handle_realine.c
+
+# pipex_utils.c handle_fd_utils.c use_heredoc.c
 
 FLOBJS = ${FLSRCS:.c=.o}
 

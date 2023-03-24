@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 09:04:33 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/24 18:32:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	ft_set_history(t_mish *meta)
 	while (line)
 	{
 		line[ft_strlen(line) - 1] = '\0';
-		//add_history(line);
+		add_history(line);
 		ft_free((void **)&line);
 		line = get_next_line(meta->fd_history);
 	}
@@ -112,26 +112,26 @@ void	ft_reset_line(t_mish *meta)
 
 void	ft_echo(t_mish *meta)
 {
-	
+	(void)meta;
 }
 
 //dobbiamo gestire i pwd
 void	ft_pwd(t_mish *meta)
 {
-	printf("%s\n", getenv("PWD"));
+	(void) meta;
+	printf("%s\n", getenv("PWD"));//ft_getenv
 }
 
 //bisogna chiamare la funzione free_all
 void	ft_exit(t_mish *meta)
 {
+	(void) meta;
 	if (meta->line[4] == 32 || meta->line[5] == '\0')
 		exit (0);
 }
 
 void	ft_cd(t_mish *meta)
 {
-	int	i;
-
 	char *cwd;
 	//if (!ft_strncmp(&meta->line[3], "echo", 4))
 	//getenv(&meta->line[1]); // prendo secondo nodo
@@ -151,7 +151,7 @@ int	main(int ac, char **av, char **envp)
 	(void) envp;
 
 	meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
-	meta.env = envp;
+	meta.env = ft_set_newenv(envp);
 	meta.line = NULL;
 	meta.fd_history = 0;
 	ft_welcome_badge(&meta);
@@ -160,10 +160,13 @@ int	main(int ac, char **av, char **envp)
 	{
 		meta.line = readline(meta.context);
 		ft_fill_history(&meta);
+		ft_handle_line(&meta);
+		//
 		// tutta questa parte va fatta dopo, con molti piu check.
 		// farei gia' tutto in matrice, quindi line viene sistemata contando
 		// '' "" e $, poi splitti tutto con ft_split tipo
-		if (!ft_strncmp(meta.line, "exit", 4))
+
+		/*if (!ft_strncmp(meta.line, "exit", 4))
 			ft_exit(&meta);
 		else if (!ft_strncmp(meta.line, "history", 7))
 			ft_history(&meta);
@@ -176,9 +179,10 @@ int	main(int ac, char **av, char **envp)
 		else if (!ft_strncmp(meta.line, "echo", 4))
 			ft_echo(&meta);
 		else
-			printf("daje!\n");
+			printf("daje!\n");*/
 		//readline va freeata? --- >  Note that you must free the memory 
 		//allocated by readline using the free function.
+		ft_cmdlst_clear(&(meta.cmd));
 		ft_reset_line(&meta);
 	}
 	//getname
