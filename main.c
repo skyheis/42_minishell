@@ -112,30 +112,13 @@ void	ft_reset_line(t_mish *meta)
 
 void	ft_echo(t_mish *meta)
 {
-	int	i;
-
-	if (meta->line[4] == 32 && meta->line[5] == '-' && meta->line[6] == 'n'
-		&& meta->line[7] == 32)
-	{
-		i = 8;
-		while (meta->line[i])
-			printf("%c", meta->line[i++]);
-	}
-	else if (meta->line[4] == 32)
-	{
-		i = 5;
-		while (meta->line[i])
-			printf("%c", meta->line[i++]);
-		if (meta->line[5])
-			printf("\n");
-	}
+	
 }
 
 //dobbiamo gestire i pwd
 void	ft_pwd(t_mish *meta)
 {
-	if (meta->line[3] == 32)
-		printf("%s\n", getenv("PWD"));
+	printf("%s\n", getenv("PWD"));
 }
 
 //bisogna chiamare la funzione free_all
@@ -143,6 +126,21 @@ void	ft_exit(t_mish *meta)
 {
 	if (meta->line[4] == 32 || meta->line[5] == '\0')
 		exit (0);
+}
+
+void	ft_cd(t_mish *meta)
+{
+	int	i;
+
+	char *cwd;
+	//if (!ft_strncmp(&meta->line[3], "echo", 4))
+	//getenv(&meta->line[1]); // prendo secondo nodo
+	if (chdir(&meta->line[3]) != 0)
+    	perror("Error");
+	cwd = ft_strjoin(getenv("PWD"), "/");
+	cwd = ft_strjoin(cwd, &meta->line[3]);
+	//ft_replace_add_env(, );
+	//printf("current working directory is: %s\n", cwd);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -173,6 +171,8 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		else if (!ft_strncmp(meta.line, "pwd", 3))
 			ft_pwd(&meta);
+		else if (!ft_strncmp(meta.line, "cd", 2))
+			ft_cd(&meta);
 		else if (!ft_strncmp(meta.line, "echo", 4))
 			ft_echo(&meta);
 		else

@@ -45,6 +45,7 @@ typedef struct	s_mish
 	char	*line;
 	char	*user;
 	char	*context;
+	char	*abs_path; // per cd e pwd
 	int		fd_history;
 	char	*path_history;
 	int		exit_code;

@@ -140,7 +140,7 @@ char	**ft_set_newenv(char **envp)
 	return (newenv);
 }
 
-char	*ft_parse_env();
+//char	*ft_parse_env();
 
 /*int main(int ac, char **av, char **envp)
 {
