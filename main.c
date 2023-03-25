@@ -81,74 +81,20 @@ void	ft_fill_history(t_mish *meta)
 	ft_putstr_fd("\n", meta->fd_history);
 }
 
-void	ft_history(t_mish *meta)
-{
-	int	i;
-	char	*hline;
-
-	i = 1;
-	if (meta->line[6] == 'y' && (meta->line[7] == 32 || meta->line[7] == '\0'))
-	{
-		if (meta->line[7] == 32 && meta->line[8] != '\0')
-			return ;
-		close(meta->fd_history);
-		meta->fd_history = open(meta->path_history,
-				O_RDWR | O_CREAT | O_APPEND, 0644);
-		hline = get_next_line(meta->fd_history);
-		while (hline)
-		{
-			printf("%4i %s", i, hline);
-			i++;
-			ft_free((void **)&hline);
-			hline = get_next_line(meta->fd_history);
-		}
-	}
-}
-
 void	ft_reset_line(t_mish *meta)
 {
 	ft_free((void **) &(meta->line));
 }
-
-void	ft_echo(t_mish *meta)
-{
-	(void)meta;
-}
-
-//dobbiamo gestire i pwd
-void	ft_pwd(t_mish *meta)
-{
-	(void) meta;
-	printf("%s\n", getenv("PWD"));//ft_getenv
-}
-
-//bisogna chiamare la funzione free_all
-void	ft_exit(t_mish *meta)
-{
-	(void) meta;
-	if (meta->line[4] == 32 || meta->line[5] == '\0')
-		exit (0);
-}
-
-void	ft_cd(t_mish *meta)
-{
-	char *cwd;
-	//if (!ft_strncmp(&meta->line[3], "echo", 4))
-	//getenv(&meta->line[1]); // prendo secondo nodo
-	if (chdir(&meta->line[3]) != 0)
-    	perror("Error");
-	cwd = ft_strjoin(getenv("PWD"), "/");
-	cwd = ft_strjoin(cwd, &meta->line[3]);
-	//ft_replace_add_env(, );
-	//printf("current working directory is: %s\n", cwd);
-}
-
+//
+		// tutta questa parte va fatta dopo, con molti piu check.
+		// farei gia' tutto in matrice, quindi line viene sistemata contando
+		// '' "" e $, poi splitti tutto con ft_split tipo
 int	main(int ac, char **av, char **envp)
 {
 	t_mish	meta;
-	(void) ac;
-	(void) av;
-	(void) envp;
+	(void)	ac;
+	(void)	av;
+	(void)	envp;
 
 	meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
 	meta.env = ft_set_newenv(envp);
@@ -160,37 +106,12 @@ int	main(int ac, char **av, char **envp)
 	{
 		meta.cmd = 0;
 		meta.line = readline(meta.context);
-
-
 		if (!meta.line)
 			break ;
-
-
 		ft_fill_history(&meta);
 		ft_handle_line(&meta);
-		//
-		// tutta questa parte va fatta dopo, con molti piu check.
-		// farei gia' tutto in matrice, quindi line viene sistemata contando
-		// '' "" e $, poi splitti tutto con ft_split tipo
-
-		/*if (!ft_strncmp(meta.line, "exit", 4))
+		if (ft_handle_commands(&meta))
 			break ;
-		else if (!ft_strncmp(meta.line, "history", 7))
-			ft_history(&meta);
-		else if (!ft_strncmp(meta.line, "quit", 5))
-			break ;
-		else if (!ft_strncmp(meta.line, "pwd", 3))
-			ft_pwd(&meta);
-		else if (!ft_strncmp(meta.line, "cd", 2))
-			ft_cd(&meta);
-		else if (!ft_strncmp(meta.line, "echo", 4))
-			ft_echo(&meta);
-		else
-			printf("daje!\n");*/
-		//readline va freeata? --- >  Note that you must free the memory 
-		//allocated by readline using the free function.
-		ft_cmdlst_clear(&(meta.cmd));
-		ft_reset_line(&meta);
 	}
 	ft_cmdlst_clear(&(meta.cmd));
 	ft_reset_line(&meta);

@@ -13,55 +13,12 @@
 #include "include/minishell.h"
 // gestire < >
 
-/*#include <stdio.h>
-#include <stdlib.h>
-
-#define SQUT 39
-#define DQUT 34*/
-
 int	ft_iscut(char c)
 {
 	if (c == 32)
 		return (1);
 	return (0);
 }
-
-/*int	ft_strlen_pez(char *s, t_mish *meta)
-{
-	int	i;
-
-	i = 0;
-	while (s[meta->f] == 32)
-		(meta->f)++;
-	while (s[meta->f])
-	{
-		if (s[meta->f] == SQUT)
-		{
-			i++;
-			(meta->f)++;
-			while (s[meta->f] != SQUT)
-			{
-				i++;
-				(meta->f)++;
-			}
-		}
-		if (s[meta->f] == DQUT)
-		{
-			i++;
-			(meta->f)++;
-			while (s[meta->f] != DQUT)
-			{
-				i++;
-				(meta->f)++;
-			}
-		}
-		if (s[meta->f] == 32)
-			break ;
-		i++;
-		(meta->f)++;
-	}
-	return (i);
-}*/
 
 int	ft_strlen_pez(char *s, int *f)
 {

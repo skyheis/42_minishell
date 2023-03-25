@@ -65,5 +65,5 @@ void	ft_handle_line(t_mish *meta)
 		}
 	}
 	ft_cmdlst_iterstr(meta->cmd, ft_parse_word, meta);
-	ft_printnodes(meta->cmd, meta);
+	//ft_printnodes(meta->cmd, meta);
 }
