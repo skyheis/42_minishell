@@ -29,7 +29,6 @@ void	ft_printnodes(t_cmd *cmd, t_mish *meta)
 	}
 }
 
-
 void	ft_handle_line(t_mish *meta)
 {
 	int		i;
@@ -41,6 +40,7 @@ void	ft_handle_line(t_mish *meta)
 	while (meta->flag)
 	{
 		meta->flag = 0;
+		meta->f = 0;
 		if (i != 0 && meta->line[i] != '|')
 			i++;
 		mat = ft_splitermux(&meta->line[i], meta);

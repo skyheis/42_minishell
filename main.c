@@ -158,6 +158,7 @@ int	main(int ac, char **av, char **envp)
 	ft_set_history(&meta);
 	while (1)
 	{
+		meta.cmd = 0;
 		meta.line = readline(meta.context);
 		ft_fill_history(&meta);
 		ft_handle_line(&meta);

@@ -56,6 +56,7 @@ typedef struct	s_mish
 	int		fd_history;
 	char	*path_history;
 	int		exit_code;
+	int		f;
 	char	**env;
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;

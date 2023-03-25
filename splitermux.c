@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "include/minishell.h"
 // gestire < >
 
 /*#include <stdio.h>
@@ -27,36 +26,41 @@ int	ft_iscut(char c)
 	return (0);
 }
 
-int	ft_strlen_pez(char *s)
+int	ft_strlen_pez(char *s, t_mish *meta)
 {
-	static int	i;
+	int	i;
 
-	if (!s[i])
-		i = 0;
-	if (s[0] == 32)
-		i++;
-	while (s[i])
+	i = 0;
+	while (s[meta->f] == 32)
+		(meta->f)++;
+	while (s[meta->f])
 	{
-		if (s[i] == SQUT)
+		if (s[meta->f] == SQUT)
 		{
 			i++;
-			while (s[i] != SQUT)
+			(meta->f)++;
+			while (s[meta->f] != SQUT)
+			{
 				i++;
+				(meta->f)++;
+			}
 		}
-		if (s[i] == DQUT)
+		if (s[meta->f] == DQUT)
 		{
 			i++;
-			while (s[i] != DQUT)
+			(meta->f)++;
+			while (s[meta->f] != DQUT)
+			{
 				i++;
+				(meta->f)++;
+			}
 		}
-		if (s[i] == 32)
-		{
-			i++;
+		if (s[meta->f] == 32)
 			break ;
-		}
 		i++;
+		(meta->f)++;
 	}
-	return (i - 1);
+	return (i);
 }
 
 char	**ft_splitermux(char *s, t_mish *meta)
@@ -64,41 +68,49 @@ char	**ft_splitermux(char *s, t_mish *meta)
 	size_t	i;
 	int		j;
 	int		k;
-	int		flag;
 	char	**new;
 
 	j = 0;
-	flag = 0;
 	k = 0;
 	i = 0;
-	if (s[i] == 32)
+	//meta->f = 0; // METTERE NEL CASO IN CUI TESTI splitermux.c da solo
+	while (s[i] == 32)
 		i++;
-	new = (char **) ft_calloc (ft_strlen(s) + 1, sizeof(char *));
-	new[0] = (char *) ft_calloc (ft_strlen_pez(s) + 1, sizeof(char));
+	new = (char **) ft_calloc (ft_strlen(s), sizeof(char *));
+	new[0] = (char *) ft_calloc ((ft_strlen_pez(s, meta) + 1), sizeof(char));
 	while (i < ft_strlen(s) && s[i] != '|')
 	{
-		while (s[i] == 32)
+		while (s[i] == 32 && s[i])
 			i++;
 		while (s[i] && s[i] != '|')
 		{
-			if (s[i] == 34)
-				flag = -42;
-			else if (s[i] == 39)
-				flag++;
-			if ((ft_iscut(s[i]) && !flag) || (flag == 2 && ft_iscut(s[i]))
-				|| (flag == -42 && ft_iscut(s[i]) && s[i - 1] == 34))
+			while (s[i] != 39 && s[i] && s[i] != 34 && s[i] != 32)
+				new[k][j++] = s[i++];
+			if (s[i] == SQUT && s[i])
 			{
+				new[k][j++] = SQUT;
 				i++;
-				break;
+				while (s[i] != SQUT && s[i])
+					new[k][j++] = s[i++];
+				if (s[i])
+					new[k][j++] = SQUT;
 			}
-			if (s[i])
-				new[k][j++] = s[i];
+			if (s[i] == DQUT && s[i])
+			{
+				new[k][j++] = DQUT;
+				i++;
+				while (s[i] != DQUT && s[i])
+					new[k][j++] = s[i++];
+				if (s[i])
+					new[k][j++] = DQUT;
+			}
+			if (s[i] == 32 || !s[i])
+				break ;
 			i++;
 		}
 		new[k][j] = '\0';
 		k++;
-		new[k] = (char *) ft_calloc (ft_strlen_pez(s) + 1, sizeof(char));
-		flag = 0;
+		new[k] = (char *) ft_calloc ((ft_strlen_pez(s, meta) + 1), sizeof(char));
 		j = 0;
 		if (s[i] == '|')
 			break ;
@@ -108,20 +120,20 @@ char	**ft_splitermux(char *s, t_mish *meta)
 		meta->flag = 1;
 	return (new);
 }
-
-/*int		main()
+/*
+int		main()
 {
 	char **str;
-
-	//str = ft_splitermux(" e ch\"a '  ' \" ciao");
-	//str = ft_splitermux(" e cha ' as ' ci 'ao");
-	//str = ft_splitermux("cia'o smasb '");
-	//str = ft_splitermux("ciao");
-	//str = ft_splitermux(" a' cane ' ");
-	//str = ft_splitermux(" \"ciao ");
-	//str = ft_splitermux(" 'ciao ");
-	str = ft_splitermux("ech'o' cas\"a '\" ");
-
+	t_mish a;
+	//str = ft_splitermux(" e ch\"a '  ' \" ciao   'a'", &a);
+	//str = ft_splitermux(" e cha ' as ' ci 'ao", &a);
+	//str = ft_splitermux("cia'o smasb ' ", &a);
+	//str = ft_splitermux("ciao a' a\"", &a);
+	//str = ft_splitermux(" a'cane ' ' ssss", &a); // CONTROLLARE
+	//str = ft_splitermux(" \"ciao ", &a);
+	//str = ft_splitermux(" \'ciao ", &a);
+	//str = ft_splitermux("ciao\"$USERzzzzz'\"", &a); //con il ./minishell non stampa, qui stampa ok
+	//str = ft_splitermux("ciao $USERs'", &a);
 	int i = 0;
 
 	while (str[i]) 
