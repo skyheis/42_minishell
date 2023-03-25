@@ -115,7 +115,7 @@ char	**ft_splitermux(char *s, t_mish *meta)
 			i++;
 		while (s[i] && s[i] != 32 && s[i] != '|')
 		{
-			while (s[i] && s[i] != SQUT && s[i] != DQUT && s[i] != 32)
+			while (s[i] && s[i] != SQUT && s[i] != DQUT && s[i] != 32 && s[i] != '|')
 				new[k][j++] = s[i++];
 			if (s[i] && s[i] == SQUT)
 			{

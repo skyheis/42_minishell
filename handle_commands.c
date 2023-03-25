@@ -2,20 +2,27 @@
 
 void	ft_echo(t_mish *meta, int *i)
 {
+	int	flag;
+
+	flag = ft_strncmp(meta->cmd->pot[1], "-n\0", 3);
 	if (!meta->cmd->pot[1])
 	{
 		printf("\n");
 		return ;
 	}
-	else
+	else if (flag)
 		printf("%s ", meta->cmd->pot[1]);
 	*i = 2;
 	while (meta->cmd->pot[*i])
 	{
-		printf("%s ", meta->cmd->pot[*i]);
+		if (!flag && !meta->cmd->pot[*i + 1])
+			printf("%s", meta->cmd->pot[*i]);
+		else
+			printf("%s ", meta->cmd->pot[*i]);
 		*i += 1;
 	}
-	printf("\n");
+	if (flag)
+		printf("\n");
 }
 
 //dobbiamo gestire i pwd
