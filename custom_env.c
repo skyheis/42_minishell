@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:31:29 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 16:11:19 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/25 15:18:41 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char	**ft_set_newenv(char **envp)
 	while (envp[i])
 	{
 		j = 0;
-		newenv[i] = ft_calloc(ft_strlen(envp[i]), sizeof(char));
+		newenv[i] = ft_calloc(ft_strlen(envp[i]) + 2, sizeof(char));
 		while (envp[i][j])
 		{
 			newenv[i][j] = envp[i][j];
@@ -148,6 +148,7 @@ char	**ft_set_newenv(char **envp)
 {
 	char **lol = ft_set_newenv(envp);
 	int i = -1;
+
 
 	lol = ft_matrixadd(lol, "okok");
 	lol = ft_matrixadd(lol, "POPIPOPI=00000000000000000000000");

@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/03/24 18:19:04 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/03/25 15:56:30 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,6 +97,9 @@ libftfclean:
 
 re: fclean all
 
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./readline.supp ./minishell
+
 cool:
 # coool Script #
 	clear
@@ -121,6 +124,6 @@ cool:
 	clear
 
 
-.PHONY: all clean fclean re starting .c.o cool libft libftclean libftfclean
+.PHONY: all clean fclean re starting .c.o cool libft libftclean libftfclean valgrind
 .SUFFIXES: .c .o
 .SILENT:

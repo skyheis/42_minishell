@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 18:47:31 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:33:32 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ char	*ft_env_value(char	*line_key, char **env)// t_mish *meta);
 	i = 0;
 	value = NULL;
 	key = ft_strdup(line_key);
-	while (ft_isenv(key[i]))
+	while (key && ft_isenv(key[i]))
 		i++;
 	key[i] = '\0';
 	i = -1;
-	while (env[++i])
+	while (env && env[++i])
 	{
-		if (env[i][ft_strlen(key)] == '=' &&
-			!ft_strncmp(env[i], key, ft_strlen(key)))
+		if (!ft_strncmp(env[i], key, ft_strlen(key))
+				&& env[i][ft_strlen(key)] == '=') //in teoria ora ok
 		{
-			value = ft_substr(env[i], ft_strlen(key)+1, ft_strlen(env[i]));
+			value = ft_substr(env[i], ft_strlen(key) + 1, ft_strlen(env[i]));
 			ft_free((void **) &key);
 			return(value);
 		}

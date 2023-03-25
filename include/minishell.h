@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 18:17:24 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/25 16:47:28 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ typedef struct	s_mish
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;
 }				t_mish;
+
+
+void	ft_printnodes(t_cmd *cmd, t_mish *meta);
+
+
 
 /* cmd_list */
 void	ft_cmdlst_iterstr(t_cmd *cmd,

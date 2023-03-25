@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 18:32:55 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/25 15:33:50 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_free_shell(t_mish *meta)
 	if (meta->fd_history > 0)
 		close(meta->fd_history);
 	rl_clear_history();
-	ft_free((void **) &(meta->path_history));
+	ft_free_matrix(&(meta->env));
 	ft_free((void **) &(meta->path_history));
 	return (1);
 }
@@ -160,6 +160,12 @@ int	main(int ac, char **av, char **envp)
 	{
 		meta.cmd = 0;
 		meta.line = readline(meta.context);
+
+
+		if (!meta.line)
+			break ;
+
+
 		ft_fill_history(&meta);
 		ft_handle_line(&meta);
 		//
@@ -168,7 +174,7 @@ int	main(int ac, char **av, char **envp)
 		// '' "" e $, poi splitti tutto con ft_split tipo
 
 		/*if (!ft_strncmp(meta.line, "exit", 4))
-			ft_exit(&meta);
+			break ;
 		else if (!ft_strncmp(meta.line, "history", 7))
 			ft_history(&meta);
 		else if (!ft_strncmp(meta.line, "quit", 5))
@@ -186,6 +192,8 @@ int	main(int ac, char **av, char **envp)
 		ft_cmdlst_clear(&(meta.cmd));
 		ft_reset_line(&meta);
 	}
+	ft_cmdlst_clear(&(meta.cmd));
+	ft_reset_line(&meta);
 	//getname
 	//print intro
 	ft_free_shell(&meta);
