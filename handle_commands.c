@@ -25,31 +25,60 @@ void	ft_echo(t_mish *meta, int *i)
 		printf("\n");
 }
 
-//dobbiamo gestire i pwd
 void	ft_pwd(t_mish *meta)
 {
-	(void) meta;
-	printf("%s\n", getenv("PWD"));//ft_getenv
-}
+	int	i;
 
-//bisogna chiamare la funzione free_all
-void	ft_exit(t_mish *meta)
-{
-	(void) meta;
-	if (meta->line[4] == 32 || meta->line[5] == '\0')
-		exit (0);
+	i = 0;
+	while (meta->cmd && meta->cmd->pot[1])
+		meta->cmd->pot++;
+	while (meta->env[i])
+	{
+		if (!ft_strncmp(meta->env[i], "PWD", 3))
+		{
+			if (!ft_strncmp(meta->line, "pwd", 3))
+				printf("%s\n", &meta->env[i][4]);
+			else
+			{
+				meta->abs_path = ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
+				meta->abs_path = ft_strjoin(meta->abs_path, meta->env[i]);
+			}
+			break ;
+		}
+		i++;
+	}
 }
 
 void	ft_cd(t_mish *meta)
 {
-	char *cwd;
+	int		i;
+	int		j;
+	int		k;
+	char	*cwd;
 
-	if (chdir(meta->cmd->pot[1]) != 0)
-    	perror("Error"); // se diverso da 0 mi vado a prendere l'absolute path cambiando directory con quello
-	cwd = ft_strjoin(getenv("PWD"), "/");
-	cwd = ft_strjoin(cwd, &meta->line[3]);
-	//ft_replace_add_env(, );
-	//printf("current working directory is: %s\n", cwd);
+	i = 0;
+	j = 0;
+	k = 0;
+	cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
+	while (meta->env[i])
+	{
+		if (!ft_strncmp(meta->env[i], "PWD", 3))
+		{
+			cwd = ft_strjoin (cwd, meta->env[i]);
+			free(meta->env[i]);
+			meta->env[i] = (char *) ft_calloc (ft_strlen(meta->env[i]) + ft_strlen(meta->cmd->pot[1]) + 1, sizeof(char));
+			meta->env[i][j] = '/';
+			while(meta->cmd->pot[1][k])
+				meta->env[i][++j] = meta->cmd->pot[1][k++];
+			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
+			break ; //ft_getenv
+		}
+		i++;
+	}
+	meta->abs_path = &meta->env[i][4];
+	if (chdir(meta->abs_path) != 0)
+    	perror("Error");
+	free(cwd);
 }
 
 void	ft_history(t_mish *meta)
@@ -71,6 +100,17 @@ void	ft_history(t_mish *meta)
 	}
 }
 
+void	ft_env(t_mish *meta)
+{
+	int	i;
+
+	i = 0;
+	if (meta->cmd->pot[1])
+		return ;
+	while (meta->env[i])
+		printf("%s\n", meta->env[i++]);
+}
+
 int	ft_handle_commands(t_mish *meta)
 {
 	int	i;
@@ -82,12 +122,15 @@ int	ft_handle_commands(t_mish *meta)
 		{
 			if (!ft_strncmp(meta->cmd->pot[i], "history", 8))
 				ft_history(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5))
+			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5)
+				|| !ft_strncmp(meta->cmd->pot[i], "exit", 5))
 				return (1);
 			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5))
 				ft_echo(meta, &i);
 			else if (!ft_strncmp(meta->cmd->pot[i], "pwd", 4))
 				ft_pwd(meta);
+			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))
+				ft_env(meta);
 			else if (!ft_strncmp(meta->cmd->pot[i], "cd", 3))
 				ft_cd(meta);
 			else

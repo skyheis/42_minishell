@@ -93,7 +93,8 @@ void	ft_handle_line(t_mish *meta);
 char	**ft_splitermux(char *s, t_mish *meta);
 
 /* handle commands*/
-int	ft_handle_commands(t_mish *meta);
+int		ft_handle_commands(t_mish *meta);
+void	ft_pwd(t_mish *meta);
 
 /* env_list */
 

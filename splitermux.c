@@ -135,7 +135,7 @@ char	**ft_splitermux(char *s, t_mish *meta)
 				if (s[i])
 					new[k][j++] = DQUT;
 			}
-			if (!s[i] || s[i] == 32)
+			if (!s[i] || s[i] == 32 || s[i] == '|')
 				break ;
 			i++;
 		}
