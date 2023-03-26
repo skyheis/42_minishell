@@ -90,19 +90,19 @@ int	ft_handle_commands(t_mish *meta)
 		{
 			if (!ft_strncmp(meta->cmd->pot[i], "history", 8))
 				ft_history(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5)
+			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5) //quit c'e' da fare?
 				|| !ft_strncmp(meta->cmd->pot[i], "exit", 5))
 				return (1);
 			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5))
 				ft_echo(meta, &i);
 			else if (!ft_strncmp(meta->cmd->pot[i], "pwd", 4))
 				ft_pwd(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))
+			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4)) // vanno ricaricate le nuove variabili ambientali?
 				ft_env(meta);
 			else if (!ft_strncmp(meta->cmd->pot[i], "cd", 3))
 			{
-				if (ft_cd(meta))
-					return (1);
+				ft_cd(meta);
+				break ;
 			}
 			else
 				printf("daje!\n");
