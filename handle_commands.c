@@ -49,38 +49,6 @@ void	ft_pwd(t_mish *meta)
 	}
 }
 
-void	ft_cd(t_mish *meta)
-{
-	int		i;
-	int		j;
-	int		k;
-	char	*cwd;
-
-	i = 0;
-	j = 0;
-	k = 0;
-	cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
-	while (meta->env[i])
-	{
-		if (!ft_strncmp(meta->env[i], "PWD", 3))
-		{
-			cwd = ft_strjoin (cwd, meta->env[i]);
-			free(meta->env[i]);
-			meta->env[i] = (char *) ft_calloc (ft_strlen(meta->env[i]) + ft_strlen(meta->cmd->pot[1]) + 1, sizeof(char));
-			meta->env[i][j] = '/';
-			while(meta->cmd->pot[1][k])
-				meta->env[i][++j] = meta->cmd->pot[1][k++];
-			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
-			break ; //ft_getenv
-		}
-		i++;
-	}
-	meta->abs_path = &meta->env[i][4];
-	if (chdir(meta->abs_path) != 0)
-    	perror("Error");
-	free(cwd);
-}
-
 void	ft_history(t_mish *meta)
 {
 	int	i;
@@ -132,7 +100,10 @@ int	ft_handle_commands(t_mish *meta)
 			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))
 				ft_env(meta);
 			else if (!ft_strncmp(meta->cmd->pot[i], "cd", 3))
-				ft_cd(meta);
+			{
+				if (ft_cd(meta))
+					return (1);
+			}
 			else
 				printf("daje!\n");
 			i++;

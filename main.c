@@ -100,12 +100,12 @@ int	main(int ac, char **av, char **envp)
 	meta.env = ft_set_newenv(envp);
 	meta.line = NULL;
 	meta.fd_history = 0;
+	meta.cmd = 0;
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);
 	ft_set_history(&meta);
 	while (1)
 	{
-		meta.cmd = 0;
 		meta.line = readline(meta.context);
 		if (!meta.line)
 			break ;
