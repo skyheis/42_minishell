@@ -52,7 +52,7 @@ typedef struct	s_mish
 	char	*line;
 	char	*user;
 	char	*context;
-	char	*abs_path; // per cd e pwd
+	char	*abs_path; // per cd e pwd ---> e' il path principale
 	int		fd_history;
 	char	*path_history;
 	int		exit_code;
@@ -94,6 +94,7 @@ char	**ft_splitermux(char *s, t_mish *meta);
 
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta);
+int		ft_cd_slash(t_mish *meta);
 void	ft_find_path(char *str, int *k);
 void	ft_abs_path(t_mish *meta);
 void	ft_pwd(t_mish *meta);

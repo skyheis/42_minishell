@@ -93,11 +93,11 @@ int	ft_handle_commands(t_mish *meta)
 			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5) //quit c'e' da fare?
 				|| !ft_strncmp(meta->cmd->pot[i], "exit", 5))
 				return (1);
-			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5))
+			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5)) // caricare nuove envp ogni volta che cambio cartella  DA FARE!!
 				ft_echo(meta, &i);
 			else if (!ft_strncmp(meta->cmd->pot[i], "pwd", 4))
 				ft_pwd(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4)) // vanno ricaricate le nuove variabili ambientali?
+			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))
 				ft_env(meta);
 			else if (!ft_strncmp(meta->cmd->pot[i], "cd", 3))
 			{

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_cd_next(t_mish *meta)
+void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi manda alla home, gestire? chdir non lo legge comunque
 {
 	int		i;
 	int		j;
@@ -17,11 +17,12 @@ void	ft_cd_next(t_mish *meta)
 			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
 			cwd = ft_strjoin (cwd, meta->env[i]);
 			free(meta->env[i]);
-			meta->env[i] = (char *) ft_calloc (ft_strlen(meta->env[i])
+			meta->env[i] = (char *) ft_calloc (ft_strlen(cwd)
 				+ ft_strlen(meta->cmd->pot[1]) + 1, sizeof(char));
-			meta->env[i][j] = '/';
+			if (cwd[5] != '\0')
+				meta->env[i][j++] = '/';
 			while(meta->cmd->pot[1][k])
-				meta->env[i][++j] = meta->cmd->pot[1][k++];
+				meta->env[i][j++] = meta->cmd->pot[1][k++];
 			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
 			break ;
 		}
@@ -29,7 +30,7 @@ void	ft_cd_next(t_mish *meta)
 	free(cwd);
 }
 
-void	ft_cd_pre(t_mish *meta)
+void	ft_cd_pre(t_mish *meta) // se sono in /home e faccio cd .. DA FARE!!
 {
 	int		i;
 	int		j;
@@ -42,6 +43,8 @@ void	ft_cd_pre(t_mish *meta)
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
+			if (!meta->env[i][5])
+				return ;
 			ft_find_path(meta->env[i], &k);
 			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
 			cwd = ft_strjoin (cwd, meta->env[i]);
@@ -50,11 +53,11 @@ void	ft_cd_pre(t_mish *meta)
 			j = -1;
 			while (++j < k)
 				meta->env[i][j] = cwd[j];
+			free(cwd);
 			break ;
 		}
 		i++;
 	}
-	free(cwd);
 }
 
 int	ft_cd2(t_mish *meta)
@@ -106,7 +109,7 @@ int	ft_check_error_cd(t_mish *meta)
 	return (0);
 }
 
-int	ft_cd(t_mish *meta) // handleare il caso in cui ci sia solo cd / o cd // o cd /.
+int	ft_cd(t_mish *meta)
 {
 	if (!meta->cmd->pot[1]) // absolute path
 	{
@@ -121,6 +124,11 @@ int	ft_cd(t_mish *meta) // handleare il caso in cui ci sia solo cd / o cd // o c
 	}
 	else
 	{
+		if (meta->cmd->pot[1][0] == '/')
+		{
+			if (ft_cd_slash(meta)) // controllo se /home e' presente in meta->env[i] senno' vado a cd2 e l'aggiungo
+				return (1);
+		}
 		if (ft_check_error_cd(meta))
 			return (1);
 		if (ft_cd2(meta))

@@ -22,7 +22,7 @@ INCLUDE = include
 DIRSRCS =
 DIROBJS = obj/
 
-FLSRCS = main.c splitermux.c cmd_list.c custom_env.c parse_line.c handle_realine.c handle_commands.c handle_commands_utils.c handle_commands_cd.c
+FLSRCS = main.c splitermux.c cmd_list.c custom_env.c parse_line.c handle_realine.c handle_commands.c handle_commands_cd2.c handle_commands_utils.c handle_commands_cd.c
 
 # pipex_utils.c handle_fd_utils.c use_heredoc.c
 
