@@ -18,7 +18,7 @@ int	ft_cd_slash(t_mish *meta)
 	int	i;
 
 	i = 0;
-	while (meta->env[i]) // manca il /..////home/niccolo/Desktop
+	while (meta->env[i]) // manca il /..////home/niccolo/Desktop DA FARE!!
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{

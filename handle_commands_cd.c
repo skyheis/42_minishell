@@ -30,7 +30,7 @@ void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi 
 	free(cwd);
 }
 
-void	ft_cd_pre(t_mish *meta) // se sono in /home e faccio cd .. DA FARE!!
+void	ft_cd_pre(t_mish *meta)
 {
 	int		i;
 	int		j;
@@ -43,8 +43,13 @@ void	ft_cd_pre(t_mish *meta) // se sono in /home e faccio cd .. DA FARE!!
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			if (!meta->env[i][5])
+			if (!meta->env[i][5] || ((!ft_strncmp(&meta->env[i][4], "/home", 5)
+				&& !meta->env[i][9])))
+			{
+				if (!ft_strncmp(&meta->env[i][4], "/home", 5) && !meta->env[i][9])
+					ft_slash(meta, i, "/");
 				return ;
+			}
 			ft_find_path(meta->env[i], &k);
 			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
 			cwd = ft_strjoin (cwd, meta->env[i]);
