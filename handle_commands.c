@@ -100,6 +100,11 @@ int	ft_handle_commands(t_mish *meta)
 				ft_echo(meta);
 				break ;
 			}
+			else if (!ft_strncmp(meta->cmd->pot[i], "unset", 5))
+			{
+				ft_unset(meta);
+				break;
+			}
 			else if (!ft_strncmp(meta->cmd->pot[i], "pwd", 4))
 				ft_pwd(meta);
 			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))
