@@ -83,41 +83,25 @@ void	ft_env(t_mish *meta)
 
 int	ft_handle_commands(t_mish *meta)
 {
-	int	i;
-
 	while (meta->cmd)
 	{
-		i = 0;
-		while (meta->cmd->pot[i])
-		{
-			if (!ft_strncmp(meta->cmd->pot[i], "history", 8))
-				ft_history(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5) //quit c'e' da fare?
-				|| !ft_strncmp(meta->cmd->pot[i], "exit", 5))
+		if (!ft_strncmp(meta->cmd->pot[0], "history", 8))
+			ft_history(meta);
+		else if (!ft_strncmp(meta->cmd->pot[0], "quit", 5) //quit c'e' da fare?
+			|| !ft_strncmp(meta->cmd->pot[0], "exit", 5))
 				return (1);
-			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5))// caricare nuove envp ogni volta che cambio cartella  DA FARE!!
-			{
-				ft_echo(meta);
-				break ;
-			}
-			else if (!ft_strncmp(meta->cmd->pot[i], "unset", 5))
-			{
-				ft_unset(meta);
-				break;
-			}
-			else if (!ft_strncmp(meta->cmd->pot[i], "pwd", 4))
-				ft_pwd(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))
-				ft_env(meta);
-			else if (!ft_strncmp(meta->cmd->pot[i], "cd", 3))
-			{
-				ft_cd(meta);
-				break ;
-			}
-			else
-				printf("daje!\n");
-			i++;
-		}
+		else if (!ft_strncmp(meta->cmd->pot[0], "echo", 5))// caricare nuove envp ogni volta che cambio cartella  DA FARE!!
+			ft_echo(meta);
+		else if (!ft_strncmp(meta->cmd->pot[0], "unset", 5))
+			ft_unset(meta);
+		else if (!ft_strncmp(meta->cmd->pot[0], "pwd", 4))
+			ft_pwd(meta);
+		else if (!ft_strncmp(meta->cmd->pot[0], "env", 4))
+			ft_env(meta);
+		else if (!ft_strncmp(meta->cmd->pot[0], "cd", 3))
+			ft_cd(meta);
+		else
+			printf("%s: command not found\n", meta->cmd->pot[0]);
 		meta->cmd = meta->cmd->next;
 	}
 	return (0);

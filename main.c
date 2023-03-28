@@ -97,7 +97,7 @@ int	main(int ac, char **av, char **envp)
 	(void)	envp;
 
 	meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
-	meta.env = ft_set_newenv(envp);
+	meta.env = ft_set_newenv(envp, 0, &meta, 0);
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;

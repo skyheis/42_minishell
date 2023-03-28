@@ -118,7 +118,7 @@ char	**ft_replace_add_env(char **mat, char *str)
 	return (ft_matrixadd(mat, str));
 }
 
-char	**ft_set_newenv(char **envp)
+char	**ft_set_newenv(char **envp, int flag, t_mish *meta, int k)
 {
 	int		i;
 	int		j;
@@ -134,7 +134,20 @@ char	**ft_set_newenv(char **envp)
 		newenv[i] = ft_calloc(ft_strlen(envp[i]) + 2, sizeof(char));
 		while (envp[i][j])
 		{
-			newenv[i][j] = envp[i][j];
+			if (meta->cmd && meta->cmd->pot[k] && flag &&
+				!ft_strncmp(meta->cmd->pot[k], envp[i],
+					ft_strlen(meta->cmd->pot[k])))
+			{
+				while (envp[i][j])
+				{
+					newenv[i][j] = envp[i + 1][j];
+					j++;
+				}
+				i++;
+				break ;
+			}
+			else
+				newenv[i][j] = envp[i][j];
 			j++;
 		}
 		i++;

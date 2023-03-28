@@ -79,7 +79,7 @@ int		ft_matrixlen(char **mat);
 char	**ft_matrixdel(char	**mat, char	*str);
 char	**ft_matrixadd(char	**mat, char	*str);
 char	**ft_replace_add_env(char **mat, char *str);
-char	**ft_set_newenv(char **envp);
+char	**ft_set_newenv(char **envp, int flag, t_mish *meta, int k);
 
 /* parse_line */
 char	*ft_linejoin(char *line, char *piece, int n);

@@ -5,9 +5,9 @@ void	ft_abs_path(t_mish *meta)
 	int	i;
 	int	k;
 
-	i = 0;
+	i = -1;
 	k = 0;
-	while (meta->env[i])
+	while (meta->env[++i])
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
@@ -23,9 +23,7 @@ void	ft_abs_path(t_mish *meta)
 					k++;
 				}
 			}
-			return  ;
 		}
-		i++;
 	}
 }
 
