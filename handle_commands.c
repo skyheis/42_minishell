@@ -1,9 +1,11 @@
 #include "minishell.h"
 
-void	ft_echo(t_mish *meta, int *i)
+void	ft_echo(t_mish *meta)
 {
 	int	flag;
+	int	i;
 
+	i = 0;
 	flag = ft_strncmp(meta->cmd->pot[1], "-n\0", 3);
 	if (!meta->cmd->pot[1])
 	{
@@ -12,14 +14,14 @@ void	ft_echo(t_mish *meta, int *i)
 	}
 	else if (flag)
 		printf("%s ", meta->cmd->pot[1]);
-	*i = 2;
-	while (meta->cmd->pot[*i])
+	i = 2;
+	while (meta->cmd->pot[i])
 	{
-		if (!flag && !meta->cmd->pot[*i + 1])
-			printf("%s", meta->cmd->pot[*i]);
+		if (!flag && !meta->cmd->pot[i + 1])
+			printf("%s", meta->cmd->pot[i]);
 		else
-			printf("%s ", meta->cmd->pot[*i]);
-		*i += 1;
+			printf("%s ", meta->cmd->pot[i]);
+		i += 1;
 	}
 	if (flag)
 		printf("\n");
@@ -93,8 +95,11 @@ int	ft_handle_commands(t_mish *meta)
 			else if (!ft_strncmp(meta->cmd->pot[i], "quit", 5) //quit c'e' da fare?
 				|| !ft_strncmp(meta->cmd->pot[i], "exit", 5))
 				return (1);
-			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5)) // caricare nuove envp ogni volta che cambio cartella  DA FARE!!
-				ft_echo(meta, &i);
+			else if (!ft_strncmp(meta->cmd->pot[i], "echo", 5))// caricare nuove envp ogni volta che cambio cartella  DA FARE!!
+			{
+				ft_echo(meta);
+				break ;
+			}
 			else if (!ft_strncmp(meta->cmd->pot[i], "pwd", 4))
 				ft_pwd(meta);
 			else if (!ft_strncmp(meta->cmd->pot[i], "env", 4))

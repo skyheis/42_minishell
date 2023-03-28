@@ -11,16 +11,18 @@ void	ft_abs_path(t_mish *meta)
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			//if (ft_strncmp(meta->env[i], meta->abs_path, ft_strlen(meta->abs_path)))
-			//{
+			if (ft_strncmp(meta->env[i], &meta->abs_path[4],
+				ft_strlen(meta->abs_path)))
+			{
 				free(meta->env[i]);
-				meta->env[i] = (char *) ft_calloc (ft_strlen(meta->abs_path) + 1, sizeof(char));
+				meta->env[i] = (char *) ft_calloc (ft_strlen(meta->abs_path)
+					+ 1, sizeof(char));
 				while (meta->abs_path[k])
 				{
 					meta->env[i][k] = meta->abs_path[k];
 					k++;
 				}
-			//}
+			}
 			return  ;
 		}
 		i++;
