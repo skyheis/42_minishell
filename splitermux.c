@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/25 16:47:41 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 10:52:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ char	**ft_splitermux(char *s, t_mish *meta)
 		}
 		k++;
 		if (!s[i] || s[i] == '|')
-				break ;
-		if (s[i] == '|')
+			break ;
+		if (s[i] == '|') //doppio check?
 			break ;
 	}
 	new[k] = NULL;

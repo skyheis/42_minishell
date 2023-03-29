@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/25 15:33:50 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:14:38 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ void	ft_reset_line(t_mish *meta)
 {
 	ft_free((void **) &(meta->line));
 }
-//
-		// tutta questa parte va fatta dopo, con molti piu check.
-		// farei gia' tutto in matrice, quindi line viene sistemata contando
-		// '' "" e $, poi splitti tutto con ft_split tipo
+
+	// tutta questa parte va fatta dopo, con molti piu check.
+	// farei gia' tutto in matrice, quindi line viene sistemata contando
+	// '' "" e $, poi splitti tutto con ft_split tipo
 int	main(int ac, char **av, char **envp)
 {
 	t_mish	meta;
@@ -97,10 +97,11 @@ int	main(int ac, char **av, char **envp)
 	(void)	envp;
 
 	meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
-	meta.env = ft_set_newenv(envp, 0, &meta, 0);
+	meta.env = ft_set_newenv(envp);
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;
+	meta.abs_path = getenv("HOME");
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);
 	ft_set_history(&meta);
@@ -113,8 +114,10 @@ int	main(int ac, char **av, char **envp)
 		ft_handle_line(&meta);
 		if (ft_handle_commands(&meta))
 			break ;
+		ft_cmdlst_clear(&(meta.cmd_head));
+		ft_reset_line(&meta);
 	}
-	ft_cmdlst_clear(&(meta.cmd));
+	ft_cmdlst_clear(&(meta.cmd_head));
 	ft_reset_line(&meta);
 	//getname
 	//print intro

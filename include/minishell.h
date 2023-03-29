@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/25 16:47:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 15:25:43 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct	s_mish
 	char	**env;
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;
+	t_cmd	*cmd_head;
 }				t_mish;
 
 
@@ -79,7 +80,7 @@ int		ft_matrixlen(char **mat);
 char	**ft_matrixdel(char	**mat, char	*str);
 char	**ft_matrixadd(char	**mat, char	*str);
 char	**ft_replace_add_env(char **mat, char *str);
-char	**ft_set_newenv(char **envp, int flag, t_mish *meta, int k);
+char	**ft_set_newenv(char **envp);
 
 /* parse_line */
 char	*ft_linejoin(char *line, char *piece, int n);

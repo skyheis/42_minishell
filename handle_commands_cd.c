@@ -5,7 +5,7 @@ void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi 
 	int		i;
 	int		j;
 	int		k;
-	char	*cwd;
+	char	*cwd = NULL;
 
 	i = -1;
 	j = 0;
@@ -27,7 +27,7 @@ void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi 
 			break ;
 		}
 	}
-	free(cwd);
+	ft_free((void **)&cwd);
 }
 
 void	ft_cd_pre(t_mish *meta)

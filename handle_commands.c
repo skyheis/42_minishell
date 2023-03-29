@@ -5,16 +5,10 @@ void	ft_echo(t_mish *meta)
 	int	flag;
 	int	i;
 
-	i = 0;
 	flag = ft_strncmp(meta->cmd->pot[1], "-n\0", 3);
-	if (!meta->cmd->pot[1])
-	{
-		printf("\n");
-		return ;
-	}
-	else if (flag)
-		printf("%s ", meta->cmd->pot[1]);
-	i = 2;
+	i = 1;
+	if (!flag)
+		i++;
 	while (meta->cmd->pot[i])
 	{
 		if (!flag && !meta->cmd->pot[i + 1])
@@ -32,20 +26,12 @@ void	ft_pwd(t_mish *meta)
 	int	i;
 
 	i = 0;
-	while (meta->cmd && meta->cmd->pot[1])
-		meta->cmd->pot++;
 	while (meta->env[i])
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			if (!ft_strncmp(meta->line, "pwd", 3))
-				printf("%s\n", &meta->env[i][4]);
-			else
-			{
-				meta->abs_path = ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
-				meta->abs_path = ft_strjoin(meta->abs_path, meta->env[i]);
-			}
-			break ;
+			printf("%s\n", &meta->env[i][4]);
+			return ;
 		}
 		i++;
 	}
@@ -58,8 +44,13 @@ void	ft_history(t_mish *meta)
 
 	i = 1;
 	close(meta->fd_history);
+	if (!ft_strncmp(meta->cmd->pot[1], "-c", 3))
+	{
+		unlink(meta->path_history);
+		rl_clear_history();
+	}
 	meta->fd_history = open(meta->path_history,
-			O_RDWR | O_CREAT | O_APPEND, 0644);
+		O_RDWR | O_CREAT | O_APPEND, 0644);
 	hline = get_next_line(meta->fd_history);
 	while (hline)
 	{
@@ -87,8 +78,7 @@ int	ft_handle_commands(t_mish *meta)
 	{
 		if (!ft_strncmp(meta->cmd->pot[0], "history", 8))
 			ft_history(meta);
-		else if (!ft_strncmp(meta->cmd->pot[0], "quit", 5) //quit c'e' da fare?
-			|| !ft_strncmp(meta->cmd->pot[0], "exit", 5))
+		else if (!ft_strncmp(meta->cmd->pot[0], "exit", 5))
 				return (1);
 		else if (!ft_strncmp(meta->cmd->pot[0], "echo", 5))// caricare nuove envp ogni volta che cambio cartella  DA FARE!!
 			ft_echo(meta);
@@ -103,6 +93,6 @@ int	ft_handle_commands(t_mish *meta)
 		else
 			printf("%s: command not found\n", meta->cmd->pot[0]);
 		meta->cmd = meta->cmd->next;
-	}
+ 	}
 	return (0);
 }
