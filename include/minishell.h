@@ -107,6 +107,7 @@ int		ft_cd(t_mish *meta);
 
 /* handle_setenv */
 void	ft_handle_setenv(t_mish *meta);
+int		ft_isasetenv(char *str);
 
 	/* env_list */
 char	*ft_envlst_retvalue(t_exenv *exenv, char *key);

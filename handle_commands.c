@@ -84,20 +84,6 @@ void	ft_env(t_mish *meta)
 		printf("%s\n", meta->env[i++]);
 }
 
-int	ft_isasetenv(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (ft_isenv(str[i]))
-			i++;
-	if (i == 0)
-		return (0);
-	if (str[i] == '=')
-		return (1);
-	return (0);
-}
-
 int	ft_handle_commands(t_mish *meta)
 {
 	while (meta->cmd)

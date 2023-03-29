@@ -37,3 +37,17 @@ void	ft_handle_setenv(t_mish *meta)
 		ft_envlst_addfront(&(meta->ext_env), ft_envlst_new(meta->cmd->pot[0]));
 	ft_free((void **) &(key));
 }
+
+int	ft_isasetenv(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isenv(str[i]))
+			i++;
+	if (i == 0)
+		return (0);
+	if (str[i] == '=')
+		return (1);
+	return (0);
+}

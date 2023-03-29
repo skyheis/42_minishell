@@ -20,3 +20,4 @@ int	ft_isenv(char c)
 	}
 	return (0);
 }
+

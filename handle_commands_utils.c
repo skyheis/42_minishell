@@ -6,23 +6,24 @@ void	ft_abs_path(t_mish *meta)
 	int	k;
 
 	i = -1;
-	k = 0;
 	while (meta->env[++i])
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			if (ft_strncmp(meta->env[i], &meta->abs_path[4],
-				ft_strlen(meta->abs_path)))
-			{
+			//if (ft_strncmp(&meta->env[i][4], meta->abs_path,
+				//ft_strlen(meta->abs_path)))
+			//{
+				k = 0;
 				free(meta->env[i]);
-				meta->env[i] = (char *) ft_calloc (ft_strlen(meta->abs_path)
-					+ 1, sizeof(char));
+				meta->env[i] = (char *) ft_calloc (ft_strlen(meta->abs_path) + 5,
+					sizeof(char));
+				ft_strlcpy(meta->env[i], "PWD=", 5);
 				while (meta->abs_path[k])
 				{
-					meta->env[i][k] = meta->abs_path[k];
+					meta->env[i][k + 4] = meta->abs_path[k];
 					k++;
 				}
-			}
+			//}
 		}
 	}
 }

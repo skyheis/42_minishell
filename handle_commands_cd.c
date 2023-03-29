@@ -21,7 +21,8 @@ void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi 
 				+ ft_strlen(meta->cmd->pot[1]) + 1, sizeof(char));
 			if (cwd[5] != '\0')
 				meta->env[i][j++] = '/';
-			while(meta->cmd->pot[1][k])
+			while(meta->cmd->pot[1][k] && (meta->cmd->pot[1][k] != '/'
+				|| (meta->cmd->pot[1][k + 1])))
 				meta->env[i][j++] = meta->cmd->pot[1][k++];
 			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
 			break ;
@@ -118,7 +119,7 @@ int	ft_cd(t_mish *meta)
 {
 	if (!meta->cmd->pot[1]) // absolute path
 	{
-		chdir(&meta->abs_path[4]);
+		chdir(meta->abs_path);
 		ft_abs_path(meta);
 		return (0);
 	}
