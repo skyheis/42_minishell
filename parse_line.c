@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 14:47:31 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:22:22 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_linejoin(char *line, char *piece, int n)
 	return (newline);
 }
 
-char	*ft_env_value(char	*line_key, char **env)// t_mish *meta);
+char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
 {
 	int		i;
 	char	*key;
@@ -67,7 +67,7 @@ char	*ft_env_value(char	*line_key, char **env)// t_mish *meta);
 			return(value);
 		}
 	}
-	//value = ft_envlst_retvalue(meta->exenv, key);
+	value = ft_envlst_retvalue(meta->ext_env, key);
 	if (!value)
 		value = ft_calloc(2, sizeof(char));
 	ft_free((void **) &key);
@@ -85,13 +85,13 @@ char	*ft_parse_word(char *line, t_mish *meta)
 	newline = NULL;
 	if (line[0] == '~' && !line[1] )//forse gestibile interno
 	{
-		newline = ft_env_value("HOME", meta->env);
+		newline = ft_env_value("HOME", meta->env, meta);
 		newline = ft_linejoin(NULL, newline, ft_strlen(newline));
 		return (newline);
 	}
 	if (line[0] == '~' && line[1] == '/')
 	{
-		newline = ft_env_value("HOME", meta->env);
+		newline = ft_env_value("HOME", meta->env, meta);
 		newline = ft_linejoin(NULL, newline, ft_strlen(newline));
 		newline = ft_linejoin(newline, "/", 1);
 		i += 2;
@@ -116,7 +116,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 		if (line[i] == '$' && ft_isenv(line[i + 1]))
 		{
 			i++;
-			value = ft_env_value(&line[i], meta->env);
+			value = ft_env_value(&line[i], meta->env, meta);
 			newline = ft_linejoin(newline, value, ft_strlen(value)); 
 			while (line[i] && ft_isenv(line[i]))
 				i++;
@@ -140,7 +140,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 					i += n;
 					n = 0;
 					i++;
-					value = ft_env_value(&line[i], meta->env);
+					value = ft_env_value(&line[i], meta->env, meta);
 					newline = ft_linejoin(newline, value, ft_strlen(value));
 					while (line[i] && ft_isenv(line[i]))
 						i++;

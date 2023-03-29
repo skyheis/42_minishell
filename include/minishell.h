@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 15:25:43 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:06:53 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct	s_mish
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
+	t_exenv	*ext_env;
 }				t_mish;
 
 
@@ -81,10 +82,11 @@ char	**ft_matrixdel(char	**mat, char	*str);
 char	**ft_matrixadd(char	**mat, char	*str);
 char	**ft_replace_add_env(char **mat, char *str);
 char	**ft_set_newenv(char **envp);
+int		ft_findchar(char *str, char c);
 
 /* parse_line */
 char	*ft_linejoin(char *line, char *piece, int n);
-char	*ft_env_value(char	*line_key, char **env);
+char	*ft_env_value(char	*line_key, char **env, t_mish *meta);
 char	*ft_parse_word(char *line, t_mish *meta);
 
 /* handle_realine */
@@ -103,6 +105,14 @@ void	ft_abs_path(t_mish *meta);
 void	ft_pwd(t_mish *meta);
 int		ft_cd(t_mish *meta);
 
-/* env_list */
+/* handle_setenv */
+void	ft_handle_setenv(t_mish *meta);
+
+	/* env_list */
+char	*ft_envlst_retvalue(t_exenv *exenv, char *key);
+void	ft_envlst_clear(t_exenv **exenv);
+void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new);
+t_exenv	*ft_envlst_new(char *str);
+void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
 
 #endif

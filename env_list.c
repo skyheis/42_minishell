@@ -6,13 +6,33 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 17:17:40 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:22:12 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //tutte da testare
+
+void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str)
+{
+	int	len;
+	int	i;
+
+	i = 0;
+	len = ft_strlen(key) + 1;
+	while (exenv)
+	{
+		if (!ft_strncmp(key, exenv->key, len))
+		{
+			while (str[i] != '=')
+				i++;
+			exenv->value = ft_substr(str, i + 1, ft_strlen(&str[i]));
+			break ;
+		}
+		exenv = exenv->next;
+	}
+}
 
 char	*ft_envlst_retvalue(t_exenv *exenv, char *key)
 {
@@ -51,13 +71,14 @@ void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new)
 	*exenv = new;
 }
 
-/* crea nuovo nodo ----- forse da freeare str? */
+/* crea nuovo nodo ----- forse da freeare str? post: non credo*/
 t_exenv	*ft_envlst_new(char *str)
 {
 	t_exenv	*new;
 	//char	*tmp;
 	int	i;	
 
+	i = 0;
 	new = malloc(sizeof(t_exenv));
 	if (!new)
 		return (NULL);
@@ -73,6 +94,6 @@ t_exenv	*ft_envlst_new(char *str)
 		i++;
 	}
 	new->next = NULL;
-	ft_free((void **) &str);
+	//noooooooooooooooooo ft_free((void **) &str);
 	return (new);
 }

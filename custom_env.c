@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:31:29 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 15:10:15 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 16:51:40 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_matrixlen(char **mat)
 	return (i);
 }
 
-static int	ft_findchar(char *str, char c)
+int	ft_findchar(char *str, char c)
 {
 	int	i;
 

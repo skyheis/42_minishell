@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 16:14:38 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:20:35 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	ft_free_shell(t_mish *meta)
 		close(meta->fd_history);
 	rl_clear_history();
 	ft_free_matrix(&(meta->env));
+	ft_envlst_clear(&(meta->ext_env));
 	ft_free((void **) &(meta->path_history));
 	return (1);
 }
@@ -102,6 +103,7 @@ int	main(int ac, char **av, char **envp)
 	meta.fd_history = 0;
 	meta.cmd = 0;
 	meta.abs_path = getenv("HOME");
+	meta.ext_env = NULL;
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);
 	ft_set_history(&meta);

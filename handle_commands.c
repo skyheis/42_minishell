@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_commands.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
+/*   Updated: 2023/03/29 17:05:56 by ggiannit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_echo(t_mish *meta)
@@ -72,6 +84,20 @@ void	ft_env(t_mish *meta)
 		printf("%s\n", meta->env[i++]);
 }
 
+int	ft_isasetenv(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isenv(str[i]))
+			i++;
+	if (i == 0)
+		return (0);
+	if (str[i] == '=')
+		return (1);
+	return (0);
+}
+
 int	ft_handle_commands(t_mish *meta)
 {
 	while (meta->cmd)
@@ -90,6 +116,8 @@ int	ft_handle_commands(t_mish *meta)
 			ft_env(meta);
 		else if (!ft_strncmp(meta->cmd->pot[0], "cd", 3))
 			ft_cd(meta);
+		else if (ft_isasetenv(meta->cmd->pot[0]))
+			ft_handle_setenv(meta);
 		else
 			printf("%s: command not found\n", meta->cmd->pot[0]);
 		meta->cmd = meta->cmd->next;
