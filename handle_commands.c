@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 17:05:56 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/30 12:05:56 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,26 @@ void	ft_env(t_mish *meta)
 		printf("%s\n", meta->env[i++]);
 }
 
+
+
+void	ft_clean_window(char **envp)
+{
+	char	*clean_path[2];
+
+	clean_path[0] = ft_strjoin(NULL, "/usr/bin/clear");
+	clean_path[1] = NULL;
+	if (!clean_path[0])
+		return ;
+	if (!fork())
+	{
+		execve("/usr/bin/clear", clean_path, envp);
+		exit(1);
+	}
+	wait(NULL);
+	ft_free_null(clean_path);
+}
+
+
 int	ft_handle_commands(t_mish *meta)
 {
 	while (meta->cmd)
@@ -102,10 +122,13 @@ int	ft_handle_commands(t_mish *meta)
 			ft_env(meta);
 		else if (!ft_strncmp(meta->cmd->pot[0], "cd", 3))
 			ft_cd(meta);
+		else if (!ft_strncmp(meta->cmd->pot[0], "clear", 6))
+			ft_clean_window(meta->env);
 		else if (ft_isasetenv(meta->cmd->pot[0]))
 			ft_handle_setenv(meta);
-		else
-			printf("%s: command not found\n", meta->cmd->pot[0]);
+		else if (meta->cmd->pot[0])
+			ft_execbin(meta);
+			//printf("%s: command not found\n", meta->cmd->pot[0]); //solo per test, poi sistemo
 		meta->cmd = meta->cmd->next;
  	}
 	return (0);

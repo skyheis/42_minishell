@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 17:06:53 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/30 11:58:10 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,17 @@ int		ft_cd(t_mish *meta);
 void	ft_handle_setenv(t_mish *meta);
 int		ft_isasetenv(char *str);
 
-	/* env_list */
+/* env_list */
 char	*ft_envlst_retvalue(t_exenv *exenv, char *key);
 void	ft_envlst_clear(t_exenv **exenv);
 void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new);
 t_exenv	*ft_envlst_new(char *str);
 void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
+
+/* find_binary */
+char	*ft_getenv(char *to_get, char **env);
+char	*ft_getpath(char *full_path, t_mish *meta);
+void	ft_getcmd(t_mish *meta);
+void	ft_execbin(t_mish *meta);
 
 #endif

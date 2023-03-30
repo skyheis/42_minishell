@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 17:20:35 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:59:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ void	ft_set_history(t_mish *meta)
 
 void	ft_fill_history(t_mish *meta)
 {
-	add_history(meta->line);
-	ft_putstr_fd(meta->line, meta->fd_history);
-	ft_putstr_fd("\n", meta->fd_history);
+	if (meta->line && meta->line[0])
+	{
+		add_history(meta->line);
+		ft_putstr_fd(meta->line, meta->fd_history);
+		ft_putstr_fd("\n", meta->fd_history);
+	}
 }
 
 void	ft_reset_line(t_mish *meta)

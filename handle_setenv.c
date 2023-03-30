@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:42:33 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 17:04:56 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/30 09:45:31 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ int	ft_isasetenv(char *str)
 	int	i;
 
 	i = 0;
-	while (ft_isenv(str[i]))
+	while (str && ft_isenv(str[i]))
 			i++;
 	if (i == 0)
 		return (0);
-	if (str[i] == '=')
+	if (str && str[i] == '=')
 		return (1);
 	return (0);
 }
