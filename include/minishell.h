@@ -105,14 +105,14 @@ char	**ft_splitermux(char *s, t_mish *meta);
 
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta, t_cmd *node);
-int		ft_pre_slash(t_mish *meta);
+int		ft_pre_slash(t_mish *meta, t_cmd *node);
 void	ft_cd_pre(t_mish *meta);
 void	ft_slash(t_mish *meta, int k, char *pot);
 void	ft_unset(t_mish *meta, t_cmd *node);
-int		ft_cd_slash(t_mish *meta);
+int		ft_cd_slash(t_mish *meta, t_cmd *node);
 void	ft_abs_path(t_mish *meta);
 void	ft_pwd(t_mish *meta);
-int		ft_cd(t_mish *meta);
+int		ft_cd(t_mish *meta, t_cmd *node);
 
 /* handle_setenv */
 void	ft_handle_setenv(t_mish *meta, t_cmd *node);

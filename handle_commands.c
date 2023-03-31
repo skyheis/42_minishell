@@ -125,7 +125,7 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 	else if (!ft_strncmp(node->pot[0], "env", 4))
 		ft_env(meta, node);
 	else if (!ft_strncmp(node->pot[0], "cd", 3))
-		ft_cd(meta);
+		ft_cd(meta, node);
 	else if (!ft_strncmp(node->pot[0], "clear", 6))
 		ft_clean_window(meta->env, meta);
 	else if (ft_isasetenv(node->pot[0]))

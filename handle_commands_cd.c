@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_cd_next(t_mish *meta) // cd /home/ problema doppi /
+void	ft_cd_next(t_mish *meta, t_cmd *node) // cd /home/ problema doppi /
 {
 	int		i;
 	int		j;
@@ -19,12 +19,12 @@ void	ft_cd_next(t_mish *meta) // cd /home/ problema doppi /
 			cwd = ft_strjoin (cwd, meta->env[i]);
 			free(meta->env[i]);
 			meta->env[i] = (char *) ft_calloc (ft_strlen(cwd)
-				+ ft_strlen(meta->cmd->pot[1]) + 1, sizeof(char));
+				+ ft_strlen(node->pot[1]) + 1, sizeof(char));
 			if (cwd[5] != '\0')
 				meta->env[i][j++] = '/';
-			while(meta->cmd->pot[1][k] && (meta->cmd->pot[1][k] != '/'
-				|| (meta->cmd->pot[1][k + 1])))
-				meta->env[i][j++] = meta->cmd->pot[1][k++];
+			while(node->pot[1][k] && (node->pot[1][k] != '/'
+				|| (node->pot[1][k + 1])))
+				meta->env[i][j++] = node->pot[1][k++];
 			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
 			break ;
 		}
@@ -67,20 +67,20 @@ void	ft_cd_pre(t_mish *meta)
 	}
 }
 
-int	ft_cd2(t_mish *meta)
+int	ft_cd2(t_mish *meta, t_cmd *node)
 {
 	int	i;
 
 	i = 2;
-	if (!ft_strncmp(meta->cmd->pot[1], "..", 2)) // ../ option with ../////// check
+	if (!ft_strncmp(node->pot[1], "..", 2)) // ../ option with ../////// check
 	{
-		while (meta->cmd->pot[1][i])
+		while (node->pot[1][i])
 		{
-			if (meta->cmd->pot[1][i] && meta->cmd->pot[1][i] != '/'
-				&& (!ft_strncmp(&meta->cmd->pot[1][i], "../", 3) ||
-					meta->cmd->pot[1][i] == '.'))
-				return (ft_pre_slash(meta));
-			else if (meta->cmd->pot[1][i] && meta->cmd->pot[1][i] != '/')
+			if (node->pot[1][i] && node->pot[1][i] != '/'
+				&& (!ft_strncmp(&node->pot[1][i], "../", 3) ||
+					node->pot[1][i] == '.'))
+				return (ft_pre_slash(meta, node));
+			else if (node->pot[1][i] && node->pot[1][i] != '/')
 				return (1);
 			i++;
 		}
@@ -91,59 +91,59 @@ int	ft_cd2(t_mish *meta)
 	}
 	else
 	{
-		chdir(meta->cmd->pot[1]);
-		ft_cd_next(meta);
+		chdir(node->pot[1]);
+		ft_cd_next(meta, node);
 		return (0);
 	}
 	return (0);
 }
 
-int	ft_check_error_cd(t_mish *meta)
+int	ft_check_error_cd(t_cmd *node)
 {
 	int	i;
 
 	i = 1;
-	if (!ft_strncmp(meta->cmd->pot[1], "./", 2)) // . option or ./ option with ./////// check
+	if (!ft_strncmp(node->pot[1], "./", 2)) // . option or ./ option with ./////// check
 	{
-		while (meta->cmd->pot[1][i])
+		while (node->pot[1][i])
 		{
-			if (meta->cmd->pot[1][i] != '/')
+			if (node->pot[1][i] != '/')
 				return (1) ;
 			i++;
 		}
 		return (1);
 	}
-	else if (meta->cmd->pot[1][0] == '.')
+	else if (node->pot[1][0] == '.')
 	{
-		if (meta->cmd->pot[1][1] != '.')
+		if (node->pot[1][1] != '.')
 			return (1);
 	}
 	return (0);
 }
 
-int	ft_cd(t_mish *meta)
+int	ft_cd(t_mish *meta, t_cmd *node)
 {
-	if (!meta->cmd->pot[1]) // absolute path
+	if (!node->pot[1]) // absolute path
 	{
 		chdir(meta->abs_path);
 		ft_abs_path(meta);
 		return (0);
 	}
-	else if (meta->cmd->pot[1][0] != '-' && chdir(meta->cmd->pot[1]) != 0) // no path available
+	else if (node->pot[1][0] != '-' && chdir(node->pot[1]) != 0) // no path available
 	{
 		perror("Error");
 		return (1);
 	}
 	else
 	{
-		if (meta->cmd->pot[1][0] == '/' || meta->cmd->pot[1][0] == '-')
+		if (node->pot[1][0] == '/' || node->pot[1][0] == '-')
 		{
-			if (ft_cd_slash(meta)) // controllo se /home e' presente in meta->env[i] senno' vado a cd2 e l'aggiungo
+			if (ft_cd_slash(meta, node)) // controllo se /home e' presente in meta->env[i] senno' vado a cd2 e l'aggiungo
 				return (1);
 		}
-		if (ft_check_error_cd(meta))
+		if (ft_check_error_cd(node))
 			return (1);
-		if (ft_cd2(meta))
+		if (ft_cd2(meta, node))
 			return (1);
 	}
 	return (0);

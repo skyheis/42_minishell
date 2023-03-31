@@ -53,30 +53,30 @@ int	ft_cd_meno(t_mish *meta)
 	return (1);
 }
 
-int	ft_cd_slash(t_mish *meta)
+int	ft_cd_slash(t_mish *meta, t_cmd *node)
 {
 	int	i;
 
 	i = 0;
-	while (meta->env[i] && meta->cmd->pot[1][0] != '-') // manca il /..////home/niccolo/Desktop DA FARE!!
+	while (meta->env[i] && node->pot[1][0] != '-') // manca il /..////home/niccolo/Desktop DA FARE!!
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			if (meta->cmd->pot[1][1] && (meta->cmd->pot[1][1] == '.' ||
-				meta->cmd->pot[1][1] == '/'))
+			if (node->pot[1][1] && (node->pot[1][1] == '.' ||
+				node->pot[1][1] == '/'))
 				ft_slash(meta, i, "/");
 			else
-				ft_slash(meta, i, &meta->cmd->pot[1][0]);
+				ft_slash(meta, i, &node->pot[1][0]);
 			return (1);
 		}
 		i++;
 	}
-	if (meta->cmd->pot[1][0] == '-' && !meta->cmd->pot[1][1])
+	if (node->pot[1][0] == '-' && !node->pot[1][1])
 		return (ft_cd_meno(meta));
 	return (0);
 }
 
-int	ft_pre_slash(t_mish *meta)
+int	ft_pre_slash(t_mish *meta, t_cmd *node)
 {
 	int	i;
 	int k;
@@ -87,9 +87,9 @@ int	ft_pre_slash(t_mish *meta)
 	chdir(&meta->abs_path[i]);
 	ft_cd_pre(meta);
 	i = 3;
-	while (meta->cmd->pot[1][i])
+	while (node->pot[1][i])
 	{
-		if (!ft_strncmp(&meta->cmd->pot[1][i], "../", 3))
+		if (!ft_strncmp(&node->pot[1][i], "../", 3))
 		{
 			k = 0;
 			ft_find_path(meta->abs_path, &k);
