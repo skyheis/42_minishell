@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 12:06:08 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:48:27 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,15 @@ int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write)
 	if (pp[1] != -1)
 		close(pp[1]);
 	return (ft_exec_pipe(meta, node, pp[0], fd_write));
+}
+
+int	ft_pipe_or_not(t_mish *meta, t_cmd *node)
+{
+	if (node->next)
+		return (mini_pipe(meta, node, 1)); 
+	else
+	{
+		//posto per redirect
+		return (ft_handle_commands(meta, node));
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 10:38:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:49:26 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ void	ft_printnodes(t_cmd *cmd, t_mish *meta);
 int		ft_free_shell(t_mish *meta);
 
 
-
 /* cmd_list */
 void	ft_cmdlst_iterstr(t_cmd *cmd,
 		char *(*parse)(char *, t_mish *), t_mish *meta);
@@ -133,5 +132,7 @@ int		ft_execbin(t_mish *meta, t_cmd *node);
 
 /* mini_pipe */
 int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
+int		ft_pipe_or_not(t_mish *meta, t_cmd *node);
+
 
 #endif

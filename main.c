@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 17:43:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:48:54 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_reset_line(t_mish *meta)
 
 int	ft_free_shell(t_mish *meta)
 {
-	ft_cmdlst_clear(&(meta->cmd_head));
+	ft_cmdlst_clear(&(meta->cmd));
 	ft_reset_line(meta);
 	ft_free((void **) &(meta->context));
 	if (meta->fd_history > 0)
@@ -128,7 +128,8 @@ int	main(int ac, char **av, char **envp)
 		ft_handle_line(&meta);
 		//if (ft_handle_commands(&meta, meta.cmd))
 		//	break ;
-		if (mini_pipe(&meta, meta.cmd, 1) == -1)
+		//if (mini_pipe(&meta, meta.cmd, 1) == -1)
+		if (ft_pipe_or_not(&meta, meta.cmd) == -1)
 			break ;
 		//ft_cmdlst_clear(&(meta.cmd_head));
 		ft_cmdlst_clear(&(meta.cmd));

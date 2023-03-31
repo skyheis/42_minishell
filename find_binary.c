@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:24:53 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 18:04:17 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:56:05 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	ft_execbin(t_mish *meta, t_cmd *node)
 	pid = fork();
 	if (!pid)
 	{
+		//signal(SIGQUIT, SIG_DFL); // ctrl-/ exit.
+		//signal(SIGINT, SIG_DFL); // ctrl-C exit.
 		execve(node->pot[0], node->pot, meta->env); //exit code
 		if (WEXITSTATUS(EXIT_FAILURE) != 1)
 		{

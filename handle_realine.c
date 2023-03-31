@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 17:30:09 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 15:26:52 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/31 14:24:01 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ void	ft_handle_line(t_mish *meta)
 		}
 	}
 	ft_cmdlst_iterstr(meta->cmd, ft_parse_word, meta);
-	meta->cmd_head = meta->cmd;
 	//ft_printnodes(meta->cmd, meta);
 }
