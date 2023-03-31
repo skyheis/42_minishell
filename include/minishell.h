@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <unistd.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <errno.h>
@@ -56,6 +57,7 @@ typedef struct	s_mish
 	int		fd_history;
 	char	*path_history;
 	int		exit_code;
+	int		pwd;
 	int		f;
 	char	**env;
 	int		flag; //handle_realine/split + 
@@ -94,16 +96,20 @@ char	*ft_parse_word(char *line, t_mish *meta);
 
 /* handle_realine */
 void	ft_handle_line(t_mish *meta);
+int		ft_find_path(char *str, int *k);
+void	sign_handler(int sig);
+
 
 /* ft_splitermux */
 char	**ft_splitermux(char *s, t_mish *meta);
 
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta, t_cmd *node);
+int		ft_pre_slash(t_mish *meta);
+void	ft_cd_pre(t_mish *meta);
 void	ft_slash(t_mish *meta, int k, char *pot);
 void	ft_unset(t_mish *meta, t_cmd *node);
 int		ft_cd_slash(t_mish *meta);
-void	ft_find_path(char *str, int *k);
 void	ft_abs_path(t_mish *meta);
 void	ft_pwd(t_mish *meta);
 int		ft_cd(t_mish *meta);

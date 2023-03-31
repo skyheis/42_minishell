@@ -43,6 +43,7 @@ void	ft_pwd(t_mish *meta)
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
+			meta->pwd = i;
 			printf("%s\n", &meta->env[i][4]);
 			return ;
 		}

@@ -115,6 +115,7 @@ char	**ft_replace_add_env(char **mat, char *str)
 		i++;
 	}
 	ft_free((void **) &(key));
+	ft_free((void **)str);
 	return (ft_matrixadd(mat, str));
 }
 

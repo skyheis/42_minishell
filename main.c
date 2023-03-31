@@ -116,8 +116,11 @@ int	main(int ac, char **av, char **envp)
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);
 	ft_set_history(&meta);
+	signal(SIGQUIT, sign_handler); // ctrl-/ exit.
+	signal(SIGINT, sign_handler); // ctrl-C exit.
 	while (1)
 	{
+		//meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
 		meta.line = readline(meta.context);
 		if (!meta.line)
 			break ;
