@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 11:58:10 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/31 10:38:59 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,13 @@ typedef struct	s_mish
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
 	t_exenv	*ext_env;
+	int		c_stdin;
+	int		c_stdout;
 }				t_mish;
 
 
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
+int		ft_free_shell(t_mish *meta);
 
 
 
@@ -96,9 +99,9 @@ void	ft_handle_line(t_mish *meta);
 char	**ft_splitermux(char *s, t_mish *meta);
 
 /* handle commands*/
-int		ft_handle_commands(t_mish *meta);
+int		ft_handle_commands(t_mish *meta, t_cmd *node);
 void	ft_slash(t_mish *meta, int k, char *pot);
-void	ft_unset(t_mish *meta);
+void	ft_unset(t_mish *meta, t_cmd *node);
 int		ft_cd_slash(t_mish *meta);
 void	ft_find_path(char *str, int *k);
 void	ft_abs_path(t_mish *meta);
@@ -106,7 +109,7 @@ void	ft_pwd(t_mish *meta);
 int		ft_cd(t_mish *meta);
 
 /* handle_setenv */
-void	ft_handle_setenv(t_mish *meta);
+void	ft_handle_setenv(t_mish *meta, t_cmd *node);
 int		ft_isasetenv(char *str);
 
 /* env_list */
@@ -118,8 +121,11 @@ void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
 
 /* find_binary */
 char	*ft_getenv(char *to_get, char **env);
-char	*ft_getpath(char *full_path, t_mish *meta);
-void	ft_getcmd(t_mish *meta);
-void	ft_execbin(t_mish *meta);
+char	*ft_getpath(char *full_path, t_mish *meta, t_cmd *node);
+void	ft_getcmd(t_mish *meta, t_cmd *node);
+int		ft_execbin(t_mish *meta, t_cmd *node);
+
+/* mini_pipe */
+int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
 
 #endif

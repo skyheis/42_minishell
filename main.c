@@ -6,25 +6,14 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 09:59:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/30 17:43:28 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // check dei free che ho gia fatto casino
-
-int	ft_free_shell(t_mish *meta)
-{
-	ft_free((void **) &(meta->context));
-	if (meta->fd_history > 0)
-		close(meta->fd_history);
-	rl_clear_history();
-	ft_free_matrix(&(meta->env));
-	ft_envlst_clear(&(meta->ext_env));
-	ft_free((void **) &(meta->path_history));
-	return (1);
-}
+// The WIFEXITED and WEXITSTATUS macros are used to check whether the child process terminated normally and to retrieve its exit status, respectively.
 
 int	ft_welcome_badge(t_mish *meta)
 {
@@ -90,6 +79,20 @@ void	ft_reset_line(t_mish *meta)
 	ft_free((void **) &(meta->line));
 }
 
+int	ft_free_shell(t_mish *meta)
+{
+	ft_cmdlst_clear(&(meta->cmd_head));
+	ft_reset_line(meta);
+	ft_free((void **) &(meta->context));
+	if (meta->fd_history > 0)
+		close(meta->fd_history);
+	rl_clear_history();
+	ft_free_matrix(&(meta->env));
+	ft_envlst_clear(&(meta->ext_env));
+	ft_free((void **) &(meta->path_history));
+	return (1);
+}
+
 	// tutta questa parte va fatta dopo, con molti piu check.
 	// farei gia' tutto in matrice, quindi line viene sistemata contando
 	// '' "" e $, poi splitti tutto con ft_split tipo
@@ -105,8 +108,11 @@ int	main(int ac, char **av, char **envp)
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;
+	meta.exit_code = 0;
 	meta.abs_path = getenv("HOME");
 	meta.ext_env = NULL;
+	meta.c_stdin = dup(0);
+	meta.c_stdout = dup(1);
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);
 	ft_set_history(&meta);
@@ -117,13 +123,14 @@ int	main(int ac, char **av, char **envp)
 			break ;
 		ft_fill_history(&meta);
 		ft_handle_line(&meta);
-		if (ft_handle_commands(&meta))
+		//if (ft_handle_commands(&meta, meta.cmd))
+		//	break ;
+		if (mini_pipe(&meta, meta.cmd, 1) == -1)
 			break ;
-		ft_cmdlst_clear(&(meta.cmd_head));
+		//ft_cmdlst_clear(&(meta.cmd_head));
+		ft_cmdlst_clear(&(meta.cmd));
 		ft_reset_line(&meta);
 	}
-	ft_cmdlst_clear(&(meta.cmd_head));
-	ft_reset_line(&meta);
 	//getname
 	//print intro
 	ft_free_shell(&meta);
