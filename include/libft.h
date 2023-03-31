@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 23:27:15 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 14:42:49 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/25 14:12:28 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ int		ft_count_in_str(char *str, char c);
 char	*ft_strjoin_free(char *s1, char *s2);
 void	*ft_free(void **malloc);
 int		ft_isenv(char c);
-
+;
 #endif

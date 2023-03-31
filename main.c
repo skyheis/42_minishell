@@ -6,14 +6,25 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 17:43:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:20:35 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // check dei free che ho gia fatto casino
-// The WIFEXITED and WEXITSTATUS macros are used to check whether the child process terminated normally and to retrieve its exit status, respectively.
+
+int	ft_free_shell(t_mish *meta)
+{
+	ft_free((void **) &(meta->context));
+	if (meta->fd_history > 0)
+		close(meta->fd_history);
+	rl_clear_history();
+	ft_free_matrix(&(meta->env));
+	ft_envlst_clear(&(meta->ext_env));
+	ft_free((void **) &(meta->path_history));
+	return (1);
+}
 
 int	ft_welcome_badge(t_mish *meta)
 {
@@ -66,12 +77,9 @@ void	ft_set_history(t_mish *meta)
 
 void	ft_fill_history(t_mish *meta)
 {
-	if (meta->line && meta->line[0])
-	{
-		add_history(meta->line);
-		ft_putstr_fd(meta->line, meta->fd_history);
-		ft_putstr_fd("\n", meta->fd_history);
-	}
+	add_history(meta->line);
+	ft_putstr_fd(meta->line, meta->fd_history);
+	ft_putstr_fd("\n", meta->fd_history);
 }
 
 void	ft_reset_line(t_mish *meta)
@@ -79,23 +87,10 @@ void	ft_reset_line(t_mish *meta)
 	ft_free((void **) &(meta->line));
 }
 
-int	ft_free_shell(t_mish *meta)
-{
-	ft_cmdlst_clear(&(meta->cmd_head));
-	ft_reset_line(meta);
-	ft_free((void **) &(meta->context));
-	if (meta->fd_history > 0)
-		close(meta->fd_history);
-	rl_clear_history();
-	ft_free_matrix(&(meta->env));
-	ft_envlst_clear(&(meta->ext_env));
-	ft_free((void **) &(meta->path_history));
-	return (1);
-}
-
 	// tutta questa parte va fatta dopo, con molti piu check.
 	// farei gia' tutto in matrice, quindi line viene sistemata contando
 	// '' "" e $, poi splitti tutto con ft_split tipo
+
 int	main(int ac, char **av, char **envp)
 {
 	t_mish	meta;
@@ -103,34 +98,32 @@ int	main(int ac, char **av, char **envp)
 	(void)	av;
 	(void)	envp;
 
-	meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
 	meta.env = ft_set_newenv(envp);
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;
-	meta.exit_code = 0;
 	meta.abs_path = getenv("HOME");
 	meta.ext_env = NULL;
-	meta.c_stdin = dup(0);
-	meta.c_stdout = dup(1);
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
-	ft_welcome_badge(&meta);
 	ft_set_history(&meta);
+	ft_welcome_badge(&meta);
+	signal(SIGQUIT, sign_handler); // ctrl-/ exit.
+	signal(SIGINT, sign_handler); // ctrl-C exit.
 	while (1)
 	{
+		meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
 		meta.line = readline(meta.context);
 		if (!meta.line)
 			break ;
 		ft_fill_history(&meta);
 		ft_handle_line(&meta);
-		//if (ft_handle_commands(&meta, meta.cmd))
-		//	break ;
-		if (mini_pipe(&meta, meta.cmd, 1) == -1)
+		if (ft_handle_commands(&meta))
 			break ;
-		//ft_cmdlst_clear(&(meta.cmd_head));
-		ft_cmdlst_clear(&(meta.cmd));
+		ft_cmdlst_clear(&(meta.cmd_head));
 		ft_reset_line(&meta);
 	}
+	ft_cmdlst_clear(&(meta.cmd_head));
+	ft_reset_line(&meta);
 	//getname
 	//print intro
 	ft_free_shell(&meta);

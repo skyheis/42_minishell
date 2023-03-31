@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/03/30 17:24:25 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/03/29 17:07:09 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,9 @@ DIRSRCS =
 DIROBJS = obj/
 
 FLSRCS = main.c splitermux.c cmd_list.c custom_env.c parse_line.c handle_realine.c \
-		 env_list.c find_binary.c \
+		 env_list.c \
 		 handle_commands.c handle_commands_cd2.c handle_commands_utils.c \
-		 handle_commands_cd.c handle_commands_unset.c handle_setenv.c \
-		 mini_pipe.c
+		 handle_commands_cd.c handle_commands_unset.c handle_setenv.c
 
 # pipex_utils.c handle_fd_utils.c use_heredoc.c
 

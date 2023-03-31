@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 10:38:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:06:53 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include <unistd.h>
+# include <signal.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <errno.h>
@@ -56,21 +57,17 @@ typedef struct	s_mish
 	int		fd_history;
 	char	*path_history;
 	int		exit_code;
+	int		pwd;
 	int		f;
 	char	**env;
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
 	t_exenv	*ext_env;
-	int		c_stdin;
-	int		c_stdout;
 }				t_mish;
 
 
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
-int		ft_free_shell(t_mish *meta);
-
-
 
 /* cmd_list */
 void	ft_cmdlst_iterstr(t_cmd *cmd,
@@ -94,38 +91,32 @@ char	*ft_parse_word(char *line, t_mish *meta);
 
 /* handle_realine */
 void	ft_handle_line(t_mish *meta);
+void	sign_handler(int sig);
 
 /* ft_splitermux */
 char	**ft_splitermux(char *s, t_mish *meta);
 
 /* handle commands*/
-int		ft_handle_commands(t_mish *meta, t_cmd *node);
+int		ft_handle_commands(t_mish *meta);
+int		ft_pre_slash(t_mish *meta);
+void	ft_cd_pre(t_mish *meta);
 void	ft_slash(t_mish *meta, int k, char *pot);
-void	ft_unset(t_mish *meta, t_cmd *node);
+void	ft_unset(t_mish *meta);
 int		ft_cd_slash(t_mish *meta);
-void	ft_find_path(char *str, int *k);
+int		ft_find_path(char *str, int *k);
 void	ft_abs_path(t_mish *meta);
 void	ft_pwd(t_mish *meta);
 int		ft_cd(t_mish *meta);
 
 /* handle_setenv */
-void	ft_handle_setenv(t_mish *meta, t_cmd *node);
+void	ft_handle_setenv(t_mish *meta);
 int		ft_isasetenv(char *str);
 
-/* env_list */
+	/* env_list */
 char	*ft_envlst_retvalue(t_exenv *exenv, char *key);
 void	ft_envlst_clear(t_exenv **exenv);
 void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new);
 t_exenv	*ft_envlst_new(char *str);
 void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
-
-/* find_binary */
-char	*ft_getenv(char *to_get, char **env);
-char	*ft_getpath(char *full_path, t_mish *meta, t_cmd *node);
-void	ft_getcmd(t_mish *meta, t_cmd *node);
-int		ft_execbin(t_mish *meta, t_cmd *node);
-
-/* mini_pipe */
-int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
 
 #endif

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi manda alla home, gestire? chdir non lo legge comunque
+void	ft_cd_next(t_mish *meta) // cd /home/ problema doppi /
 {
 	int		i;
 	int		j;
@@ -10,6 +10,7 @@ void	ft_cd_next(t_mish *meta) // anche se faccio cd home senza fare cd /home mi 
 	i = -1;
 	j = 0;
 	k = 0;
+	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
 	while (meta->env[++i])
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
@@ -40,15 +41,15 @@ void	ft_cd_pre(t_mish *meta)
 
 	i = 0;
 	j = 0;
+	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
 	while (meta->env[i])
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			if (!meta->env[i][5] || ((!ft_strncmp(&meta->env[i][4], "/home", 5)
-				&& !meta->env[i][9])))
+			k = 0;
+			if (ft_find_path(meta->env[i], &k) == -42)
 			{
-				if (!ft_strncmp(&meta->env[i][4], "/home", 5) && !meta->env[i][9])
-					ft_slash(meta, i, "/");
+				ft_slash(meta, i, "/");
 				return ;
 			}
 			ft_find_path(meta->env[i], &k);
@@ -75,8 +76,13 @@ int	ft_cd2(t_mish *meta)
 	{
 		while (meta->cmd->pot[1][i])
 		{
-			if (meta->cmd->pot[1][i++] != '/')
+			if (meta->cmd->pot[1][i] && meta->cmd->pot[1][i] != '/'
+				&& (!ft_strncmp(&meta->cmd->pot[1][i], "../", 3) ||
+					meta->cmd->pot[1][i] == '.'))
+				return (ft_pre_slash(meta));
+			else if (meta->cmd->pot[1][i] && meta->cmd->pot[1][i] != '/')
 				return (1);
+			i++;
 		}
 		i = 0;
 		ft_find_path(meta->abs_path, &i);
@@ -123,14 +129,14 @@ int	ft_cd(t_mish *meta)
 		ft_abs_path(meta);
 		return (0);
 	}
-	else if (chdir(meta->cmd->pot[1]) != 0) // no path available
+	else if (meta->cmd->pot[1][0] != '-' && chdir(meta->cmd->pot[1]) != 0) // no path available
 	{
-		perror("Errory");
+		perror("Error");
 		return (1);
 	}
 	else
 	{
-		if (meta->cmd->pot[1][0] == '/')
+		if (meta->cmd->pot[1][0] == '/' || meta->cmd->pot[1][0] == '-')
 		{
 			if (ft_cd_slash(meta)) // controllo se /home e' presente in meta->env[i] senno' vado a cd2 e l'aggiungo
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 09:52:35 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/30 09:42:47 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/03/21 10:30:21 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ int main(void)
 	char *line;
 	int i = 0;
 	
-	while (1)
+	while (0)
 	{
 		line = readline("culo: ");
-		printf("tette is: %s\nchar is: %i", line, line[0]);
+		printf("tette is: %s\n", line);
 		add_history(line);
 		if (i == 5)
 			rl_clear_history();
 		free(line);
 		i++;
 	} 
-	//unlink("me");
+	unlink("me");
 	//line = getcwd();
 	//printf("pwd is: %s\n", line);
 }
