@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 17:09:47 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/01 17:51:04 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,16 +93,6 @@ int	ft_free_shell(t_mish *meta)
 	return (1);
 }
 
-void	ft_tupadre(t_mish *meta, int ecode)
-{
-	static t_mish	*versometa;
-
-	if (meta)
-		versometa = meta;
-	else
-		versometa->exit_code = ecode;
-}
-
 	// tutta questa parte va fatta dopo, con molti piu check.
 	// farei gia' tutto in matrice, quindi line viene sistemata contando
 	// '' "" e $, poi splitti tutto con ft_split tipo
@@ -123,15 +113,14 @@ int	main(int ac, char **av, char **envp)
 	meta.ext_env = NULL;
 	meta.c_stdin = dup(0);
 	meta.c_stdout = dup(1);
-	ft_tupadre(&meta , 0);
+	ft_sign_ecode(&meta , 0);
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);
 	ft_set_history(&meta);
-	signal(SIGQUIT, sign_handler); // ctrl-/ exit.
-	signal(SIGINT, sign_handler); // ctrl-C exit.
 	while (1)
 	{
-		//meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
+		signal(SIGQUIT, ft_sign_handler_rl); // ctrl-/
+		signal(SIGINT, ft_sign_handler_rl); // ctrl-C
 		meta.line = readline(meta.context);
 		if (!meta.line)
 			break ;
@@ -140,15 +129,14 @@ int	main(int ac, char **av, char **envp)
 		//if (ft_handle_commands(&meta, meta.cmd))
 		//	break ;
 		//if (mini_pipe(&meta, meta.cmd, 1) == -1)
-		if (ft_pipe_or_not(&meta, meta.cmd) == -1)
+		meta.exit_code = ft_pipe_or_not(&meta, meta.cmd);
+		if (meta.exit_code == -1)
 			break ;
 		//ft_cmdlst_clear(&(meta.cmd_head));
 		//printf("\necode %i\n", meta.exit_code);
 		ft_cmdlst_clear(&(meta.cmd));
 		ft_reset_line(&meta);
 	}
-	//getname
-	//print intro
 	ft_free_shell(&meta);
 }
 

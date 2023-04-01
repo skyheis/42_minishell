@@ -49,18 +49,3 @@ int	ft_find_path(char *str, int *k)
 		return (-42);
 	return (0);
 }
-
-void	ft_tupadre(t_mish *meta, int ecode);
-
-void	sign_handler(int sig)
-{
-	if (sig == SIGINT) // ctrl-C // deve dare nuova schermata
-	{
-		ft_tupadre(NULL, 130);
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		
-		rl_redisplay();
-	}
-}

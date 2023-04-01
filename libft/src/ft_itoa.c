@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:37:59 by ggiannit          #+#    #+#             */
-/*   Updated: 2022/10/09 12:29:40 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:43:02 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*ft_itoa(int n)
 	size_t	len_s;
 	char	*str_nbr;
 
-	str_nbr = (char *) malloc(((len_s = ft_n_digits(n)) + 1) * sizeof(char));
+	len_s = ft_n_digits(n);
+	str_nbr = (char *) ft_calloc(len_s + 1, sizeof(char));
 	if (str_nbr == NULL)
 		return (NULL);
 	str_nbr[len_s--] = '\0';

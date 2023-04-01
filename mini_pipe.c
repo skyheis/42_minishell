@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 14:48:27 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:34:35 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_exec_pipe(t_mish *meta, t_cmd *node, int fd_in, int fd_out)
 	return (pexit);
 }
 
-int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write)
+int	ft_mini_pipe(t_mish *meta, t_cmd *node, int fd_write)
 {
 	int		pp[2];
 
@@ -83,7 +83,7 @@ int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write)
 	else
 	{
 		pipe(pp);
-		mini_pipe(meta, node->next, pp[1]);
+		ft_mini_pipe(meta, node->next, pp[1]);
 	}
 	if (pp[1] != -1)
 		close(pp[1]);
@@ -92,8 +92,9 @@ int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write)
 
 int	ft_pipe_or_not(t_mish *meta, t_cmd *node)
 {
+	signal(SIGINT, ft_sign_handler_exec); // ctrl-C
 	if (node->next)
-		return (mini_pipe(meta, node, 1)); 
+		return (ft_mini_pipe(meta, node, 1)); 
 	else
 	{
 		//posto per redirect

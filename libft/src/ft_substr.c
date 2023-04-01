@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 18:07:12 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/25 14:11:39 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/01 13:57:10 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ char	*ft_substr(char const *str, unsigned int start, size_t len)
 	sub_str = (char *) ft_calloc((len + 1), sizeof(char));
 	if (sub_str == NULL)
 		return (NULL);
-
 	while (str && str[start + k] && k < len)
 	{
 		sub_str[k] = str[start + k];

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 14:49:26 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/01 17:18:38 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,17 @@ char	*ft_linejoin(char *line, char *piece, int n);
 char	*ft_env_value(char	*line_key, char **env, t_mish *meta);
 char	*ft_parse_word(char *line, t_mish *meta);
 
-/* handle_realine */
+/* handle_readline */
 void	ft_handle_line(t_mish *meta);
 int		ft_find_path(char *str, int *k);
 void	sign_handler(int sig);
 
+/* buildin */
+void	ft_echo(t_mish *meta, t_cmd *node);
+void	ft_pwd(t_mish *meta);
+void	ft_history(t_mish *meta, t_cmd *node);
+void	ft_env(t_mish *meta, t_cmd *node);
+void	ft_unset(t_mish *meta, t_cmd *node);
 
 /* ft_splitermux */
 char	**ft_splitermux(char *s, t_mish *meta);
@@ -131,8 +137,12 @@ void	ft_getcmd(t_mish *meta, t_cmd *node);
 int		ft_execbin(t_mish *meta, t_cmd *node);
 
 /* mini_pipe */
-int	mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
+int		ft_mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
 int		ft_pipe_or_not(t_mish *meta, t_cmd *node);
 
+/* sign_handler */
+void	ft_sign_ecode(t_mish *meta, int ecode);
+void	ft_sign_handler_exec(int sig);
+void	ft_sign_handler_rl(int sig);
 
 #endif
