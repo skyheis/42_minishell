@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 16:59:48 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/02 17:33:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,16 @@ char	*ft_parse_word(char *line, t_mish *meta)
 			i++;
 			while (line[i + n] && line[i + n] != DQUT)
 			{
-				if (line[i + n] == '$' && ft_isenv(line[i + n + 1]))
+				if (line[i + n] == '$' && line[i + n + 1] == '?')
+				{
+					newline = ft_linejoin(newline, &line[i], n);
+					i += n + 2;
+					n = 0;
+					value = ft_utoa(meta->exit_code); 
+					newline = ft_linejoin(newline, value, ft_strlen(value));
+					ft_free((void **) &value);
+				}
+				else if (line[i + n] == '$' && ft_isenv(line[i + n + 1]))
 				{
 					newline = ft_linejoin(newline, &line[i], n);
 					i += n;
