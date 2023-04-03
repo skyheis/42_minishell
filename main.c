@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 17:51:04 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:28:19 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int	main(int ac, char **av, char **envp)
 	meta.ext_env = NULL;
 	meta.c_stdin = dup(0);
 	meta.c_stdout = dup(1);
+	meta.infile = -2;
+	meta.outfile = -2;
 	ft_sign_ecode(&meta , 0);
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 	ft_welcome_badge(&meta);

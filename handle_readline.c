@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_realine.c                                   :+:      :+:    :+:   */
+/*   handle_readline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 17:30:09 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 14:24:01 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:01:47 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_handle_line(t_mish *meta)
 		//	i++;
 		mat = ft_splitermux(&meta->line[i], meta);
 		ft_cmdlst_addfront(&meta->cmd, ft_cmdlst_new(mat));
+		meta->cmd->red = NULL;
 		while (meta->line[i] && meta->line[i] != '|')
 		{
 			if (meta->line[i] && meta->line[i] == SQUT)

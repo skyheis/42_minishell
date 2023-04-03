@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 17:18:38 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/03 16:03:01 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 typedef struct	s_cmd
 {
 	char			**pot; //matrix of line no pipe ([0] is command)
+	char			**red;
 	struct s_cmd	*next; //ogni nodo un pipe :D
 }				t_cmd;
 
@@ -66,6 +67,8 @@ typedef struct	s_mish
 	t_exenv	*ext_env;
 	int		c_stdin;
 	int		c_stdout;
+	int		infile;
+	int		outfile;
 }				t_mish;
 
 

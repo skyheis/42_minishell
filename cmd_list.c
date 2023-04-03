@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/24 12:02:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/03 15:17:26 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ t_cmd	*ft_cmdlst_new(char **pot)
 	if (!new)
 		return (NULL);
 	new->pot = pot;
+	new->red = 0;
 	new->next = NULL;
 	return (new);
 }
