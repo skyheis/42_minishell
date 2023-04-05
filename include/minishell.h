@@ -117,6 +117,7 @@ char	**ft_splitered(char *s, t_mish *meta);
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta, t_cmd *node);
 int		ft_pre_slash(t_mish *meta, t_cmd *node);
+void	ft_cd_slash2(t_mish *meta, t_cmd *node, int k);
 void	ft_cd_pre(t_mish *meta);
 void	ft_slash(t_mish *meta, int k, char *pot);
 void	ft_unset(t_mish *meta, t_cmd *node);

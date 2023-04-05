@@ -30,7 +30,7 @@ void	ft_slash(t_mish *meta, int k, char *pot)
 	free(cwd);
 }
 
-int	ft_cd_meno(t_mish *meta)
+int	ft_cd_meno(t_mish *meta) // mettere la funzione che si trova nel file di GIULio
 {
 	int		i;
 	char	*tmp;
@@ -40,13 +40,13 @@ int	ft_cd_meno(t_mish *meta)
 	{
 		if (!strncmp(meta->env[i], "OLDPWD=", 7))
 		{
-			tmp = (char *) ft_calloc (ft_strlen(meta->env[meta->pwd]) + 1, sizeof(char));
+			tmp = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char)); // nel file di giulio cambiare sta robba (meta->env[i])
 			tmp = ft_strjoin(tmp, meta->env[meta->pwd]);
 			ft_replace_add_env(meta->env, ft_strjoin("PWD=", &meta->env[i][7]));
 			printf("%s\n", &meta->env[meta->pwd][4]);
 			ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &tmp[4]));
 			free(tmp);
-			break;
+			break ;
 		}
 		i++;
 	}
@@ -58,22 +58,63 @@ int	ft_cd_slash(t_mish *meta, t_cmd *node)
 	int	i;
 
 	i = 0;
-	while (meta->env[i] && node->pot[1][0] != '-') // manca il /..////home/niccolo/Desktop DA FARE!!
+	while (meta->env[i] && node->pot[1][0] != '-')
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
-			if (node->pot[1][1] && (node->pot[1][1] == '.' ||
-				node->pot[1][1] == '/'))
-				ft_slash(meta, i, "/");
-			else
-				ft_slash(meta, i, &node->pot[1][0]);
+			ft_cd_slash2(meta, node, i);
 			return (1);
 		}
 		i++;
 	}
-	if (node->pot[1][0] == '-' && !node->pot[1][1])
+	if (node->pot[1][0] == '-' && (!node->pot[1][1] || node->pot[1][1] == 32))
 		return (ft_cd_meno(meta));
 	return (0);
+}
+
+void	ft_next_slash(t_mish *meta, char *str)
+{
+	int		i;
+	int		j;
+	int		k;
+	char	*cwd = NULL;
+
+	i = -1;
+	j = 0;
+	k = 0;
+	while (meta->env[++i])
+	{
+		if (!ft_strncmp(meta->env[i], "PWD", 3))
+		{
+			ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[i][4]));
+			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
+			cwd = ft_strjoin (cwd, meta->env[i]);
+			free(meta->env[i]);
+			meta->env[i] = (char *) ft_calloc (ft_strlen(cwd)
+				+ ft_strlen(str) + 1, sizeof(char));
+			if (cwd[5] != '\0')
+				meta->env[i][j++] = '/';
+			while(str[k] && str[k] != '/')
+				meta->env[i][j++] = str[k++];
+			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
+			break ;
+		}
+	}
+	ft_free((void **)&cwd);
+}
+
+int	len_slash(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			return (i);
+		i++;
+	}
+	return (i);
 }
 
 int	ft_pre_slash(t_mish *meta, t_cmd *node)
@@ -82,21 +123,80 @@ int	ft_pre_slash(t_mish *meta, t_cmd *node)
 	int k;
 
 	i = 0;
-	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
-	ft_find_path(meta->abs_path, &i);
-	chdir(&meta->abs_path[i]);
-	ft_cd_pre(meta);
-	i = 3;
+	if (!ft_strncmp(&node->pot[1][i], "..", 2)
+		|| !ft_strncmp(&node->pot[1][i], "../", 3))
+	{
+		ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
+		ft_find_path(meta->abs_path, &i);
+		chdir(&meta->abs_path[i]);
+		ft_cd_pre(meta);
+		i = 3;
+	}
 	while (node->pot[1][i])
 	{
-		if (!ft_strncmp(&node->pot[1][i], "../", 3))
+		if (!ft_strncmp(&node->pot[1][i], "..", 2) || (!ft_strncmp(&node->pot[1][i], "../", 3)))
+		{
+			k = 0;
+			//ft_find_path(meta->abs_path, &k);
+			ft_cd_pre(meta);
+			chdir(&meta->env[meta->pwd][4]);
+			i += 3;
+		}
+		else if ((ft_isalpha(node->pot[1][i]) || ft_isdigit(node->pot[1][i])) ||
+			(!ft_strncmp(&node->pot[1][i], "./", 2) && (ft_isalpha(node->pot[1][i + 2])
+				|| ft_isdigit(node->pot[1][i + 2]))))
+		{
+			k = 0;
+			if (!ft_strncmp(&node->pot[1][i], "./", 2))
+				i += 2;
+			//ft_find_path(meta->abs_path, &k);
+			chdir(&node->pot[1][i]);
+			ft_next_slash(meta, &node->pot[1][i]);
+			i += len_slash(&node->pot[1][i]);
+			i++;
+		}
+		else
+			i++;
+	}
+	return (1);
+}
+
+void	ft_cd_slash2(t_mish *meta, t_cmd *node, int k)
+{
+	int	i;
+
+	i = 1;
+	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[k][4]));
+	ft_slash(meta, i, "/");
+	while (node->pot[1][i] && !ft_isalpha(node->pot[1][i])
+		&& !ft_isdigit(node->pot[1][i]))
+		i++;
+	i--;
+	while (node->pot[1][i])
+	{
+		if (!ft_strncmp(&node->pot[1][i], "..", 2) || (!ft_strncmp(&node->pot[1][i], "../", 3)))
 		{
 			k = 0;
 			ft_find_path(meta->abs_path, &k);
 			chdir(&meta->abs_path[k]);
 			ft_cd_pre(meta);
+			i += 3;
 		}
-		i += 3;
+		else if ((ft_isalpha(node->pot[1][i]) || ft_isdigit(node->pot[1][i])) ||
+			(!ft_strncmp(&node->pot[1][i], "./", 2) && (ft_isalpha(node->pot[1][i + 2])
+				|| ft_isdigit(node->pot[1][i + 2]))))
+		{
+			k = 0;
+			if (!ft_strncmp(&node->pot[1][i], "./", 2))
+				i += 2;
+			ft_find_path(meta->abs_path, &k);
+			chdir(&meta->abs_path[k]);
+			ft_next_slash(meta, &node->pot[1][i]);
+			i += len_slash(&node->pot[1][i]);
+			i++;
+		}
+		else
+			i++;
 	}
-	return (1);
+	return ;
 }

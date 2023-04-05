@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	ft_cd_next(t_mish *meta, t_cmd *node) // cd /home/ problema doppi /
+/*void	ft_cd_next(t_mish *meta)
 {
 	int		i;
 	int		j;
@@ -31,7 +31,7 @@ void	ft_cd_next(t_mish *meta, t_cmd *node) // cd /home/ problema doppi /
 	}
 	ft_free((void **)&cwd);
 }
-
+*/
 void	ft_cd_pre(t_mish *meta)
 {
 	int		i;
@@ -72,13 +72,17 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 	int	i;
 
 	i = 2;
-	if (!ft_strncmp(node->pot[1], "..", 2)) // ../ option with ../////// check
+	if (!ft_strncmp(node->pot[1], "..", 2))
 	{
 		while (node->pot[1][i])
 		{
 			if (node->pot[1][i] && node->pot[1][i] != '/'
 				&& (!ft_strncmp(&node->pot[1][i], "../", 3) ||
 					node->pot[1][i] == '.'))
+				return (ft_pre_slash(meta, node));
+			else if ((ft_isalpha(node->pot[1][i + 3]) || ft_isdigit(node->pot[1][i + 3])) ||
+			(!ft_strncmp(&node->pot[1][i + 1], "./", 2) && (ft_isalpha(node->pot[1][i + 3])
+				|| ft_isdigit(node->pot[1][i + 3]))))
 				return (ft_pre_slash(meta, node));
 			else if (node->pot[1][i] && node->pot[1][i] != '/')
 				return (1);
@@ -92,18 +96,19 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 	else
 	{
 		chdir(node->pot[1]);
-		ft_cd_next(meta, node);
+		ft_pre_slash(meta, node); // ft_cd_next c'era prima
 		return (0);
 	}
 	return (0);
 }
 
-int	ft_check_error_cd(t_cmd *node)
+int	ft_check_error_cd(t_mish *meta, t_cmd *node)
 {
 	int	i;
 
+	(void) meta;
 	i = 1;
-	if (!ft_strncmp(node->pot[1], "./", 2)) // . option or ./ option with ./////// check
+	if (!ft_strncmp(node->pot[1], "./", 2))
 	{
 		while (node->pot[1][i])
 		{
@@ -141,9 +146,7 @@ int	ft_cd(t_mish *meta, t_cmd *node)
 			if (ft_cd_slash(meta, node)) // controllo se /home e' presente in meta->env[i] senno' vado a cd2 e l'aggiungo
 				return (1);
 		}
-		if (ft_check_error_cd(node))
-			return (1);
-		if (ft_cd2(meta, node))
+		else if (ft_cd2(meta, node)) // prima era if senza else
 			return (1);
 	}
 	return (0);
