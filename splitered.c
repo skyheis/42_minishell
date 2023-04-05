@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   splitermux.c                                       :+:      :+:    :+:   */
+/*   splitered.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 13:42:39 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:05:00 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* split che ritorna una matrice del comando, escludendo i redirect */
+/* split che ritorna una matrice con i soli redirect */
 
-int	ft_iscut(char c)
+static int	ft_iscut(char c)
 {
 	if (!c || c == 32 || c == '|' || c == '<' || c == '>')
 		return (1);
@@ -26,24 +26,60 @@ static int	ft_strlen_pez(char *s, int *f)
 	int	i;
 
 	i = 0;
-	while (s[*f] == 32)
-		*f += 1;
-	while ((s[*f] && s[*f] == '<') || (s[*f] && s[*f] == '>'))
+	while (s[*f] && s[*f] != '<' && s[*f] != '>')
 	{
-		if (s[*f] == '<' && s[*f + 1] == '<')
-				*f += 2;
-	else if (s[*f] == '>' && s[*f + 1] == '>')
-				*f += 2;
-		else
+		if (s[*f] == SQUT)
+		{
+			*f += 1;
+			while (s[*f] != SQUT)
+				*f += 1;
+		}
+		if (s[*f] == DQUT)
+		{
+			*f += 1;
+			while (s[*f] != DQUT)
+				*f += 1;
+		}
+		*f += 1;
+	}
+	if ((s[*f] && s[*f] == '<') || (s[*f] && s[*f] == '>'))
+	{
+		if ((s[*f] == '<' && s[*f + 1] == '<') && (s[*f] == '>' && s[*f + 1] == '>'))
+		{
+			i++;
+			*f += 1;
+		}
+		i++;
 		*f += 1;
 		while (s[*f] == 32)
 			*f += 1;
 		while (!ft_iscut(s[*f]))
+		{
+			if (s[*f] == SQUT)
+			{
+				i++;
+				*f += 1;
+				while (s[*f] != SQUT)
+				{
+					i++;
+					*f += 1;
+				}
+			}
+			if (s[*f] == DQUT)
+			{
+				i++;
+				*f += 1;
+				while (s[*f] != DQUT)
+				{
+					i++;
+					*f += 1;
+				}
+			}
+			i++;
 			*f += 1;
-		while (s[*f] == 32)
-			*f += 1;
+		}
 	}
-	while (s[*f])
+/*	while (s[*f])
 	{
 		if (s[*f] == SQUT)
 		{
@@ -70,7 +106,7 @@ static int	ft_strlen_pez(char *s, int *f)
 			break ;
 		i++;
 		*f += 1;
-	}
+	}*/
 	return (i);
 }
 
@@ -85,24 +121,9 @@ static int	ft_count_word(char *str)
 		return (1);
 	while (str && str[i])
 	{
-		while (str[i] && str[i] == 32)
-			i++;
-		while ((str[i] && str[i] == '>') || (str[i] && str[i] == '<'))
+		while (str[i] && str[i] != '<' && str[i] != '>')
 		{
-			if (str[i] == '>' && str[i + 1] == '>')
-					i += 2;
-			else if (str[i] == '<' && str[i + 1] == '<')
-					i += 2;
-			else
-				i++;
-			while (str[i] == 32)
-				i++;
-			while (!ft_iscut(str[i]))
-				i++;
-		}
-		while (str[i] && str[i] != 32)
-		{
- 			if (str[i] && str[i] == SQUT)
+			if (str[i] && str[i] == SQUT)
 			{
 				i++;
 				while (str[i] && str[i] != SQUT)
@@ -118,12 +139,18 @@ static int	ft_count_word(char *str)
 				return (word) ;
 			i++;
 		}
+		if (str[i] == '<' || str[i] == '>')
+		{
+			i++;
+			if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' && str[i + 1] == '>'))
+				i++;
+		}
 		word++;
 	}
 	return (word);
 }
 
-char	**ft_splitermux(char *s, t_mish *meta)
+char	**ft_splitered(char *s, t_mish *meta)
 {
 	size_t	i;
 	int		j;
@@ -133,8 +160,6 @@ char	**ft_splitermux(char *s, t_mish *meta)
 
 	k = 0;
 	i = 0;
-	while (s[i] == 32)
-		i++;
 	f = i;
 	//printf("word: %i\n", ft_count_word(s));
 	new = (char **) ft_calloc (ft_count_word(s) + 1, sizeof(char *));
@@ -147,8 +172,25 @@ char	**ft_splitermux(char *s, t_mish *meta)
 		new[k] = ft_calloc ((ft_strlen_pez(s, &f) + 1), sizeof(char));
 		while (s[i] == 32 && s[i])
 			i++;
-		while ((s[i] && s[i] == '>') || (s[i] && s[i] == '<'))
+
+		//while ((s[i] && s[i] == '>') || (s[i] && s[i] == '<'))
+		while (s[i] && s[i] != '<' && s[i] != '>' && s[i] != '|')
 		{
+			if (s[i] && s[i] == SQUT)
+			{
+				i++;
+				while (s[i] && s[i] != SQUT)
+					i++;
+			}
+			if (s[i] && s[i] == DQUT)
+			{
+				i++;
+				while (s[i] && s[i] != DQUT)
+					i++;
+			}
+			i++;
+		}
+/*		if 
 			if (s[i] == '>' && s[i + 1] == '>')
 					i += 2;
 			else if (s[i] == '<' && s[i + 1] == '<')
@@ -161,32 +203,34 @@ char	**ft_splitermux(char *s, t_mish *meta)
 				i++;
 			while (s[i] == 32)
 				i++;
-		}
-		while (s[i] && s[i] != 32 && s[i] != '|')
+		}*/
+		if (s[i] == '<' && s[i] == '>')
 		{
-			while (!ft_iscut(s[i]) && s[i] != SQUT && s[i] != DQUT) 
+			new[k][j++] = s[i++];
+			if ((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>'))
 				new[k][j++] = s[i++];
-
-			if (s[i] && s[i] == SQUT)
+			while (!ft_iscut(s[i]))
 			{
-				new[k][j++] = SQUT;
-				i++;
-				while (s[i] && s[i] != SQUT)
-					new[k][j++] = s[i++];
-				if (s[i])
+				if (s[i] && s[i] == SQUT)
+				{
 					new[k][j++] = SQUT;
-			}
-			if (s[i] && s[i] == DQUT)
-			{
-				new[k][j++] = DQUT;
-				i++;
-				while (s[i] && s[i] != DQUT)
-					new[k][j++] = s[i++];
-				if (s[i])
+					i++;
+					while (s[i] && s[i] != SQUT)
+						new[k][j++] = s[i++];
+					if (s[i])
+						new[k][j++] = SQUT;
+				}
+				if (s[i] && s[i] == DQUT)
+				{
 					new[k][j++] = DQUT;
+					i++;
+					while (s[i] && s[i] != DQUT)
+						new[k][j++] = s[i++];
+					if (s[i])
+						new[k][j++] = DQUT;
+				}
+				new[k][j++] = s[i++];
 			}
-			if (ft_iscut(s[i]))
-				break ;
 		}
 		k++;
 		if (!s[i] || s[i] == '|')

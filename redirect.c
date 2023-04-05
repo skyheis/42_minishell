@@ -6,11 +6,44 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:29:27 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/03 17:14:43 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:29:17 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/* 1 append, 2 create */
+int	ft_out_file(t_mish *meta, char *filename, int type)
+{
+	if (!filename[0])
+		return (0);
+	if (meta->outfile != -2)
+		close(meta->outfile);
+	if (type == 1)
+		meta->outfile = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else if (type == 2)
+		meta->outfile = open(filename, O_WRONLY | O_TRUNC | O_CREAT, 0644);
+}
+
+int	ft_in_file(t_mish *meta, char *filename)
+{
+	if (!filename[0])
+	{
+		printf("hiroshell: syntax error near unexpected token `newline'");
+		meta->exit_code = 2;
+		return (0);
+	}
+	if (meta->infile != -2)
+		close(meta->infile);
+	meta->infile = open(filename, O_RDONLY);
+	if (meta->infile)
+	{
+		perror(filename);
+		meta->exit_code = 1;
+		return (0);
+	}
+	return (1);
+}
 
 int	ft_in_heredoc(t_mish *meta, char *delimiter)
 {
@@ -20,8 +53,8 @@ int	ft_in_heredoc(t_mish *meta, char *delimiter)
 	//unlink("~/.heredoc");
 	if (!delimiter[0])
 		return (0);
-	if (delimiter[0] == 32)
-		delimiter[0] == '\0';
+	if (delimiter[0] == 32)//non ricordo boh lol
+		delimiter[0] == '\0'; //how knows
 	if (meta->infile != -2)
 		close(meta->infile);
 	meta->infile = open("~/.heredoc", O_WRONLY | O_CREAT, 0644);
@@ -42,7 +75,7 @@ int	ft_in_heredoc(t_mish *meta, char *delimiter)
 	ft_free_null(&nline);
 	ft_free_null(&delimiter);
 	meta->infile = open("~/.heredoc", O_RDONLY); 
-	return (1);
+	return (1); //ricordati di cancellare .heredoc
 }
 
 int	ft_red_error(t_mish *meta)
@@ -63,14 +96,16 @@ int	ft_do_red(t_mish *meta, t_cmd *node)
 		len = ft_strlen(node->red[i]);
 		if (node->red[i][0] == '<' && node->red[i][1] == '<')
 			if (!ft_in_heredoc(meta, &node->red[i][2]))
-				return (ft_do_red(meta));
-
+				return (ft_red_error(meta));
 		else if (node->red[i][0] == '<')
-			//infile
+			if (!ft_in_file(meta, &node->red[i][1]))
+				return (1);
 		else if (node->red[i][0] == '>' && node->red[i][1] == '>')
-			//append
+			if (!ft_out_file(meta, &node->red[i][2], 1))
+				return (ft_red_error(meta));
 		else if (node->red[i][1] == '>')
-			//create
+			if (!ft_out_file(meta, &node->red[i][1], 2))
+				return (ft_red_error(meta));
 	}
 	return (0);
 }

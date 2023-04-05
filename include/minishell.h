@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/03 16:03:01 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:04:17 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct	s_mish
 
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
 int		ft_free_shell(t_mish *meta);
+void	ft_print_file(t_mish *meta, char *filename);
 
 
 /* cmd_list */
@@ -110,6 +111,8 @@ void	ft_unset(t_mish *meta, t_cmd *node);
 
 /* ft_splitermux */
 char	**ft_splitermux(char *s, t_mish *meta);
+/* ft_splitered */
+char	**ft_splitered(char *s, t_mish *meta);
 
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta, t_cmd *node);

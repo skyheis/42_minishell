@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/01 17:19:12 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/05 15:04:32 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ INCLUDE = include
 DIRSRCS =
 DIROBJS = obj/
 
-FLSRCS = main.c splitermux.c cmd_list.c custom_env.c parse_line.c handle_readline.c \
+FLSRCS = main.c cmd_list.c custom_env.c parse_line.c handle_readline.c \
+		 splitered.c splitermux.c \
 		 env_list.c find_binary.c buildin.c \
 		 handle_commands.c handle_commands_utils.c \
 		 buildin_cd.c buildin_cd2.c handle_setenv.c \
@@ -79,7 +80,7 @@ ${NAME}: ${OBJS}
 	@echo "$(YELLOW)- Compiler: $(WHITE)${CC}$(DEF_COLOR)"
 	@echo "$(YELLOW)- Flags: $(WHITE)${CFLAGS} ${MINIFLAGS}$(DEF_COLOR)"
 	@${CC} ${CFLAGS} -L $(ARUSDDIR) -I $(INCLUDE) -o $(NAME) $(OBJS) $(ARINC) $(MINIFLAGS)
-	
+
 clean:
 	@make -sC libft clean
 	@${RM} ${OBJS} 

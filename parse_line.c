@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/03 16:02:50 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/04 14:41:10 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ char	*ft_parse_word(char *line, t_mish *meta)
 		else
 			i++;
 		//endfun
-
 	}
 	ft_free((void **) &line); //occhio per test
 	return (newline);

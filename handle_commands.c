@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 17:12:26 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:21:43 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,21 @@ void	ft_clean_window(char **envp, t_mish *meta)
 	}
 	wait(NULL);
 	ft_free_null(clean_path);
+	ft_print_file(meta, "badge.bdg");
+	ft_printf("\n");
+}
+
+void	ft_chad(t_mish *meta)
+{
+	static int	i = 0;
+
+	if (i > 1)
+		i = 0;
+	if (i == 0)
+		ft_print_file(meta, "chad.bdg");
+	else if (i == 1)
+		ft_print_file(meta, "test.bdg");
+	i++;
 }
 
 int	ft_handle_commands(t_mish *meta, t_cmd *node)
@@ -51,6 +66,8 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 		ft_cd(meta, node);
 	else if (!ft_strncmp(node->pot[0], "clear", 6))
 		ft_clean_window(meta->env, meta);
+	else if (!ft_strncmp(node->pot[0], "chad", 5))
+		ft_chad(meta);
 	else if (ft_isasetenv(node->pot[0]))
 		ft_handle_setenv(meta, node);
 	else if (node->pot[0])

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:10:48 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 17:48:53 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/04 12:22:17 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_pwd(t_mish *meta)
 
 void	ft_history(t_mish *meta, t_cmd *node)
 {
-	int	i;
+	int		i;
 	char	*hline;
 
 	i = 1;
@@ -64,7 +64,7 @@ void	ft_history(t_mish *meta, t_cmd *node)
 		rl_clear_history();
 	}
 	meta->fd_history = open(meta->path_history,
-		O_RDWR | O_CREAT | O_APPEND, 0644);
+			O_RDWR | O_CREAT | O_APPEND, 0644);
 	hline = get_next_line(meta->fd_history);
 	while (hline)
 	{

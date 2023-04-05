@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/03 14:28:19 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:04:48 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // check dei free che ho gia fatto casino
 // The WIFEXITED and WEXITSTATUS macros are used to check whether the child process terminated normally and to retrieve its exit status, respectively.
 
-int	ft_welcome_badge(t_mish *meta)
+void	ft_print_file(t_mish *meta, char *filename)
 {
 	int		fd;
 	int		b_readed;
@@ -24,11 +24,11 @@ int	ft_welcome_badge(t_mish *meta)
 
 	(void) meta;
 	printf("\e[1;1H\e[2J");
-	fd = open("badge.bdg", O_RDONLY);
+	fd = open(filename, O_RDONLY);
 	b_readed = READ_SIZE;
 	full_badge = NULL;
 	if (fd == -1)
-		return (0);
+		return ;
 	while (b_readed == READ_SIZE)
 	{
 		file_memory = (char *) ft_calloc(READ_SIZE + 1, sizeof(char));
@@ -36,15 +36,14 @@ int	ft_welcome_badge(t_mish *meta)
 		if (b_readed == -1)
 		{
 			ft_free((void **) &(file_memory));
-			return (0);
+			return ;
 		}
 		full_badge = ft_strjoin_free(full_badge, file_memory);
 	}
 	close(fd);
-	printf("%s\nWelcome %s\n\n", full_badge, getenv("USER"));
+	printf("%s", full_badge);
 	// se serve, mettiamo full_badge in struct e free in free_shell
 	ft_free((void **) &(full_badge));
-	return (1);
 }
 
 void	ft_set_history(t_mish *meta)
@@ -76,6 +75,16 @@ void	ft_fill_history(t_mish *meta)
 
 void	ft_reset_line(t_mish *meta)
 {
+	if (meta->infile != -2)
+	{
+		close(meta->infile);
+		meta->infile = -2;
+	}
+	if (meta->outfile != -2)
+	{
+		close(meta->outfile);
+		meta->outfile = -2;
+	}
 	ft_free((void **) &(meta->line));
 }
 
@@ -117,7 +126,11 @@ int	main(int ac, char **av, char **envp)
 	meta.outfile = -2;
 	ft_sign_ecode(&meta , 0);
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
-	ft_welcome_badge(&meta);
+
+	//welcome
+	ft_print_file(&meta, "badge.bdg");
+	printf("\nWelcome %s\n\n", getenv("USER"));
+
 	ft_set_history(&meta);
 	while (1)
 	{
