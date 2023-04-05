@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 15:04:17 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:17:24 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	ft_print_file(t_mish *meta, char *filename);
 
 
 /* cmd_list */
-void	ft_cmdlst_iterstr(t_cmd *cmd,
-		char *(*parse)(char *, t_mish *), t_mish *meta);
+void	ft_cmdlst_iterstr(t_cmd *cmd, char *(*parse1)(char *, t_mish *),
+		char *(*parse2)(char *, t_mish *), t_mish *meta);
 void	ft_cmdlst_clear(t_cmd **cmd);
 void	ft_cmdlst_addfront(t_cmd **cmd, t_cmd *new);
 t_cmd	*ft_cmdlst_new(char **pot);
@@ -96,6 +96,7 @@ int		ft_findchar(char *str, char c);
 char	*ft_linejoin(char *line, char *piece, int n);
 char	*ft_env_value(char	*line_key, char **env, t_mish *meta);
 char	*ft_parse_word(char *line, t_mish *meta);
+char	*ft_parse_red(char *line, t_mish *meta);
 
 /* handle_readline */
 void	ft_handle_line(t_mish *meta);

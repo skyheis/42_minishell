@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 15:05:00 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 18:16:02 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	ft_strlen_pez(char *s, int *f)
 {
 	int	i;
 
-	i = 0;
+	i = 5;
 	while (s[*f] && s[*f] != '<' && s[*f] != '>')
 	{
 		if (s[*f] == SQUT)
@@ -172,8 +172,6 @@ char	**ft_splitered(char *s, t_mish *meta)
 		new[k] = ft_calloc ((ft_strlen_pez(s, &f) + 1), sizeof(char));
 		while (s[i] == 32 && s[i])
 			i++;
-
-		//while ((s[i] && s[i] == '>') || (s[i] && s[i] == '<'))
 		while (s[i] && s[i] != '<' && s[i] != '>' && s[i] != '|')
 		{
 			if (s[i] && s[i] == SQUT)
@@ -190,46 +188,33 @@ char	**ft_splitered(char *s, t_mish *meta)
 			}
 			i++;
 		}
-/*		if 
-			if (s[i] == '>' && s[i + 1] == '>')
-					i += 2;
-			else if (s[i] == '<' && s[i + 1] == '<')
-					i += 2;
-			else
-				i++;
-			while (s[i] == 32)
-				i++;
-			while (!ft_iscut(s[i]))
-				i++;
-			while (s[i] == 32)
-				i++;
-		}*/
-		if (s[i] == '<' && s[i] == '>')
+		if (s[i] == '<' || s[i] == '>')
 		{
 			new[k][j++] = s[i++];
-			if ((s[i] == '<' && s[i + 1] == '<') || (s[i] == '>' && s[i + 1] == '>'))
+			if ((s[i - 1] == '<' && s[i] == '<') || (s[i - 1] == '>' && s[i] == '>'))
+				new[k][j++] = s[i++];
+			while (s[i] == 32)
 				new[k][j++] = s[i++];
 			while (!ft_iscut(s[i]))
 			{
 				if (s[i] && s[i] == SQUT)
 				{
-					new[k][j++] = SQUT;
-					i++;
+					new[k][j++] = s[i++];
 					while (s[i] && s[i] != SQUT)
 						new[k][j++] = s[i++];
 					if (s[i])
-						new[k][j++] = SQUT;
+						new[k][j++] = s[i++];
 				}
-				if (s[i] && s[i] == DQUT)
+				else if (s[i] && s[i] == DQUT)
 				{
-					new[k][j++] = DQUT;
-					i++;
+					new[k][j++] = s[i++];
 					while (s[i] && s[i] != DQUT)
 						new[k][j++] = s[i++];
 					if (s[i])
-						new[k][j++] = DQUT;
+						new[k][j++] = s[i++];
 				}
-				new[k][j++] = s[i++];
+				else
+					new[k][j++] = s[i++];
 			}
 		}
 		k++;

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 13:42:39 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:05:10 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,21 @@ static int	ft_strlen_pez(char *s, int *f)
 		while (s[*f] == 32)
 			*f += 1;
 		while (!ft_iscut(s[*f]))
+		{
+			if (s[*f] && s[*f] == SQUT)
+			{
+				*f += 1;
+				while (s[*f] && s[*f] != SQUT)
+					*f += 1;
+			}
+			else if (s[*f] && s[*f] == DQUT)
+			{
+				*f += 1;
+				while (s[*f] && s[*f] != DQUT)
+					*f += 1;
+			}
 			*f += 1;
+		}
 		while (s[*f] == 32)
 			*f += 1;
 	}
@@ -137,7 +151,7 @@ char	**ft_splitermux(char *s, t_mish *meta)
 		i++;
 	f = i;
 	//printf("word: %i\n", ft_count_word(s));
-	new = (char **) ft_calloc (ft_count_word(s) + 1, sizeof(char *));
+	new = (char **) ft_calloc (ft_count_word(s) + 3, sizeof(char *));
 	while (s[i] && s[i] != '|')
 	{
 		j = 0;
@@ -158,7 +172,21 @@ char	**ft_splitermux(char *s, t_mish *meta)
 			while (s[i] == 32)
 				i++;
 			while (!ft_iscut(s[i]))
+			{
+	 			if (s[i] && s[i] == SQUT)
+				{
+					i++;
+					while (s[i] && s[i] != SQUT)
+						i++;
+				}
+				else if (s[i] && s[i] == DQUT)
+				{
+					i++;
+					while (s[i] && s[i] != DQUT)
+						i++;
+				}
 				i++;
+			}
 			while (s[i] == 32)
 				i++;
 		}
@@ -166,24 +194,21 @@ char	**ft_splitermux(char *s, t_mish *meta)
 		{
 			while (!ft_iscut(s[i]) && s[i] != SQUT && s[i] != DQUT) 
 				new[k][j++] = s[i++];
-
 			if (s[i] && s[i] == SQUT)
 			{
-				new[k][j++] = SQUT;
-				i++;
+				new[k][j++] = s[i++];
 				while (s[i] && s[i] != SQUT)
 					new[k][j++] = s[i++];
 				if (s[i])
-					new[k][j++] = SQUT;
+					new[k][j++] = s[i++];
 			}
 			if (s[i] && s[i] == DQUT)
 			{
-				new[k][j++] = DQUT;
-				i++;
+				new[k][j++] = s[i++];
 				while (s[i] && s[i] != DQUT)
 					new[k][j++] = s[i++];
 				if (s[i])
-					new[k][j++] = DQUT;
+					new[k][j++] = s[i++];
 			}
 			if (ft_iscut(s[i]))
 				break ;

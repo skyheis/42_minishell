@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 14:04:48 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:33:47 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	main(int ac, char **av, char **envp)
 	ft_pwd(&meta); //set current pwd-path to meta->abs_path
 
 	//welcome
-	ft_print_file(&meta, "badge.bdg");
+	ft_print_file(&meta, "badge/badge.bdg");
 	printf("\nWelcome %s\n\n", getenv("USER"));
 
 	ft_set_history(&meta);

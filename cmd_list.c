@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/03 15:17:26 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/05 19:27:32 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,23 @@
 //tutte da testare
 
 /* esegue una funzine su tutte le stringhe */
-void	ft_cmdlst_iterstr(t_cmd *cmd,
-		char *(*parse)(char *, t_mish *), t_mish *meta)
+void	ft_cmdlst_iterstr(t_cmd *cmd, char *(*parse2)(char *, t_mish *),
+		char *(*parse1)(char *, t_mish *), t_mish *meta)
 {
 	int i;
 
 	while (cmd)
 	{
 		i = 0;
-		while (cmd->pot[i])
+		while (cmd->pot && cmd->pot[i])
 		{
-			cmd->pot[i] = (*parse)(cmd->pot[i], meta);
+			cmd->pot[i] = (*parse1)(cmd->pot[i], meta);
+			i++;
+		}
+		i = 0;
+		while (cmd->red && cmd->red[i])
+		{
+			cmd->red[i] = (*parse2)(cmd->red[i], meta);
 			i++;
 		}
 		cmd = cmd->next;
@@ -42,6 +48,7 @@ void	ft_cmdlst_clear(t_cmd **cmd)
 	{
 		tmp = (*cmd)->next;
 		ft_free_matrix(&((*cmd)->pot));
+		ft_free_matrix(&((*cmd)->red));
 		ft_free((void **) cmd);
 		(*cmd) = tmp;
 	}
