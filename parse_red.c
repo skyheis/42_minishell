@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:07:43 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/04 14:41:01 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 09:57:30 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,28 @@ char	*ft_parse_red(char *line, t_mish *meta)
 			i++;
 		while (line[i])
 		{
-			while (line[i + n] && line[i + n] != SQUT && line[i + n] != DQUT)
+			n = 0;
+			while (line[i + n] && line[i + n] != SQUT && line[i + n] != DQUT && line[i + n] != '$')
 				n++;
 			newline = ft_linejoin(newline, &line[i], n);
 			i += n;
 			n = 0;
-			if (line[i] == SQUT)
+			if (line[i] == '$' && line[i + 1] == '?')
+			{
+				value = ft_utoa(meta->exit_code); 
+				newline = ft_linejoin(newline, value, ft_strlen(value));
+					ft_free((void **) &value);
+				i += 2;
+			}
+			else if (line[i] == '$' && ft_isenv(line[i + 1]))
+			{
+				i++;
+				value = ft_env_value(&line[i], meta->env, meta);
+				newline = ft_linejoin(newline, value, ft_strlen(value)); 
+				while (line[i] && ft_isenv(line[i]))
+					i++;
+			}
+			else if (line[i] == SQUT)
 			{
 				i++;
 				while (line[i + n] && line[i + n] != SQUT)
