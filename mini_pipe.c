@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 16:34:35 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 14:55:53 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,31 @@ void	ft_redirect(int fd_in, int fd_out)
 	if (fd_out != -1)
 		dup2(fd_out, 1);
 }
+
+void	ft_redirect_test(t_mish *meta)
+{
+	if (meta->infile != -2)
+		dup2(meta->infile, 0);
+	if (meta->outfile != -2)
+		dup2(meta->outfile, 1);
+}
+
+void	ft_rev_redirect(t_mish *meta)
+{
+	if (meta->infile != -2)
+	{
+		close(meta->infile);
+		meta->infile = -2;
+		dup2(meta->c_stdin, 0);
+	}
+	if (meta->outfile != -2)
+	{
+		close(meta->outfile);
+		meta->outfile = -2;
+		dup2(meta->c_stdout, 1);
+	}
+}
+
 
 int	ft_exec_pipe(t_mish *meta, t_cmd *node, int fd_in, int fd_out)
 {
@@ -98,6 +123,12 @@ int	ft_pipe_or_not(t_mish *meta, t_cmd *node)
 	else
 	{
 		//posto per redirect
-		return (ft_handle_commands(meta, node));
+		meta->exit_code = ft_do_red(meta, node); //se no such file or red no exec
+		if (meta->exit_code == 130)
+			return (130);
+		ft_redirect_test(meta);
+		meta->exit_code = ft_handle_commands(meta, node);
+		ft_rev_redirect(meta);
+		return (meta->exit_code);
 	}
 }

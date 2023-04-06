@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 19:33:47 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 11:55:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ int	main(int ac, char **av, char **envp)
 		//	break ;
 		//if (mini_pipe(&meta, meta.cmd, 1) == -1)
 		meta.exit_code = ft_pipe_or_not(&meta, meta.cmd);
+		printf("exit_code is: %i\n", meta.exit_code);
 		if (meta.exit_code == -1)
 			break ;
 		//ft_cmdlst_clear(&(meta.cmd_head));

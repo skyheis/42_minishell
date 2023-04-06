@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 19:17:24 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 12:41:28 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,12 @@ int		ft_pipe_or_not(t_mish *meta, t_cmd *node);
 
 /* sign_handler */
 void	ft_sign_ecode(t_mish *meta, int ecode);
+int		ft_magic_heredoc(int keepit);
+void	ft_sign_handler_heredoc(int sig);
 void	ft_sign_handler_exec(int sig);
 void	ft_sign_handler_rl(int sig);
+
+/* redirect */
+int	ft_do_red(t_mish *meta, t_cmd *node);
 
 #endif
