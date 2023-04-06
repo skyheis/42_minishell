@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:28:42 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 15:02:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 16:00:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ void	ft_sign_ecode(t_mish *meta, int ecode)
 
 int	ft_magic_heredoc(int keepit)
 {
-	static int	last = 0;
+	static int	pid = 0;
 
-	//printf("\npre  last %i keepit %i\n", last, keepit);
-	if (last)
+	if (pid)
 	{
-		last = 0;
+		kill(pid, SIGKILL);
+		write(1, "\n", 1);
+		pid = 0;
 		return (1);
 	}
 	if (keepit)
-		last = keepit;
-	//printf("post last %i keepit %i\n", last, keepit);
+		pid = keepit;
 	return (0);
 }
 
@@ -44,7 +44,7 @@ void	ft_sign_handler_heredoc(int sig)
 	if (sig == SIGINT) // ctrl-C
 	{
 		ft_sign_ecode(NULL, 130);
-		ft_magic_heredoc(1);
+		ft_magic_heredoc(0);
 	}
 }
 

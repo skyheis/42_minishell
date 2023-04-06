@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 11:07:43 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 09:57:30 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:52:53 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*ft_parse_red(char *line, t_mish *meta)
 			{
 				value = ft_utoa(meta->exit_code); 
 				newline = ft_linejoin(newline, value, ft_strlen(value));
-					ft_free((void **) &value);
+				ft_free((void **) &value);
 				i += 2;
 			}
 			else if (line[i] == '$' && ft_isenv(line[i + 1]))

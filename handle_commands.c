@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 19:34:17 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 19:40:42 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,16 @@ void	ft_chad(t_mish *meta)
 {
 	static int	i = 0;
 
-	if (i > 1)
+	if (i > 4)
 		i = 0;
 	if (i == 0)
-		ft_print_file(meta, "badge/chad.bdg");
+		ft_print_file(meta, "badge/chad1.bdg");
 	else if (i == 1)
-		ft_print_file(meta, "badge/test.bdg");
+		ft_print_file(meta, "badge/chad2.bdg");
+	else if (i == 2)
+		ft_print_file(meta, "badge/chad3.bdg");
+	else if (i == 3)
+		ft_print_file(meta, "badge/sponge.bdg");
 	i++;
 }
 

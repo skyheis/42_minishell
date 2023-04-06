@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 11:55:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 19:30:28 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void	ft_reset_line(t_mish *meta)
 		close(meta->outfile);
 		meta->outfile = -2;
 	}
+	if (access("/tmp/.heredoc", R_OK))
+		unlink("/tmp/.heredoc");
 	ft_free((void **) &(meta->line));
 }
 

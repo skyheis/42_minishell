@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 14:55:53 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/06 17:39:05 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ int	ft_pipe_or_not(t_mish *meta, t_cmd *node)
 	{
 		//posto per redirect
 		meta->exit_code = ft_do_red(meta, node); //se no such file or red no exec
-		if (meta->exit_code == 130)
-			return (130);
+		if (meta->exit_code)
+			return (meta->exit_code);
 		ft_redirect_test(meta);
 		meta->exit_code = ft_handle_commands(meta, node);
 		ft_rev_redirect(meta);
