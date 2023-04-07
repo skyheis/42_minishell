@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 19:40:42 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/07 10:57:27 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_chad(t_mish *meta)
 {
 	static int	i = 0;
 
-	if (i > 4)
+	if (i > 5)
 		i = 0;
 	if (i == 0)
 		ft_print_file(meta, "badge/chad1.bdg");
@@ -45,6 +45,8 @@ void	ft_chad(t_mish *meta)
 	else if (i == 2)
 		ft_print_file(meta, "badge/chad3.bdg");
 	else if (i == 3)
+		ft_print_file(meta, "badge/younow.bdg");
+	else if (i == 4)
 		ft_print_file(meta, "badge/sponge.bdg");
 	i++;
 }
@@ -72,6 +74,8 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 		ft_clean_window(meta->env, meta);
 	else if (!ft_strncmp(node->pot[0], "chad", 5))
 		ft_chad(meta);
+	else if (!ft_strncmp(node->pot[0], "duck", 5))
+		ft_duck(meta);
 	else if (ft_isasetenv(node->pot[0]))
 		ft_handle_setenv(meta, node);
 	else if (node->pot[0])

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 12:41:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/07 11:04:15 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/time.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -75,6 +76,7 @@ typedef struct	s_mish
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
 int		ft_free_shell(t_mish *meta);
 void	ft_print_file(t_mish *meta, char *filename);
+void	ft_duck(t_mish *meta);
 
 
 /* cmd_list */
