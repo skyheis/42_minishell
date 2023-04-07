@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 19:30:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:21:39 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,23 @@
 
 // check dei free che ho gia fatto casino
 // The WIFEXITED and WEXITSTATUS macros are used to check whether the child process terminated normally and to retrieve its exit status, respectively.
+
+void	ft_clean_for_file(char **env)
+{
+	char *clean_path[2];
+
+	clean_path[0] = ft_strjoin(NULL, "/usr/bin/clear");
+	clean_path[1] = NULL;
+	if (!clean_path[0])
+		return ;
+	if (!fork())
+	{
+		execve("/usr/bin/clear", clean_path, env);//, envp);
+		exit(1);
+	}
+	wait(NULL);
+	ft_free_null(clean_path);
+}
 
 void	ft_print_file(t_mish *meta, char *filename)
 {
@@ -23,7 +40,8 @@ void	ft_print_file(t_mish *meta, char *filename)
 	char	*full_badge;
 
 	(void) meta;
-	printf("\e[1;1H\e[2J");
+	//printf("\e[1;1H\e[2J");
+	ft_clean_for_file(meta->env);
 	fd = open(filename, O_RDONLY);
 	b_readed = READ_SIZE;
 	full_badge = NULL;
@@ -114,7 +132,7 @@ int	main(int ac, char **av, char **envp)
 	(void)	av;
 	(void)	envp;
 
-	meta.context = ft_strjoin(getenv("USER"), "@hiroshell: ");
+	meta.context = ft_strjoin(getenv("USER"), "@duckshell: ");
 	meta.env = ft_set_newenv(envp);
 	meta.line = NULL;
 	meta.fd_history = 0;

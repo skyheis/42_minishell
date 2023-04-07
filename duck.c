@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:57:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/07 11:11:20 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/07 17:36:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 int	ft_magic_duck(int keepit)
 {
-	static int	pid = 0;
+	static int	duck = 0;
 
-	if (pid)
+	if (duck)
 	{
-		pid = 0;
+		duck = 0;
 		return (0);
 	}
 	if (keepit)
-		pid = keepit;
+		duck = keepit;
 	return (1);
 }
 
 void	ft_sign_handler_duck(int sig)
 {
-	if (sig == SIGINT) // ctrl-C
+	if (sig == SIGINT)
 		ft_magic_duck(1);
 }
 
-void	ft_duck(t_mish *meta)
+int	ft_duck(t_mish *meta)
 {
 	int		i;
 	int		fd;
@@ -48,14 +48,15 @@ void	ft_duck(t_mish *meta)
 	i = -1;
 	while (fnames[++i])
 		fnames[i][ft_strlen(fnames[i]) - 1] = '\0';
-	i = -1;
+	i = 0;
 	while (ft_magic_duck(0))
 	{
 		ft_print_file(meta, fnames[i++]);
 		usleep(110000);
-		if (i == 56)
-			i = -1;
+		if (i == 55)
+			i = 0;
 	}
 	ft_free_matrix(&fnames);
 	signal(SIGINT, ft_sign_handler_exec);
+	return (130);
 }

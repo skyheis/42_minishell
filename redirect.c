@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:29:27 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 19:19:50 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/07 16:21:47 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_in_file(t_mish *meta, char *filename)
 {
 	if (!filename[0])
 	{
-		printf("hiroshell: syntax error near unexpected token `newline'");
+		printf("duckshell: syntax error near unexpected token `newline'");
 		meta->exit_code = 2;
 		return (0);
 	}
@@ -106,7 +106,7 @@ int	ft_in_heredoc(t_mish *meta, char *delimiter)
 
 int	ft_red_error(t_mish *meta)
 {
-	printf("hiroshell: syntax error near unexpected token `newline'\n");
+	printf("duckshell: syntax error near unexpected token `newline'\n");
 	meta->exit_code = 2;
 	return (2);
 }

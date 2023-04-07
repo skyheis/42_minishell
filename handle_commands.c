@@ -6,13 +6,13 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/07 10:57:27 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/07 17:46:41 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_clean_window(char **envp, t_mish *meta)
+void	ft_clean_shell(char **envp, t_mish *meta)
 {
 	char	*clean_path[2];
 
@@ -39,14 +39,16 @@ void	ft_chad(t_mish *meta)
 	if (i > 5)
 		i = 0;
 	if (i == 0)
-		ft_print_file(meta, "badge/chad1.bdg");
-	else if (i == 1)
-		ft_print_file(meta, "badge/chad2.bdg");
-	else if (i == 2)
 		ft_print_file(meta, "badge/chad3.bdg");
+	else if (i == 1)
+		ft_print_file(meta, "badge/chad1.bdg");
+	else if (i == 2)
+		ft_print_file(meta, "badge/chad0.bdg");
 	else if (i == 3)
-		ft_print_file(meta, "badge/younow.bdg");
+		ft_print_file(meta, "badge/chad2.bdg");
 	else if (i == 4)
+		ft_print_file(meta, "badge/younow.bdg");
+	else if (i == 5)
 		ft_print_file(meta, "badge/sponge.bdg");
 	i++;
 }
@@ -71,43 +73,14 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 	else if (!ft_strncmp(node->pot[0], "cd", 3))
 		ft_cd(meta, node);
 	else if (!ft_strncmp(node->pot[0], "clear", 6))
-		ft_clean_window(meta->env, meta);
+		ft_clean_shell(meta->env, meta);
 	else if (!ft_strncmp(node->pot[0], "chad", 5))
 		ft_chad(meta);
 	else if (!ft_strncmp(node->pot[0], "duck", 5))
-		ft_duck(meta);
+		ecode = ft_duck(meta);
 	else if (ft_isasetenv(node->pot[0]))
 		ft_handle_setenv(meta, node);
 	else if (node->pot[0])
 		ecode = ft_execbin(meta, node);
 	return (ecode);
 }
-
-/*int	ft_handle_commands(t_mish *meta)
-{
-	while (node)
-	{
-		if (!ft_strncmp(node->pot[0], "history", 8))
-			ft_history(meta);
-		else if (!ft_strncmp(node->pot[0], "exit", 5))
-				return (1);
-		else if (!ft_strncmp(node->pot[0], "echo", 5))// caricare nuove envp ogni volta che cambio cartella  DA FARE!!
-			ft_echo(meta);
-		else if (!ft_strncmp(node->pot[0], "unset", 5))
-			ft_unset(meta);
-		else if (!ft_strncmp(node->pot[0], "pwd", 4))
-			ft_pwd(meta);
-		else if (!ft_strncmp(node->pot[0], "env", 4))
-			ft_env(meta);
-		else if (!ft_strncmp(node->pot[0], "cd", 3))
-			ft_cd(meta);
-		else if (!ft_strncmp(node->pot[0], "clear", 6))
-			ft_clean_window(meta->env, meta);
-		else if (ft_isasetenv(node->pot[0]))
-			ft_handle_setenv(meta);
-		else if (node->pot[0])
-			ft_execbin(meta);
-		node = node->next;
- 	}
-	return (0);
-}*/
