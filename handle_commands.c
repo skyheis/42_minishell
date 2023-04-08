@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/07 17:46:41 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/08 15:11:37 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_clean_shell(char **envp, t_mish *meta)
 	}
 	wait(NULL);
 	ft_free_null(clean_path);
-	ft_print_file(meta, "badge.bdg");
+	ft_print_file(meta, "badge/badge.bdg");
 	ft_printf("\n");
 }
 
@@ -62,7 +62,7 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 		ft_history(meta, node);
 	else if (!ft_strncmp(node->pot[0], "exit", 5))
 		return (-1);
-	else if (!ft_strncmp(node->pot[0], "echo", 5))// caricare nuove envp ogni volta che cambio cartella  DA FARE!!
+	else if (!ft_strncmp(node->pot[0], "echo", 5))
 		ft_echo(meta, node);
 	else if (!ft_strncmp(node->pot[0], "unset", 5))
 		ft_unset(meta, node);
