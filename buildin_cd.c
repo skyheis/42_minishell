@@ -41,7 +41,7 @@ void	ft_cd_pre(t_mish *meta)
 
 	i = 0;
 	j = 0;
-	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
+	//ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
 	while (meta->env[i])
 	{
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
@@ -80,7 +80,7 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 				&& (!ft_strncmp(&node->pot[1][i], "../", 3) ||
 					node->pot[1][i] == '.'))
 				return (ft_pre_slash(meta, node));
-			else if ((ft_isalpha(node->pot[1][i + 3]) || ft_isdigit(node->pot[1][i + 3])) ||
+			else if (node->pot[1][i] && (ft_isalpha(node->pot[1][i + 3]) || ft_isdigit(node->pot[1][i + 3])) ||
 			(!ft_strncmp(&node->pot[1][i + 1], "./", 2) && (ft_isalpha(node->pot[1][i + 3])
 				|| ft_isdigit(node->pot[1][i + 3]))))
 				return (ft_pre_slash(meta, node));
@@ -101,7 +101,7 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 	}
 	return (0);
 }
-
+/*
 int	ft_check_error_cd(t_mish *meta, t_cmd *node)
 {
 	int	i;
@@ -125,7 +125,7 @@ int	ft_check_error_cd(t_mish *meta, t_cmd *node)
 	}
 	return (0);
 }
-
+*/
 int	ft_cd(t_mish *meta, t_cmd *node)
 {
 	if (!node->pot[1]) // absolute path

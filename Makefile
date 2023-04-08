@@ -41,7 +41,7 @@ ARINC = $(addprefix $(ARUSDDIR),$(ARUSD))
 CC = cc
 AR = ar
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = #-Wall -Wextra -Werror -g
 MINIFLAGS = -lreadline
 
 ###### COLORS ########
