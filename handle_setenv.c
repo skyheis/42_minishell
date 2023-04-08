@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:42:33 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 10:39:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/08 17:23:56 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ int	ft_isasetenv(char *str)
 	return (0);
 }
 
+void	ft_env_rbracket(char **vake)
+{
+	int		eq;
+	char	*key;
+	char	*tmp;
+
+	eq = ft_findchar(*vake, '=');
+	if ((*vake)[eq + 1] != '(' || (*vake)[ft_strlen(*vake) - 1] != ')')
+		return ;
+	key = ft_strdup(*vake);
+	key[eq + 1] = '\0';
+	tmp = ft_linejoin(key, &((*vake)[eq + 2]), ft_strlen(&((*vake)[eq + 2])) - 1);
+	ft_free((void **) vake);
+	*vake = tmp;
+}
+
 void	ft_handle_setenv(t_mish *meta, t_cmd *node)
 {
 	int		i;
@@ -34,6 +50,7 @@ void	ft_handle_setenv(t_mish *meta, t_cmd *node)
 	i = 0;
 	key = ft_strdup(node->pot[0]);
 	key[ft_findchar(node->pot[0], '=')] = '\0';
+	ft_env_rbracket(&(node->pot[0]));
 	while (meta->env[i])
 	{
 		if (!ft_strncmp(meta->env[i], key, ft_strlen(key)))

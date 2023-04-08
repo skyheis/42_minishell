@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/07 11:05:53 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/08 19:27:19 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,6 @@ FLSRCS = main.c cmd_list.c custom_env.c parse_line.c handle_readline.c \
 		 handle_commands.c handle_commands_utils.c \
 		 buildin_cd.c buildin_cd2.c handle_setenv.c \
 		 mini_pipe.c sign_handler.c redirect.c duck.c
-
-# pipex_utils.c handle_fd_utils.c use_heredoc.c
 
 FLOBJS = ${FLSRCS:.c=.o}
 
@@ -84,12 +82,12 @@ ${NAME}: ${OBJS}
 clean:
 	@make -sC libft clean
 	@${RM} ${OBJS} 
-	@echo "$(RED)All $(CYAN)$(NAME)$(RED)'s objects removed with $(WHITE)${RM}$(DEF_COLOR) ☯" 
+	@echo "$(RED)All $(CYAN)$(NAME)$(RED)'s objects removed with $(WHITE)${RM} $(YELLOW)*QUACK*$(DEF_COLOR)"
 
 fclean: clean
 	@make -sC libft fclean
 	@${RM} ${NAME} 
-	@echo "$(RED)..and $(CYAN)${NAME} $(RED)as been removed$(DEF_COLOR) ⛩️"
+	@echo "$(RED)..and $(CYAN)${NAME} $(RED)as been removed$(DEF_COLOR) 🦆🦆"
 
 libft:
 	@make -sC libft

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 17:39:05 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/08 15:35:54 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,20 @@ int	ft_close_n_ret(int fd1, int fd2, int fd3, int ret_num)
 	return (ret_num);
 }
 
-void	ft_redirect(int fd_in, int fd_out)
+void	ft_redirect(t_mish *meta, int fd_in, int fd_out)
 {
-	if (fd_in != -1)
+	if (meta->infile != -2)
+		dup2(meta->infile, 0);
+	else if (fd_in != -1)
 		dup2(fd_in, 0);
-	if (fd_out != -1)
+
+	if (meta->outfile != -2)
+		dup2(meta->outfile, 1);
+	else if (fd_out != -1)
 		dup2(fd_out, 1);
 }
 
-void	ft_redirect_test(t_mish *meta)
+void	ft_red_fromfile(t_mish *meta)
 {
 	if (meta->infile != -2)
 		dup2(meta->infile, 0);
@@ -72,7 +77,6 @@ void	ft_rev_redirect(t_mish *meta)
 	}
 }
 
-
 int	ft_exec_pipe(t_mish *meta, t_cmd *node, int fd_in, int fd_out)
 {
 	int	stat;
@@ -82,14 +86,16 @@ int	ft_exec_pipe(t_mish *meta, t_cmd *node, int fd_in, int fd_out)
 	pid = fork();
 	if (!pid)
 	{
-		ft_redirect(fd_in, fd_out);
+		stat = ft_do_red(meta, node);
+		if (stat)
+			exit(stat);
+		ft_redirect(meta, fd_in, fd_out);
 		pexit = ft_handle_commands(meta, node);
 		ft_close_n_ret(fd_in, fd_out, -1, -2);
 		ft_free_shell(meta);
 		exit(pexit);
 	}
 	wait(&stat);
-	//ft_close_n_ret(fd_in, -1, -1, -2);
 	if (stat == 65280)
 		return (-1);
 	pexit = WEXITSTATUS(stat);
@@ -117,16 +123,15 @@ int	ft_mini_pipe(t_mish *meta, t_cmd *node, int fd_write)
 
 int	ft_pipe_or_not(t_mish *meta, t_cmd *node)
 {
-	signal(SIGINT, ft_sign_handler_exec); // ctrl-C
+	signal(SIGINT, ft_sign_handler_exec);
 	if (node->next)
 		return (ft_mini_pipe(meta, node, 1)); 
 	else
 	{
-		//posto per redirect
-		meta->exit_code = ft_do_red(meta, node); //se no such file or red no exec
+		meta->exit_code = ft_do_red(meta, node);
 		if (meta->exit_code)
 			return (meta->exit_code);
-		ft_redirect_test(meta);
+		ft_redirect(meta, -1, -1);
 		meta->exit_code = ft_handle_commands(meta, node);
 		ft_rev_redirect(meta);
 		return (meta->exit_code);

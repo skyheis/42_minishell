@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/01 16:48:35 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/08 19:27:52 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -108,11 +108,11 @@ ${NAME}: ${OBJS}
 
 clean:
 	@${RM} ${OBJS} 
-	@echo "$(RED)All $(CYAN)$(PRNAME)$(RED)'s objects removed with $(WHITE)${RM}$(DEF_COLOR) ⛩️" 
+	@echo "$(RED)All $(CYAN)$(PRNAME)$(RED)'s objects removed with $(WHITE)${RM} $(YELLOW)*QUACK*$(DEF_COLOR)"
 
 fclean: clean
 	@${RM} ${NAME} 
-	@echo "$(RED)..and $(CYAN)${ARNAME} $(RED)as been removed$(DEF_COLOR) ☯"
+	@echo "$(RED)..and $(CYAN)${ARNAME} $(RED)as been removed$(DEF_COLOR) 🦆🦆"
 
 re: fclean all
 

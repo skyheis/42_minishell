@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 17:46:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/08 19:16:11 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
 	while (env && env[++i])
 	{
 		if (!ft_strncmp(env[i], key, ft_strlen(key))
-				&& env[i][ft_strlen(key)] == '=') //in teoria ora ok
+				&& env[i][ft_strlen(key)] == '=')
 		{
 			value = ft_substr(env[i], ft_strlen(key) + 1, ft_strlen(env[i]));
 			ft_free((void **) &key);
@@ -122,12 +122,18 @@ char	*ft_parse_word(char *line, t_mish *meta)
 			ft_free((void **) &value);
 			i += 2;
 		}
-		else if (line[i] == '$' && ft_isenv(line[i + 1]))
+		else if (line[i] == '$' &&
+				(ft_isenv(line[i + 1]) || line[i + 1] == '{'))
 		{
 			i++;
+			if (line[i] == '{')
+				i++;
 			value = ft_env_value(&line[i], meta->env, meta);
 			newline = ft_linejoin(newline, value, ft_strlen(value)); 
+			ft_free((void **) &value);
 			while (line[i] && ft_isenv(line[i]))
+				i++;
+			if (line[i] == '}')
 				i++;
 		}
 		else if (line[i] == SQUT)
@@ -152,14 +158,18 @@ char	*ft_parse_word(char *line, t_mish *meta)
 					newline = ft_linejoin(newline, value, ft_strlen(value));
 					ft_free((void **) &value);
 				}
-				else if (line[i + n] == '$' && ft_isenv(line[i + n + 1]))
+				else if (line[i + n] == '$' &&
+						(ft_isenv(line[i + n + 1]) || line[i + n + 1] == '{'))
 				{
 					newline = ft_linejoin(newline, &line[i], n);
 					i += n;
 					n = 0;
 					i++;
+					if (line[i] == '{')
+						i++;
 					value = ft_env_value(&line[i], meta->env, meta);
 					newline = ft_linejoin(newline, value, ft_strlen(value));
+					ft_free((void **) &value);
 					while (line[i] && ft_isenv(line[i]))
 						i++;
 				}
@@ -170,7 +180,8 @@ char	*ft_parse_word(char *line, t_mish *meta)
 			i += (n + 1);
 		}
 		else
-			i++;
+			newline = ft_linejoin(newline, &line[i++], 1); //risky
+			//i++;
 		//endfun
 	}
 	ft_free((void **) &line); //occhio per test
