@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 17:22:12 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/10 17:34:16 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str)
 		{
 			while (str[i] != '=')
 				i++;
+			ft_free((void **) &(exenv->value));
 			exenv->value = ft_substr(str, i + 1, ft_strlen(&str[i]));
 			break ;
 		}
@@ -59,7 +60,7 @@ void	ft_envlst_clear(t_exenv **exenv)
 		tmp = (*exenv)->next;
 		ft_free((void **) &((*exenv)->key));
 		ft_free((void **) &((*exenv)->value));
-		ft_free((void **) exenv);
+		ft_free((void **) &(*exenv));
 		(*exenv) = tmp;
 	}
 }

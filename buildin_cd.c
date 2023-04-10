@@ -80,9 +80,9 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 				&& (!ft_strncmp(&node->pot[1][i], "../", 3) ||
 					node->pot[1][i] == '.'))
 				return (ft_pre_slash(meta, node));
-			else if (node->pot[1][i] && (ft_isalpha(node->pot[1][i + 3]) || ft_isdigit(node->pot[1][i + 3])) ||
+			else if (node->pot[1][i] && ((ft_isalpha(node->pot[1][i + 3]) || ft_isdigit(node->pot[1][i + 3])) ||
 			(!ft_strncmp(&node->pot[1][i + 1], "./", 2) && (ft_isalpha(node->pot[1][i + 3])
-				|| ft_isdigit(node->pot[1][i + 3]))))
+				|| ft_isdigit(node->pot[1][i + 3])))))
 				return (ft_pre_slash(meta, node));
 			else if (node->pot[1][i] && node->pot[1][i] != '/')
 				return (1);

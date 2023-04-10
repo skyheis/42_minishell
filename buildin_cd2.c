@@ -98,7 +98,7 @@ void	ft_next_slash(t_mish *meta, char *str)
 				meta->env[i][j++] = '/';
 			while(str[k] && str[k] != '/')
 				meta->env[i][j++] = str[k++];
-			printf("%i\n", ft_strlen(str));
+			//printf("%i\n", ft_strlen(str));
 			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
 			break ;
 		}
@@ -138,7 +138,7 @@ int	ft_pre_slash(t_mish *meta, t_cmd *node)
 	}
 	while (node->pot[1][i])
 	{
-		if (node->pot[1][i] && !ft_strncmp(&node->pot[1][i], "..", 2) || (!ft_strncmp(&node->pot[1][i], "../", 3)))
+		if (node->pot[1][i] && (!ft_strncmp(&node->pot[1][i], "..", 2) || (!ft_strncmp(&node->pot[1][i], "../", 3))))
 		{
 			//k = 0;
 			//ft_find_path(meta->abs_path, &k);
@@ -147,9 +147,9 @@ int	ft_pre_slash(t_mish *meta, t_cmd *node)
 			chdir(&meta->env[meta->pwd][4]);
 			i += 3;
 		}
-		else if (node->pot[1][i] && (ft_isalpha(node->pot[1][i]) || ft_isdigit(node->pot[1][i])) ||
+		else if (node->pot[1][i] && ((ft_isalpha(node->pot[1][i]) || ft_isdigit(node->pot[1][i])) ||
 			(!ft_strncmp(&node->pot[1][i], "./", 2) && (ft_isalpha(node->pot[1][i + 2])
-				|| ft_isdigit(node->pot[1][i + 2]))))
+				|| ft_isdigit(node->pot[1][i + 2])))))
 		{
 			//k = 0;
 			if (!ft_strncmp(&node->pot[1][i], "./", 2))

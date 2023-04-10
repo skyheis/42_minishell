@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/08 19:27:19 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/10 16:15:06 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ ARINC = $(addprefix $(ARUSDDIR),$(ARUSD))
 CC = cc
 AR = ar
 RM = rm -f
-CFLAGS = #-Wall -Wextra -Werror -g
+CFLAGS = -g -Wall -Wextra -Werror
 MINIFLAGS = -lreadline
 
 ###### COLORS ########
