@@ -89,6 +89,7 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 			i++;
 		}
 		i = 0;
+		ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
 		ft_find_path(meta->abs_path, &i);
 		chdir(&meta->abs_path[i]);
 		ft_cd_pre(meta);

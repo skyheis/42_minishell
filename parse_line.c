@@ -22,7 +22,7 @@ char	*ft_linejoin(char *line, char *piece, int n)
 	int		j;
 	char	*newline;
 
-	newline = ft_calloc(ft_strlen(line) + n + 1, sizeof(char));
+	newline = ft_calloc(ft_strlen(line) + n + 3, sizeof(char)); // prima era +1
 	if (!newline)
 		return (NULL);
 	i = 0;
