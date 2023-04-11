@@ -37,6 +37,7 @@ int	ft_cd_meno(t_mish *meta)
 	char	*tmp;
 
 	i = 0;
+	tmp = NULL;
 	while (meta->env[i])
 	{
 		if (!strncmp(meta->env[i], "OLDPWD=", 7))
