@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 14:30:17 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:25:50 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ int	ft_free_shell(t_mish *meta)
 	ft_cmdlst_clear(&(meta->cmd));
 	ft_reset_line(meta);
 	ft_free((void **) &(meta->context));
+	ft_free((void **) &(meta->curdir));
+	ft_free((void **) &(meta->olddir));
 	if (meta->fd_history > 0)
 		close(meta->fd_history);
 	rl_clear_history();
@@ -133,21 +135,26 @@ int	main(int ac, char **av, char **envp)
 	(void)	envp;
 
 	meta.context = ft_strjoin(getenv("USER"), "@duckshell: ");
+	meta.curdir = ft_strdup(getenv("PWD"));
+	if (getenv("OLDPWD"))
+		meta.olddir = ft_strdup(getenv("OLDPWD"));
+	else
+		meta.olddir = ft_strdup(getenv("PWD"));
 	meta.env = ft_set_newenv(envp);
-	meta.env = ft_replace_add_env(meta.env,
-		ft_linejoin(ft_strdup("OLDPWD="), getenv("PWD"), ft_strlen(getenv("PWD"))));
+	//meta.env = ft_replace_add_env(meta.env,
+	//	ft_linejoin(ft_strdup("OLDPWD="), getenv("PWD"), ft_strlen(getenv("PWD"))));
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;
 	meta.exit_code = 0;
-	meta.abs_path = getenv("HOME");
+	meta.home_path = getenv("HOME");
 	meta.ext_env = NULL;
 	meta.c_stdin = dup(0);
 	meta.c_stdout = dup(1);
 	meta.infile = -2;
 	meta.outfile = -2;
 	ft_sign_ecode(&meta , 0);
-	ft_pwd(&meta); //set current pwd-path to meta->abs_path
+	//ft_set_duck
 
 	//welcome
 	ft_print_file(&meta, "badge/badge.bdg");

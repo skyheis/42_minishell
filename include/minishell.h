@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 14:27:17 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:03:51 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ typedef struct	s_mish
 	char	*line;
 	char	*user;
 	char	*context;
-	char	*abs_path; // per cd e pwd ---> e' il path principale
 	int		fd_history;
 	char	*path_history;
 	int		exit_code;
 	int		pwd;
-//	int		f;
+	char	*curdir;
+	char	*olddir;
+	char	*home_path; // per cd e pwd ---> e' il path principale
 	char	**env;
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;
@@ -120,9 +121,9 @@ char	**ft_splitered(char *s, t_mish *meta);
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta, t_cmd *node);
 int		ft_pre_slash(t_mish *meta, t_cmd *node);
-void	ft_cd_slash2(t_mish *meta, t_cmd *node, int k);
+void	ft_cd_slash2(t_mish *meta, t_cmd *node);
 void	ft_cd_pre(t_mish *meta);
-void	ft_slash(t_mish *meta, int k, char *pot);
+void	ft_slash(t_mish *meta);
 void	ft_unset(t_mish *meta, t_cmd *node);
 int		ft_cd_slash(t_mish *meta, t_cmd *node);
 void	ft_abs_path(t_mish *meta);

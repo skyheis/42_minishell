@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/08 17:00:37 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 18:16:34 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 	else if (!ft_strncmp(node->pot[0], "env", 4))
 		ft_env(meta, node);
 	else if (!ft_strncmp(node->pot[0], "cd", 3))
-		ft_cd(meta, node);
+		ecode = ft_cd(meta, node);
 	else if (!ft_strncmp(node->pot[0], "clear", 6))
 		ft_clean_shell(meta->env, meta);
 	else if (!ft_strncmp(node->pot[0], "chad", 5))

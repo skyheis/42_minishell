@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:10:48 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/10 19:40:28 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 16:49:25 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,7 @@ void	ft_echo(t_mish *meta, t_cmd *node)
 
 void	ft_pwd(t_mish *meta)
 {
-	int	i;
-
-	i = 0;
-	while (meta->env[i])
-	{
-		if (!ft_strncmp(meta->env[i], "PWD", 3))
-		{
-			meta->pwd = i;
-			printf("%s\n", &meta->env[i][4]);
-			return ;
-		}
-		i++;
-	}
+	printf("%s\n", meta->curdir);
 }
 
 void	ft_history(t_mish *meta, t_cmd *node)

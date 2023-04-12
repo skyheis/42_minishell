@@ -1,71 +1,46 @@
 #include "minishell.h"
 
-/*void	ft_cd_next(t_mish *meta)
+void	ft_if_exist_replace(t_mish *meta)
 {
-	int		i;
-	int		j;
-	int		k;
-	char	*cwd = NULL;
+	int	i;
 
-	i = -1;
-	j = 0;
-	k = 0;
-	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
-	while (meta->env[++i])
+	i = 0;
+	while (meta->env[i])
 	{
-		if (!ft_strncmp(meta->env[i], "PWD", 3))
+		if (!ft_strncmp(meta->env[i], "PWD=", 4))
 		{
-			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
-			cwd = ft_strjoin (cwd, meta->env[i]);
-			free(meta->env[i]);
-			meta->env[i] = (char *) ft_calloc (ft_strlen(cwd)
-				+ ft_strlen(node->pot[1]) + 1, sizeof(char));
-			if (cwd[5] != '\0')
-				meta->env[i][j++] = '/';
-			while(node->pot[1][k] && (node->pot[1][k] != '/'
-				|| (node->pot[1][k + 1])))
-				meta->env[i][j++] = node->pot[1][k++];
-			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
-			break ;
+			ft_free((void **) &(meta->env[i]));
+			meta->env[i] = ft_strjoin("PWD=", meta->curdir);
 		}
+		if (!ft_strncmp(meta->env[i], "OLDPWD=", 7))
+		{
+			ft_free((void **) &(meta->env[i]));
+			meta->env[i] = ft_strjoin("OLDPWD=", meta->olddir);
+		}
+		i++;
 	}
-	ft_free((void **)&cwd);
 }
-*/
+
 void	ft_cd_pre(t_mish *meta)
 {
-	int		i;
 	int		j;
 	int		k;
 	char	*cwd;
 
-	i = 0;
 	j = 0;
-	//ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
-	while (meta->env[i])
+	k = 0;
+	if (ft_find_path(meta->curdir, &k) == -42)
 	{
-		if (!ft_strncmp(meta->env[i], "PWD", 3))
-		{
-			k = 0;
-			if (ft_find_path(meta->env[i], &k) == -42)
-			{
-				ft_slash(meta, i, "/");
-				return ;
-			}
-			ft_find_path(meta->env[i], &k);
-			//cwd = (char *) ft_calloc(ft_strlen(meta->env[i]) + 1, sizeof(char));
-			//cwd = ft_strjoin(cwd, meta->env[i]);
-			cwd = ft_strdup(meta->env[i]);
-			ft_free((void **) &(meta->env[i]));
-			meta->env[i] = (char *) ft_calloc(k + 1, sizeof(char));
-			j = -1;
-			while (++j < k)
-				meta->env[i][j] = cwd[j];
-			ft_free((void **) &cwd);
-			break ;
-		}
-		i++;
+		ft_slash(meta);
+		return ;
 	}
+	cwd = ft_strdup(meta->curdir);
+	ft_free((void **) &(meta->curdir));
+	meta->curdir = (char *) ft_calloc(k + 1, sizeof(char));
+	j = -1;
+	while (++j < k)
+		meta->curdir[j] = cwd[j];
+	ft_free((void **) &cwd);
 }
 
 int	ft_cd2(t_mish *meta, t_cmd *node)
@@ -90,66 +65,39 @@ int	ft_cd2(t_mish *meta, t_cmd *node)
 			i++;
 		}
 		i = 0;
-		ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
-		ft_find_path(meta->abs_path, &i);
-		chdir(&meta->abs_path[i]);
+		ft_free((void **) &(meta->olddir));
+		meta->olddir = ft_strdup(meta->curdir);
+		ft_find_path(meta->home_path, &i);
+		chdir(&meta->home_path[i]);
 		ft_cd_pre(meta);
 	}
 	else
 	{
 		chdir(node->pot[1]);
-		ft_pre_slash(meta, node); // ft_cd_next c'era prima
+		ft_pre_slash(meta, node);
 		return (0);
 	}
 	return (0);
 }
-/*
-int	ft_check_error_cd(t_mish *meta, t_cmd *node)
-{
-	int	i;
 
-	(void) meta;
-	i = 1;
-	if (!ft_strncmp(node->pot[1], "./", 2))
-	{
-		while (node->pot[1][i])
-		{
-			if (node->pot[1][i] != '/')
-				return (1) ;
-			i++;
-		}
-		return (1);
-	}
-	else if (node->pot[1][0] == '.')
-	{
-		if (node->pot[1][1] != '.')
-			return (1);
-	}
-	return (0);
-}
-*/
 int	ft_cd(t_mish *meta, t_cmd *node)
 {
-	if (!node->pot[1]) // absolute path
+	if (!node->pot[1]) // home path
 	{
-		chdir(meta->abs_path);
+		chdir(meta->home_path);
 		ft_abs_path(meta);
-		return (0);
 	}
 	else if (node->pot[1][0] != '-' && chdir(node->pot[1]) != 0) // no path available
 	{
 		perror("Error");
 		return (1);
 	}
-	else
+	else if (node->pot[1][0] == '/' || node->pot[1][0] == '-')
 	{
-		if (node->pot[1][0] == '/' || node->pot[1][0] == '-')
-		{
-			if (ft_cd_slash(meta, node)) // controllo se /home e' presente in meta->env[i] senno' vado a cd2 e l'aggiungo
-				return (1);
-		}
-		else if (ft_cd2(meta, node)) // prima era if senza else
-			return (1);
+		ft_cd_slash(meta, node);
 	}
+	else
+		ft_cd2(meta, node);
+	ft_if_exist_replace(meta);
 	return (0);
 }
