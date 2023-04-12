@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/08 19:16:11 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:02:40 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
 			return(value);
 		}
 	}
-	value = ft_envlst_retvalue(meta->ext_env, key);
+	value = ft_strdup(ft_envlst_retvalue(meta->ext_env, key));
 	if (!value)
 		value = ft_calloc(2, sizeof(char));
 	ft_free((void **) &key);
@@ -89,13 +89,15 @@ char	*ft_parse_word(char *line, t_mish *meta)
 	if (line[0] == '~' && !line[1] )//forse gestibile interno
 	{
 		newline = ft_env_value("HOME", meta->env, meta);
-		newline = ft_linejoin(NULL, newline, ft_strlen(newline));
+		//newline = ft_linejoin(NULL, newline, ft_strlen(newline));
+		//newline = ft_strdup(newline);
+		ft_free((void **) &line);
 		return (newline);
 	}
 	if (line[0] == '~' && line[1] == '/')
 	{
 		newline = ft_env_value("HOME", meta->env, meta);
-		newline = ft_linejoin(NULL, newline, ft_strlen(newline));
+		//newline = ft_linejoin(NULL, newline, ft_strlen(newline));
 		newline = ft_linejoin(newline, "/", 1);
 		i += 2;
 	}

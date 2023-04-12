@@ -20,15 +20,16 @@ void	ft_slash(t_mish *meta, int k, char *pot)// k da levare forse
 
 	k = 0;
 	ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[meta->pwd][4]));
-	cwd = (char *) ft_calloc (ft_strlen("PWD=")
-		+ ft_strlen(pot) + 1, sizeof(char));
+	//cwd = (char *) ft_calloc (ft_strlen("PWD=")
+	//	+ ft_strlen(pot) + 1, sizeof(char));
 	cwd = ft_strjoin ("PWD=", pot);
 	if (cwd[ft_strlen(cwd) - 1] == '/' && ft_isalpha_slash(&cwd[4]))
 		cwd[ft_strlen(cwd) - 1] = '\0';
-	free(meta->env[meta->pwd]);
-	meta->env[meta->pwd] = (char *) ft_calloc(ft_strlen(cwd) + 1, sizeof(char));
-	meta->env[meta->pwd] = ft_strjoin(meta->env[meta->pwd], cwd);
-	free(cwd);
+	ft_free((void **) &(meta->env[meta->pwd]));
+	meta->env[meta->pwd] = cwd;
+	//meta->env[meta->pwd] = (char *) ft_calloc(ft_strlen(cwd) + 1, sizeof(char));
+	//meta->env[meta->pwd] = ft_strjoin(meta->env[meta->pwd], cwd);
+	//free(cwd);
 }
 
 int	ft_cd_meno(t_mish *meta)
@@ -42,12 +43,13 @@ int	ft_cd_meno(t_mish *meta)
 	{
 		if (!strncmp(meta->env[i], "OLDPWD=", 7))
 		{
-			tmp = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
-			tmp = ft_strjoin(tmp, meta->env[meta->pwd]);
+			//tmp = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
+			//tmp = ft_strjoin(tmp, meta->env[meta->pwd]);
+			tmp = ft_strdup(meta->env[meta->pwd]);
 			ft_replace_add_env(meta->env, ft_strjoin("PWD=", &meta->env[i][7]));
 			printf("%s\n", &meta->env[meta->pwd][4]);
 			ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &tmp[4]));
-			free(tmp);
+			ft_free((void **) &tmp);
 			chdir(&meta->env[meta->pwd][4]);
 			break ;
 		}
@@ -90,9 +92,10 @@ void	ft_next_slash(t_mish *meta, char *str)
 		if (!ft_strncmp(meta->env[i], "PWD", 3))
 		{
 			//ft_replace_add_env(meta->env, ft_strjoin("OLDPWD=", &meta->env[i][4]));
-			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]), sizeof(char));
-			cwd = ft_strjoin (cwd, meta->env[i]);
-			free(meta->env[i]);
+			//cwd = (char *) ft_calloc (ft_strlen(meta->env[i]), sizeof(char));
+			//cwd = ft_strjoin (cwd, meta->env[i]);
+			cwd = ft_strdup(meta->env[i]);
+			ft_free((void **) &(meta->env[i]));
 			meta->env[i] = (char *) ft_calloc (ft_strlen(cwd)
 				+ ft_strlen(str) + 1, sizeof(char));
 			if (cwd[5] != '\0')
@@ -100,11 +103,11 @@ void	ft_next_slash(t_mish *meta, char *str)
 			while(str[k] && str[k] != '/')
 				meta->env[i][j++] = str[k++];
 			//printf("%i\n", ft_strlen(str));
-			meta->env[i] = ft_strjoin (cwd, meta->env[i]);
+			meta->env[i] = ft_strjoin_free(cwd, meta->env[i]);
 			break ;
 		}
 	}
-	ft_free((void **)&cwd);
+	//ft_free((void **)&cwd);
 }
 
 int	len_slash(char *str)

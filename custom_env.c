@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:31:29 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/29 16:51:40 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:17:15 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ char	**ft_matrixadd(char	**mat, char	*str)
 		}
 		i++;
 	}
-	newmat[i] = ft_strdup(str);
+	//newmat[i] = ft_strdup(str);
+	newmat[i] = str;
 	ft_free_matrix(&mat);
 	return (newmat);
 }
@@ -109,14 +110,15 @@ char	**ft_replace_add_env(char **mat, char *str)
 		{
 			ft_free((void **) &(key));
 			ft_free((void **) &(mat[i]));
-			mat[i] = ft_strdup(str);
-			free(str);
+			//mat[i] = ft_strdup(str);
+			//ft_free((void **) &(str)); //occhio per env no export
+			mat[i] = str;
 			return (mat);
 		}
 		i++;
 	}
 	ft_free((void **) &(key));
-	ft_free((void **)str);
+	//ft_free((void **)str); //non mi torna
 	return (ft_matrixadd(mat, str));
 }
 

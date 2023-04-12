@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/08 17:00:10 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:27:17 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct	s_mish
 	char	*path_history;
 	int		exit_code;
 	int		pwd;
-	int		f;
+//	int		f;
 	char	**env;
 	int		flag; //handle_realine/split + 
 	t_cmd	*cmd;

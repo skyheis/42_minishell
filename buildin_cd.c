@@ -53,14 +53,15 @@ void	ft_cd_pre(t_mish *meta)
 				return ;
 			}
 			ft_find_path(meta->env[i], &k);
-			cwd = (char *) ft_calloc (ft_strlen(meta->env[i]) + 1, sizeof(char));
-			cwd = ft_strjoin (cwd, meta->env[i]);
-			free(meta->env[i]);
-			meta->env[i] = (char *) ft_calloc (k + 1, sizeof(char));
+			//cwd = (char *) ft_calloc(ft_strlen(meta->env[i]) + 1, sizeof(char));
+			//cwd = ft_strjoin(cwd, meta->env[i]);
+			cwd = ft_strdup(meta->env[i]);
+			ft_free((void **) &(meta->env[i]));
+			meta->env[i] = (char *) ft_calloc(k + 1, sizeof(char));
 			j = -1;
 			while (++j < k)
 				meta->env[i][j] = cwd[j];
-			free(cwd);
+			ft_free((void **) &cwd);
 			break ;
 		}
 		i++;

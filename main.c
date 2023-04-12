@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/07 16:21:39 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:30:17 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int	main(int ac, char **av, char **envp)
 
 	meta.context = ft_strjoin(getenv("USER"), "@duckshell: ");
 	meta.env = ft_set_newenv(envp);
+	meta.env = ft_replace_add_env(meta.env,
+		ft_linejoin(ft_strdup("OLDPWD="), getenv("PWD"), ft_strlen(getenv("PWD"))));
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;

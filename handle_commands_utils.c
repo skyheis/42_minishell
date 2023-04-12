@@ -15,7 +15,7 @@ void	ft_abs_path(t_mish *meta)
 				//ft_strlen(meta->abs_path)))
 			//{
 				k = 0;
-				free(meta->env[i]);
+				ft_free((void **) &(meta->env[i]));
 				meta->env[i] = (char *) ft_calloc (ft_strlen(meta->abs_path) + 5,
 					sizeof(char));
 				ft_strlcpy(meta->env[i], "PWD=", 5);
