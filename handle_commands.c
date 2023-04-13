@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 18:16:34 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 11:13:52 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 		ecode = ft_cd(meta, node);
 	else if (!ft_strncmp(node->pot[0], "clear", 6))
 		ft_clean_shell(meta->env, meta);
+	else if (!ft_strncmp(node->pot[0], "export", 7))
+		ft_export(meta, node);
 	else if (!ft_strncmp(node->pot[0], "chad", 5))
 		ft_chad(meta);
 	else if (!ft_strncmp(node->pot[0], "duck", 5))

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 18:25:50 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 10:07:40 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,8 @@ int	main(int ac, char **av, char **envp)
 	meta.c_stdout = dup(1);
 	meta.infile = -2;
 	meta.outfile = -2;
+	meta.duckpath = getenv("PWD");
 	ft_sign_ecode(&meta , 0);
-	//ft_set_duck
 
 	//welcome
 	ft_print_file(&meta, "badge/badge.bdg");

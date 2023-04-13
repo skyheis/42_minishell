@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:31:29 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 14:17:15 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 12:36:02 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	**ft_replace_add_env(char **mat, char *str)
 	key[ft_findchar(str, '=')] = '\0';
 	while (mat[i])
 	{
-		if (!ft_strncmp(mat[i], key, ft_strlen(key)))
+		if (!ft_strncmp(mat[i], key, ft_strlen(key)) && mat[i][ft_strlen(key)] == '=')
 		{
 			ft_free((void **) &(key));
 			ft_free((void **) &(mat[i]));

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 18:03:51 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 12:03:23 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ typedef struct	s_mish
 	int		pwd;
 	char	*curdir;
 	char	*olddir;
-	char	*home_path; // per cd e pwd ---> e' il path principale
+	char	*home_path;
 	char	**env;
-	int		flag; //handle_realine/split + 
+	int		flag;
 	t_cmd	*cmd;
 	t_cmd	*cmd_head;
 	t_exenv	*ext_env;
@@ -71,6 +71,7 @@ typedef struct	s_mish
 	int		c_stdout;
 	int		infile;
 	int		outfile;
+	char	*duckpath;
 }				t_mish;
 
 
@@ -113,6 +114,9 @@ void	ft_history(t_mish *meta, t_cmd *node);
 void	ft_env(t_mish *meta, t_cmd *node);
 void	ft_unset(t_mish *meta, t_cmd *node);
 
+/* buildin_export */
+void	ft_export(t_mish *meta, t_cmd *node);
+
 /* ft_splitermux */
 char	**ft_splitermux(char *s, t_mish *meta);
 /* ft_splitered */
@@ -140,6 +144,8 @@ void	ft_envlst_clear(t_exenv **exenv);
 void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new);
 t_exenv	*ft_envlst_new(char *str);
 void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
+int		ft_envlst_statusvalue(t_exenv *exenv, char *key);
+void	ft_envlst_nullnode(t_exenv *exenv, char *key);
 
 /* find_binary */
 char	*ft_getenv(char *to_get, char **env);

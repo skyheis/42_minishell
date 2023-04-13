@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:42:33 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/08 17:23:56 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 12:22:26 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_handle_setenv(t_mish *meta, t_cmd *node)
 	ft_env_rbracket(&(node->pot[0]));
 	while (meta->env[i])
 	{
-		if (!ft_strncmp(meta->env[i], key, ft_strlen(key)))
+		if (!ft_strncmp(meta->env[i], key, ft_strlen(key)) && meta->env[i][ft_strlen(key)] == '=')
 		{
 			ft_free((void **) &(key));
 			ft_free((void **) &(meta->env[i]));
@@ -62,7 +62,12 @@ void	ft_handle_setenv(t_mish *meta, t_cmd *node)
 		}
 		i++;
 	}
-	if (ft_envlst_retvalue(meta->ext_env, key))
+	if (ft_envlst_statusvalue(meta->ext_env, key) == 1)
+	{
+		meta->env = ft_replace_add_env(meta->env, strdup(node->pot[0]));
+		ft_envlst_nullnode(meta->ext_env, key);
+	}
+	else if (ft_envlst_statusvalue(meta->ext_env, key) == 2)
 		ft_envlst_newvalue(meta->ext_env, key, node->pot[0]);
 	else
 		ft_envlst_addfront(&(meta->ext_env), ft_envlst_new(node->pot[0]));
