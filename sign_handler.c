@@ -6,21 +6,11 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:28:42 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/07 15:27:37 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:49:53 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_sign_ecode(t_mish *meta, int ecode)
-{
-	static t_mish	*versometa;
-
-	if (meta)
-		versometa = meta;
-	else
-		versometa->exit_code = ecode;
-}
 
 int	ft_magic_heredoc(int keepit)
 {
@@ -40,12 +30,21 @@ int	ft_magic_heredoc(int keepit)
 
 void	ft_sign_handler_heredoc(int sig)
 {
-
 	if (sig == SIGINT)
 	{
 		ft_sign_ecode(NULL, 130);
 		ft_magic_heredoc(0);
 	}
+}
+
+void	ft_sign_ecode(t_mish *meta, int ecode)
+{
+	static t_mish	*versometa;
+
+	if (meta)
+		versometa = meta;
+	else
+		versometa->exit_code = ecode;
 }
 
 void	ft_sign_handler_exec(int sig)

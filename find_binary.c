@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:24:53 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/03/31 14:56:05 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:15:56 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,11 @@ int	ft_execbin(t_mish *meta, t_cmd *node)
 	pid = fork();
 	if (!pid)
 	{
-		//signal(SIGQUIT, SIG_DFL); // ctrl-/ exit.
-		//signal(SIGINT, SIG_DFL); // ctrl-C exit.
-		execve(node->pot[0], node->pot, meta->env); //exit code
+		execve(node->pot[0], node->pot, meta->env);
 		if (WEXITSTATUS(EXIT_FAILURE) != 1)
 		{
-			printf("%s: command not found\n",
-					&node->pot[0][ft_endpath(node->pot[0])]);
+			ft_putstr_fd(&node->pot[0][ft_endpath(node->pot[0])],2 );
+			ft_putstr_fd(": command not found\n", 2);
 			ft_free_shell(meta);
 			exit(127);
 		}
@@ -106,6 +104,5 @@ int	ft_execbin(t_mish *meta, t_cmd *node)
 		exit(EXIT_FAILURE);
 	}
 	waitpid(pid, &meta->exit_code, 0);
-	//printf("\nexit_code %i\n\n", WEXITSTATUS(meta->exit_code));
 	return (WEXITSTATUS(meta->exit_code));
 }

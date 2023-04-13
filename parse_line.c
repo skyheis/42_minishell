@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 11:55:13 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 14:02:40 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:39:50 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,6 @@ char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
 	ft_free((void **) &key);
 	return (value);
 }
-
-
-//da gestire singolo $
 
 char	*ft_parse_word(char *line, t_mish *meta)
 {

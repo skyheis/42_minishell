@@ -6,34 +6,11 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 12:02:51 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:04:08 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//tutte da testare
-
-void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str)
-{
-	int	len;
-	int	i;
-
-	i = 0;
-	len = ft_strlen(key) + 1;
-	while (exenv)
-	{
-		if (!ft_strncmp(key, exenv->key, len))
-		{
-			while (str[i] != '=')
-				i++;
-			ft_free((void **) &(exenv->value));
-			exenv->value = ft_substr(str, i + 1, ft_strlen(&str[i]));
-			break ;
-		}
-		exenv = exenv->next;
-	}
-}
 
 void	ft_envlst_nullnode(t_exenv *exenv, char *key)
 {
@@ -50,38 +27,6 @@ void	ft_envlst_nullnode(t_exenv *exenv, char *key)
 		}
 		exenv = exenv->next;
 	}
-}
-
-int	ft_envlst_statusvalue(t_exenv *exenv, char *key)
-{
-	int	len;
-
-	len = ft_strlen(key) + 1;
-	while (exenv)
-	{
-		if (!ft_strncmp(key, exenv->key, len))
-		{
-			if (exenv->value)
-				return (2);
-			return (1);
-		}
-		exenv = exenv->next;
-	}
-	return (0);
-}
-
-char	*ft_envlst_retvalue(t_exenv *exenv, char *key)
-{
-	int	len;
-
-	len = ft_strlen(key) + 1;
-	while (exenv)
-	{
-		if (!ft_strncmp(key, exenv->key, len))
-			return (exenv->value);
-		exenv = exenv->next;
-	}
-	return (NULL);
 }
 
 /* pulisce tutta la lista */

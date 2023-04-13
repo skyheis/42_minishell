@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/05 18:16:02 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 16:38:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,235 +14,87 @@
 
 /* split che ritorna una matrice con i soli redirect */
 
-static int	ft_iscut(char c)
+static void	ft_splitered_bwhile_2(char *s, t_spl *x)
 {
-	if (!c || c == 32 || c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
+	while (s[x->i] == 32)
+		x->new[x->k][x->j++] = s[x->i++];
+	while (!ft_iscut(s[x->i]))
+	{
+		if (s[x->i] && s[x->i] == SQUT)
+		{
+			x->new[x->k][x->j++] = s[x->i++];
+			while (s[x->i] && s[x->i] != SQUT)
+				x->new[x->k][x->j++] = s[x->i++];
+			if (s[x->i])
+				x->new[x->k][x->j++] = s[x->i++];
+		}
+		else if (s[x->i] && s[x->i] == DQUT)
+		{
+			x->new[x->k][x->j++] = s[x->i++];
+			while (s[x->i] && s[x->i] != DQUT)
+				x->new[x->k][x->j++] = s[x->i++];
+			if (s[x->i])
+				x->new[x->k][x->j++] = s[x->i++];
+		}
+		else
+			x->new[x->k][x->j++] = s[x->i++];
+	}
 }
 
-static int	ft_strlen_pez(char *s, int *f)
+static void	ft_splitered_bwhile_1(char *s, t_spl *x)
 {
-	int	i;
-
-	i = 5;
-	while (s[*f] && s[*f] != '<' && s[*f] != '>')
+	if (s[x->i] == '<' || s[x->i] == '>')
 	{
-		if (s[*f] == SQUT)
-		{
-			*f += 1;
-			while (s[*f] != SQUT)
-				*f += 1;
-		}
-		if (s[*f] == DQUT)
-		{
-			*f += 1;
-			while (s[*f] != DQUT)
-				*f += 1;
-		}
-		*f += 1;
+		x->new[x->k][x->j++] = s[x->i++];
+		if ((s[x->i - 1] == '<' && s[x->i] == '<')
+			|| (s[x->i - 1] == '>' && s[x->i] == '>'))
+			x->new[x->k][x->j++] = s[x->i++];
+		ft_splitered_bwhile_2(s, x);
 	}
-	if ((s[*f] && s[*f] == '<') || (s[*f] && s[*f] == '>'))
-	{
-		if ((s[*f] == '<' && s[*f + 1] == '<') && (s[*f] == '>' && s[*f + 1] == '>'))
-		{
-			i++;
-			*f += 1;
-		}
-		i++;
-		*f += 1;
-		while (s[*f] == 32)
-			*f += 1;
-		while (!ft_iscut(s[*f]))
-		{
-			if (s[*f] == SQUT)
-			{
-				i++;
-				*f += 1;
-				while (s[*f] != SQUT)
-				{
-					i++;
-					*f += 1;
-				}
-			}
-			if (s[*f] == DQUT)
-			{
-				i++;
-				*f += 1;
-				while (s[*f] != DQUT)
-				{
-					i++;
-					*f += 1;
-				}
-			}
-			i++;
-			*f += 1;
-		}
-	}
-/*	while (s[*f])
-	{
-		if (s[*f] == SQUT)
-		{
-			i++;
-			*f += 1;
-			while (s[*f] != SQUT)
-			{
-				i++;
-				*f += 1;
-			}
-		}
-		if (s[*f] == DQUT)
-		{
-			i++;
-			*f += 1;
-			while (s[*f] != DQUT)
-			{
-				i++;
-				*f += 1;
-			}
-		}
-		//if (s[*f] == 32)
-		if (ft_iscut(s[*f]))
-			break ;
-		i++;
-		*f += 1;
-	}*/
-	return (i);
 }
 
-static int	ft_count_word(char *str)
+static void	ft_splitered_bwhile_0(char *s, t_spl *x)
 {
-	int	i;
-	int	word;
-
-	i = 0;
-	word = 1;
-	if (!str)
-		return (1);
-	while (str && str[i])
+	x->j = 0;
+	x->new[x->k] = ft_calloc ((ft_strred_pez(s, &(x->f)) + 1), sizeof(char));
+	while (s[x->i] == 32 && s[x->i])
+		x->i++;
+	while (s[x->i] && s[x->i] != '<' && s[x->i] != '>' && s[x->i] != '|')
 	{
-		while (str[i] && str[i] != '<' && str[i] != '>')
+		if (s[x->i] && s[x->i] == SQUT)
 		{
-			if (str[i] && str[i] == SQUT)
-			{
-				i++;
-				while (str[i] && str[i] != SQUT)
-					i++;
-			}
-			if (str[i] && str[i] == DQUT)
-			{
-				i++;
-				while (str[i] && str[i] != DQUT)
-					i++;
-			}
-			if (str[i] == '|')
-				return (word) ;
-			i++;
+			x->i++;
+			while (s[x->i] && s[x->i] != SQUT)
+				x->i++;
 		}
-		if (str[i] == '<' || str[i] == '>')
+		if (s[x->i] && s[x->i] == DQUT)
 		{
-			i++;
-			if ((str[i] == '<' && str[i + 1] == '<') || (str[i] == '>' && str[i + 1] == '>'))
-				i++;
+			x->i++;
+			while (s[x->i] && s[x->i] != DQUT)
+				x->i++;
 		}
-		word++;
+		x->i++;
 	}
-	return (word);
 }
 
 char	**ft_splitered(char *s, t_mish *meta)
 {
-	size_t	i;
-	int		j;
-	int		k;
-	int		f;
-	char	**new;
+	t_spl	x;
 
-	k = 0;
-	i = 0;
-	f = i;
-	//printf("word: %i\n", ft_count_word(s));
-	new = (char **) ft_calloc (ft_count_word(s) + 1, sizeof(char *));
-	while (s[i] && s[i] != '|')
+	x.k = 0;
+	x.i = 0;
+	x.f = 0;
+	x.new = (char **) ft_calloc (ft_count_word_red(s) + 1, sizeof(char *));
+	while (s[x.i] && s[x.i] != '|')
 	{
-		j = 0;
-		/*int test = 0;
-		test = (ft_strlen_pez(s, &f) + 1);
-		new[k] = ft_calloc (test, sizeof(char));*/
-		new[k] = ft_calloc ((ft_strlen_pez(s, &f) + 1), sizeof(char));
-		while (s[i] == 32 && s[i])
-			i++;
-		while (s[i] && s[i] != '<' && s[i] != '>' && s[i] != '|')
-		{
-			if (s[i] && s[i] == SQUT)
-			{
-				i++;
-				while (s[i] && s[i] != SQUT)
-					i++;
-			}
-			if (s[i] && s[i] == DQUT)
-			{
-				i++;
-				while (s[i] && s[i] != DQUT)
-					i++;
-			}
-			i++;
-		}
-		if (s[i] == '<' || s[i] == '>')
-		{
-			new[k][j++] = s[i++];
-			if ((s[i - 1] == '<' && s[i] == '<') || (s[i - 1] == '>' && s[i] == '>'))
-				new[k][j++] = s[i++];
-			while (s[i] == 32)
-				new[k][j++] = s[i++];
-			while (!ft_iscut(s[i]))
-			{
-				if (s[i] && s[i] == SQUT)
-				{
-					new[k][j++] = s[i++];
-					while (s[i] && s[i] != SQUT)
-						new[k][j++] = s[i++];
-					if (s[i])
-						new[k][j++] = s[i++];
-				}
-				else if (s[i] && s[i] == DQUT)
-				{
-					new[k][j++] = s[i++];
-					while (s[i] && s[i] != DQUT)
-						new[k][j++] = s[i++];
-					if (s[i])
-						new[k][j++] = s[i++];
-				}
-				else
-					new[k][j++] = s[i++];
-			}
-		}
-		k++;
-		if (!s[i] || s[i] == '|')
+		ft_splitered_bwhile_0(s, &x);
+		ft_splitered_bwhile_1(s, &x);
+		x.k++;
+		if (!s[x.i] || s[x.i] == '|')
 			break ;
 	}
-	new[k] = NULL;
-	if (s[i] == '|')
+	x.new[x.k] = NULL;
+	if (s[x.i] == '|')
 		meta->flag = 1;
-	return (new);
+	return (x.new);
 }
-/*
-int		main()
- 
-	char **str;
-	t_mish a;
-	//str = ft_splitermux(" e ch\"a '  ' \" ciao   'a'", &a);
-	//str = ft_splitermux(" e cha ' as ' ci 'ao", &a);
-	//str = ft_splitermux("cia'o smasb ' ", &a);
-	//str = ft_splitermux("ciao a' a\"", &a);
-	//str = ft_splitermux(" a'cane ' ' ssss ", &a); // CONTROLLARE
-	//str = ft_splitermux(" \"ciao ", &a);
-	//str = ft_splitermux(" \'ciao ", &a);
-	//str = ft_splitermux("ciao\"$USERzzzzz'\"", &a); //con il ./minishell non stampa, qui stampa ok
-	//str = ft_splitermux("ciao $USERs'", &a);
-	int i = 0;
-
-	while (str[i]) 
-		printf("%s\n", str[i++]);
-}
-*/

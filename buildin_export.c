@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 17:51:33 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 13:06:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:21:06 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 /* nuova lista per export senza value?
  * forse basta fare che se value = NULL allora stampa, senno no
- * 
- * quando dichiara invece bisogna prima cercare se non c'e', se c'e' la aggiunge a env_list
+ *
+ * quando dichiara invece bisogna prima cercare se non c'e',
+ *    se c'e' la aggiunge a env_list
  * */
 
-void	ft_export_stamp(t_mish *meta)
+static void	ft_export_stamp(t_mish *meta)
 {
 	int		i;
 	int		eq;
@@ -42,35 +43,79 @@ void	ft_export_stamp(t_mish *meta)
 	}
 }
 
-int		ft_key_iglliena(t_mish *meta, char *key)
+static int	ft_key_iglliena(t_mish *meta, char *key)
 {
 	int		i;
 
 	i = 0;
 	while (meta->env[i])
 	{
-		if (!ft_strncmp(meta->env[i], key, ft_strlen(key)) && meta->env[i][ft_strlen(key)] == '=')
+		if (!ft_strncmp(meta->env[i], key, ft_strlen(key))
+			&& meta->env[i][ft_strlen(key)] == '=')
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
+static void	ft_export_solokey(t_mish *meta, t_cmd *node, int k)
+{
+	char	*tmp;
+	t_exenv	*ino;
+
+	ino = meta->ext_env;
+	while (ino)
+	{
+		if (!ft_strncmp(ino->key, node->pot[k], ft_findchar(node->pot[k], '='))
+			&& !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))// - 1))
+		{
+			if (ft_envlst_statusvalue(ino, ino->key) == 1)
+				break ;
+			tmp = ft_strjoin(ino->key, "=");
+			tmp = ft_linejoin(tmp, ino->value, ft_strlen(ino->value));
+			meta->env = ft_replace_add_env(meta->env, tmp);
+			ft_free((void **) &(ino->key));
+			ft_free((void **) &(ino->value));
+			break ;
+		}
+		ino = ino->next;
+	}
+	if (!ino)
+		ft_envlst_addfront(&meta->ext_env, ft_envlst_new(node->pot[k]));
+}
+
+static void	ft_export_full(t_mish *meta, t_cmd *node, int k)
+{
+	t_exenv	*ino;
+
+	meta->env = ft_replace_add_env(meta->env, ft_strdup(node->pot[k]));
+	ino = meta->ext_env;
+	while (ino)
+	{
+		if (!ft_strncmp(ino->key, node->pot[k], ft_findchar(node->pot[k], '='))
+			&& !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))
+		{
+			ft_free((void **) &(ino->key));
+			ft_free((void **) &(ino->value));
+			break ;
+		}
+		ino = ino->next;
+	}
+}
+
 void	ft_export(t_mish *meta, t_cmd *node)
 {
 	int		i;
 	int		k;
-	char	*tmp;
-	t_exenv	*ino;
 
 	if (!node->pot[1])
 		ft_export_stamp(meta);
 	else
 	{
-		i = 0;
 		k = 0;
 		while (node->pot[++k])
 		{
+			i = 0;
 			while (ft_isenv(node->pot[k][i]))
 				i++;
 			if (node->pot[k][i] == '\0' ||
@@ -78,40 +123,10 @@ void	ft_export(t_mish *meta, t_cmd *node)
 			{
 				if (ft_key_iglliena(meta, node->pot[k]))
 					continue ;
-				ino = meta->ext_env;
-				while (ino)
-				{
-					if (!ft_strncmp(ino->key, node->pot[k], ft_findchar(node->pot[k], '=')) && !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))// - 1))
-					{
-						if (ft_envlst_statusvalue(ino, ino->key) == 1)
-							break ;
-						tmp = ft_strjoin(ino->key, "=");
-						tmp = ft_linejoin(tmp, ino->value, ft_strlen(ino->value));
-						meta->env = ft_replace_add_env(meta->env, tmp);
-						ft_free((void **) &(ino->key));
-						ft_free((void **) &(ino->value));
-						break ;
-					}
-					ino = ino->next;
-				}
-				if (!ino)
-					ft_envlst_addfront(&meta->ext_env, ft_envlst_new(node->pot[k]));
+				ft_export_solokey(meta, node, k);
 			}
 			else
-			{
-				meta->env = ft_replace_add_env(meta->env, ft_strdup(node->pot[k]));
-				ino = meta->ext_env;
-				while (ino)
-				{
-					if (!ft_strncmp(ino->key, node->pot[k], ft_findchar(node->pot[k], '=')) && !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))
-					{
-						ft_free((void **) &(ino->key));
-						ft_free((void **) &(ino->value));
-						break ;
-					}
-					ino = ino->next;
-				}
-			}
+				ft_export_full(meta, node, k);
 		}
 	}
 }

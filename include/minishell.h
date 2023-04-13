@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 12:03:23 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:31:57 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@
 # define SQUT 39
 # define DQUT 34
 
-// la home con il / e' stata usata una volta, se viene riusata
-// conveniene metterla nella struct?
-
 typedef struct	s_cmd
 {
-	char			**pot; //matrix of line no pipe ([0] is command)
+	char			**pot;
 	char			**red;
-	struct s_cmd	*next; //ogni nodo un pipe :D
+	struct s_cmd	*next;
 }				t_cmd;
 
 typedef struct	s_exenv
@@ -74,6 +71,14 @@ typedef struct	s_mish
 	char	*duckpath;
 }				t_mish;
 
+typedef struct	s_spl
+{
+	size_t	i;
+	int		j;
+	int		k;
+	int		f;
+	char	**new;
+}				t_spl;
 
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
 int		ft_free_shell(t_mish *meta);
@@ -87,14 +92,6 @@ void	ft_cmdlst_iterstr(t_cmd *cmd, char *(*parse1)(char *, t_mish *),
 void	ft_cmdlst_clear(t_cmd **cmd);
 void	ft_cmdlst_addfront(t_cmd **cmd, t_cmd *new);
 t_cmd	*ft_cmdlst_new(char **pot);
-
-/* custom_env */
-int		ft_matrixlen(char **mat);
-char	**ft_matrixdel(char	**mat, char	*str);
-char	**ft_matrixadd(char	**mat, char	*str);
-char	**ft_replace_add_env(char **mat, char *str);
-char	**ft_set_newenv(char **envp);
-int		ft_findchar(char *str, char c);
 
 /* parse_line */
 char	*ft_linejoin(char *line, char *piece, int n);
@@ -117,11 +114,6 @@ void	ft_unset(t_mish *meta, t_cmd *node);
 /* buildin_export */
 void	ft_export(t_mish *meta, t_cmd *node);
 
-/* ft_splitermux */
-char	**ft_splitermux(char *s, t_mish *meta);
-/* ft_splitered */
-char	**ft_splitered(char *s, t_mish *meta);
-
 /* handle commands*/
 int		ft_handle_commands(t_mish *meta, t_cmd *node);
 int		ft_pre_slash(t_mish *meta, t_cmd *node);
@@ -139,13 +131,23 @@ void	ft_handle_setenv(t_mish *meta, t_cmd *node);
 int		ft_isasetenv(char *str);
 
 /* env_list */
-char	*ft_envlst_retvalue(t_exenv *exenv, char *key);
 void	ft_envlst_clear(t_exenv **exenv);
 void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new);
 t_exenv	*ft_envlst_new(char *str);
-void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
-int		ft_envlst_statusvalue(t_exenv *exenv, char *key);
 void	ft_envlst_nullnode(t_exenv *exenv, char *key);
+
+/* custom_env */
+char	**ft_matrixdel(char	**mat, char	*str);
+char	**ft_matrixadd(char	**mat, char	*str);
+char	**ft_replace_add_env(char **mat, char *str);
+char	**ft_set_newenv(char **envp);
+
+/* env utils */
+int		ft_matrixlen(char **mat);
+int		ft_findchar(char *str, char c);
+int		ft_envlst_statusvalue(t_exenv *exenv, char *key);
+char	*ft_envlst_retvalue(t_exenv *exenv, char *key);
+void	ft_envlst_newvalue(t_exenv *exenv, char *key, char *str);
 
 /* find_binary */
 char	*ft_getenv(char *to_get, char **env);
@@ -153,9 +155,18 @@ char	*ft_getpath(char *full_path, t_mish *meta, t_cmd *node);
 void	ft_getcmd(t_mish *meta, t_cmd *node);
 int		ft_execbin(t_mish *meta, t_cmd *node);
 
-/* mini_pipe */
+/* mini_pipe & utils*/
 int		ft_mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
 int		ft_pipe_or_not(t_mish *meta, t_cmd *node);
+int		ft_close_n_ret(int fd1, int fd2, int fd3, int ret_num);
+void	ft_redirect(t_mish *meta, int fd_in, int fd_out);
+void	ft_red_fromfile(t_mish *meta);
+void	ft_rev_redirect(t_mish *meta);
+
+/* redirect & utils*/
+int		ft_do_red(t_mish *meta, t_cmd *node);
+int		ft_red_error(t_mish *meta);
+int		ft_in_heredoc(t_mish *meta, char *delimiter);
 
 /* sign_handler */
 void	ft_sign_ecode(t_mish *meta, int ecode);
@@ -164,7 +175,15 @@ void	ft_sign_handler_heredoc(int sig);
 void	ft_sign_handler_exec(int sig);
 void	ft_sign_handler_rl(int sig);
 
-/* redirect */
-int	ft_do_red(t_mish *meta, t_cmd *node);
+/* ft_splitermux & utils */
+char	**ft_splitermux(char *s, t_mish *meta);
+int		ft_strmux_pez(char *s, int *f);
+int		ft_count_word_mux(char *str);
+int		ft_iscut(char c);
+
+/* ft_splitered & utils*/
+char	**ft_splitered(char *s, t_mish *meta);
+int		ft_strred_pez(char *s, int *f);
+int		ft_count_word_red(char *str);
 
 #endif

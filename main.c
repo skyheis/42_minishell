@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 10:07:40 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:52:41 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_print_file(t_mish *meta, char *filename)
 	char	*full_badge;
 
 	(void) meta;
-	//printf("\e[1;1H\e[2J");
 	ft_clean_for_file(meta->env);
 	fd = open(filename, O_RDONLY);
 	b_readed = READ_SIZE;
@@ -60,7 +59,6 @@ void	ft_print_file(t_mish *meta, char *filename)
 	}
 	close(fd);
 	printf("%s", full_badge);
-	// se serve, mettiamo full_badge in struct e free in free_shell
 	ft_free((void **) &(full_badge));
 }
 
@@ -141,8 +139,6 @@ int	main(int ac, char **av, char **envp)
 	else
 		meta.olddir = ft_strdup(getenv("PWD"));
 	meta.env = ft_set_newenv(envp);
-	//meta.env = ft_replace_add_env(meta.env,
-	//	ft_linejoin(ft_strdup("OLDPWD="), getenv("PWD"), ft_strlen(getenv("PWD"))));
 	meta.line = NULL;
 	meta.fd_history = 0;
 	meta.cmd = 0;

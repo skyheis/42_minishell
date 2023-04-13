@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/13 11:10:59 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/13 19:30:33 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,16 @@ INCLUDE = include
 DIRSRCS =
 DIROBJS = obj/
 
-FLSRCS = main.c cmd_list.c custom_env.c parse_line.c handle_readline.c \
-		 splitered.c splitermux.c parse_red.c\
-		 env_list.c find_binary.c buildin.c buildin_export.c \
-		 handle_commands.c buildin_cd_utils.c \
-		 buildin_cd.c buildin_cd2.c handle_setenv.c \
-		 mini_pipe.c sign_handler.c redirect.c duck.c
+FLSRCS = main.c handle_readline.c \
+		 parse_line.c parse_red.c find_binary.c \
+		 buildin.c buildin_unset.c buildin_export.c \
+		 buildin_cd.c buildin_cd2.c buildin_cd_utils.c \
+		 env_list.c custom_env.c env_utils.c \
+		 handle_commands.c handle_setenv.c cmd_list.c \
+		 mini_pipe.c mini_pipe_utils.c \
+		 splitered.c splitered_utils.c \
+		 splitermux.c splitermux_utils_0.c splitermux_utils_1.c \
+		 sign_handler.c redirect.c redirect_utils.c duck.c
 
 FLOBJS = ${FLSRCS:.c=.o}
 

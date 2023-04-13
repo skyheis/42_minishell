@@ -6,19 +6,17 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 09:32:08 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 17:59:29 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//tutte da testare
-
 /* esegue una funzine su tutte le stringhe */
 void	ft_cmdlst_iterstr(t_cmd *cmd, char *(*parse1)(char *, t_mish *),
 		char *(*parse2)(char *, t_mish *), t_mish *meta)
 {
-	int i;
+	int	i;
 
 	while (cmd)
 	{

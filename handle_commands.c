@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 11:13:52 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:31:36 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,29 @@ void	ft_chad(t_mish *meta)
 	i++;
 }
 
+int	ft_handle_commands_continue(t_mish *meta, t_cmd *node)
+{
+	int	ecode;
+
+	ecode = 0;
+	if (!ft_strncmp(node->pot[0], "clear", 6))
+		ft_clean_shell(meta->env, meta);
+	else if (!ft_strncmp(node->pot[0], "export", 7))
+		ft_export(meta, node);
+	else if (!ft_strncmp(node->pot[0], "chad", 5))
+		ft_chad(meta);
+	else if (!ft_strncmp(node->pot[0], "duck", 5))
+		ecode = ft_duck(meta);
+	else if (ft_isasetenv(node->pot[0]))
+		ft_handle_setenv(meta, node);
+	else if (node->pot[0])
+		ecode = ft_execbin(meta, node);
+	return (ecode);
+}
+
 int	ft_handle_commands(t_mish *meta, t_cmd *node)
 {
-	int ecode;
+	int	ecode;
 
 	ecode = 0;
 	if (!ft_strncmp(node->pot[0], "history", 8))
@@ -72,17 +92,7 @@ int	ft_handle_commands(t_mish *meta, t_cmd *node)
 		ft_env(meta, node);
 	else if (!ft_strncmp(node->pot[0], "cd", 3))
 		ecode = ft_cd(meta, node);
-	else if (!ft_strncmp(node->pot[0], "clear", 6))
-		ft_clean_shell(meta->env, meta);
-	else if (!ft_strncmp(node->pot[0], "export", 7))
-		ft_export(meta, node);
-	else if (!ft_strncmp(node->pot[0], "chad", 5))
-		ft_chad(meta);
-	else if (!ft_strncmp(node->pot[0], "duck", 5))
-		ecode = ft_duck(meta);
-	else if (ft_isasetenv(node->pot[0]))
-		ft_handle_setenv(meta, node);
-	else if (node->pot[0])
-		ecode = ft_execbin(meta, node);
+	else
+		ecode = ft_handle_commands_continue(meta, node);
 	return (ecode);
 }

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 17:10:48 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/12 16:49:25 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:27:44 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,4 @@ void	ft_env(t_mish *meta, t_cmd *node)
 		return ;
 	while (meta->env[i])
 		printf("%s\n", meta->env[i++]);
-}
-
-void	ft_unset(t_mish *meta, t_cmd *node) //manca la parte della lista
-{
-	int	i;
-	int	j;
-	int	len;
-
-	i = 0;
-	while (meta->env[i])
-	{
-		j = 1;
-		while (node->pot[j])
-		{
-			len = ft_strlen(node->pot[j]);
-			if (!ft_strncmp(meta->env[i], node->pot[j], len))
-				if (meta->env[i][len] == '=')
-					meta->env = ft_matrixdel(meta->env, node->pot[j]);
-			j++;
-		}
-		i++;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 17:30:09 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/06 15:21:16 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/13 19:05:49 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ void	ft_handle_line(t_mish *meta)
 	char	**mat;
 
 	i = 0;
-	// if dopo spazi subito | allora exit with error
+	// if dopo spazi subito | allora exit with error 2
+	// bash: syntax error near unexpected token `|'
 	meta->flag = 1;
 	while (meta->flag)
 	{
 		meta->flag = 0;
 		if (i != 0 && meta->line[i] == '|')
 			i++;
-		//if (meta->line[i] == '|')
-		//	i++;
 		mat = ft_splitermux(&meta->line[i], meta);
 		ft_cmdlst_addfront(&meta->cmd, ft_cmdlst_new(mat));
 		meta->cmd->red = ft_splitered(&meta->line[i], meta);
@@ -73,8 +72,6 @@ void	ft_handle_line(t_mish *meta)
 			i++;
 		}
 	}
-	//ft_printnodes(meta->cmd, meta);
 	ft_cmdlst_iterstr(meta->cmd, ft_parse_word, ft_parse_red, meta);
-	//ft_printnodes(meta->cmd, meta);
-	//exit(0);
 }
+/* ft_printnodes(meta->cmd, meta); */
