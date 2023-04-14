@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 19:18:50 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:46:02 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int	ft_close_n_ret(int fd1, int fd2, int fd3, int ret_num)
 {
-	if (fd1 != -1)
+	if (fd1 != -1 && fd1 != -2)
 		close(fd1);
-	if (fd2 != -1)
+	if (fd2 != -1 && fd2 != -2)
 		close(fd2);
-	if (fd3 != -1)
+	if (fd3 != -1 && fd3 != -2)
 		close(fd3);
 	if (ret_num == -2)
 		return (0);
@@ -49,13 +49,15 @@ void	ft_rev_redirect(t_mish *meta)
 {
 	if (meta->infile != -2)
 	{
-		close(meta->infile);
+		if (meta->infile != -1)
+			close(meta->infile);
 		meta->infile = -2;
 		dup2(meta->c_stdin, 0);
 	}
 	if (meta->outfile != -2)
 	{
-		close(meta->outfile);
+		if (meta->outfile != -1)
+			close(meta->outfile);
 		meta->outfile = -2;
 		dup2(meta->c_stdout, 1);
 	}

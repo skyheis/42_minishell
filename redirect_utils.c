@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 14:53:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 18:43:00 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:47:47 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_in_heredoc(t_mish *meta, char *delimiter)
 	unlink("/tmp/.heredoc");
 	if (!delimiter[0])
 		return (0);
-	if (meta->infile != -2)
+	if (meta->infile != -2 && meta->infile != -1)
 		close(meta->infile);
 	pid = fork();
 	ft_magic_heredoc(pid);

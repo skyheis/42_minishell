@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:27:27 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 09:41:39 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:49:05 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	ft_fill_history(t_mish *meta)
 
 void	ft_reset_line(t_mish *meta)
 {
-	if (meta->infile != -2)
+	if (meta->infile != -2 && meta->infile != -1)
 	{
 		close(meta->infile);
 		meta->infile = -2;
 	}
-	if (meta->outfile != -2)
+	if (meta->outfile != -2 && meta->outfile != -1)
 	{
 		close(meta->outfile);
 		meta->outfile = -2;

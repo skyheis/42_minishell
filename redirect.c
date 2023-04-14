@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:29:27 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 15:09:44 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:47:24 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_out_file(t_mish *meta, char *filename, int type)
 {
 	if (!filename[0])
 		return (0);
-	if (meta->outfile != -2)
+	if (meta->outfile != -2 && meta->outfile != -1)
 		close(meta->outfile);
 	if (type == 1)
 		meta->outfile = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -34,6 +34,7 @@ int	ft_in_file(t_mish *meta, char *filename)
 		meta->exit_code = 2;
 		return (0);
 	}
+	if (meta->infile != -2 && meta->infile != -1)
 	if (meta->infile != -2)
 		close(meta->infile);
 	meta->infile = open(filename, O_RDONLY);

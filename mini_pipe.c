@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 09:43:15 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 14:44:21 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ int	ft_exec_pipe(t_mish *meta, t_cmd *node, int fd_in, int fd_out)
 	pid = fork();
 	if (!pid)
 	{
-		stat = ft_do_red(meta, node);
-		if (stat)
-			exit(stat);
-		ft_redirect(meta, fd_in, fd_out);
-		pexit = ft_handle_commands(meta, node);
-		ft_close_n_ret(fd_in, fd_out, -1, -2);
+		pexit = ft_do_red(meta, node);
+		if (pexit == 0)
+		{
+			ft_redirect(meta, fd_in, fd_out);
+			pexit = ft_handle_commands(meta, node);
+			ft_close_n_ret(fd_in, fd_out, -1, -2);
+		}
 		ft_free_shell(meta);
 		exit(pexit);
 	}
