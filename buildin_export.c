@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/10 17:51:33 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 19:21:06 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:46:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	ft_export_solokey(t_mish *meta, t_cmd *node, int k)
 	while (ino)
 	{
 		if (!ft_strncmp(ino->key, node->pot[k], ft_findchar(node->pot[k], '='))
-			&& !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))// - 1))
+			&& !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))
 		{
 			if (ft_envlst_statusvalue(ino, ino->key) == 1)
 				break ;

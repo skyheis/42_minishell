@@ -6,13 +6,13 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 10:37:59 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/01 16:43:02 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:40:58 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_n_digits(int n)
+static size_t	ft_n_digits(int n)
 {
 	size_t	k;
 
@@ -29,6 +29,16 @@ size_t	ft_n_digits(int n)
 	return (k);
 }
 
+static int	ft_is_minint(int *n)
+{
+	if (*n == -2147483648)
+	{
+		*n /= 10;
+		return (1);
+	}
+	return (0);
+}
+
 char	*ft_itoa(int n)
 {
 	size_t	len_s;
@@ -39,11 +49,8 @@ char	*ft_itoa(int n)
 	if (str_nbr == NULL)
 		return (NULL);
 	str_nbr[len_s--] = '\0';
-	if (n == -2147483648)
-	{
+	if (ft_is_minint(&n))
 		str_nbr[len_s--] = '8';
-		n /= 10;
-	}
 	if (n < 0)
 	{
 		str_nbr[0] = '-';

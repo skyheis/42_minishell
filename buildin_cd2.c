@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buildin_cd2.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/04/14 09:54:48 by ggiannit          #+#    #+#             */
+/*   Updated: 2023/04/14 09:55:18 by ggiannit         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	ft_slash(t_mish *meta)//, char *pot)// k da levare forse
+void	ft_slash(t_mish *meta)
 {
-
 	ft_free((void **) &(meta->olddir));
 	meta->olddir = ft_strdup(meta->curdir);
 	ft_free((void **) &(meta->curdir));
@@ -31,7 +42,7 @@ int	ft_cd_slash(t_mish *meta, t_cmd *node)
 	if (node->pot[1][0] != '-')
 	{
 		ft_cd_slash2(meta, node);
-		return (1); //perche' torna uno?
+		return (1);
 	}
 	if (node->pot[1][0] == '-' && (!node->pot[1][1] || node->pot[1][1] == 32))
 		return (ft_cd_meno(meta));
@@ -118,7 +129,7 @@ void	ft_cd_slash2(t_mish *meta, t_cmd *node)
 	int	k;
 
 	i = 1;
-	ft_slash(meta);//, "/");
+	ft_slash(meta);
 	while (node->pot[1][i] && !ft_isalpha(node->pot[1][i])
 		&& !ft_isdigit(node->pot[1][i]))
 		i++;

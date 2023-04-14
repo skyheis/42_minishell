@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/13 19:30:33 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/14 09:36:30 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ INCLUDE = include
 DIRSRCS =
 DIROBJS = obj/
 
-FLSRCS = main.c handle_readline.c \
+FLSRCS = main.c handle_readline.c free_n_history.c print_file.c \
 		 parse_line.c parse_red.c find_binary.c \
 		 buildin.c buildin_unset.c buildin_export.c \
 		 buildin_cd.c buildin_cd2.c buildin_cd_utils.c \

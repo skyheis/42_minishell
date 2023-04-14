@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 10:38:50 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 18:04:08 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:50:04 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_envlst_addfront(t_exenv **exenv, t_exenv *new)
 t_exenv	*ft_envlst_new(char *str)
 {
 	t_exenv	*new;
-	int	i;	
+	int		i;
 
 	i = 0;
 	new = malloc(sizeof(t_exenv));
@@ -67,7 +67,7 @@ t_exenv	*ft_envlst_new(char *str)
 		if (str[i] == '=')
 		{
 			new->key = ft_substr(str, 0, i);
-			new->value = ft_substr(str, i + 1, ft_strlen(&str[i])); //se niente dopo = e' null o vuoto?
+			new->value = ft_substr(str, i + 1, ft_strlen(&str[i]));
 			break ;
 		}
 		i++;

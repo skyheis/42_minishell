@@ -6,12 +6,13 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/24 17:30:09 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 19:05:49 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:42:47 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/* debug
 void	ft_printnodes(t_cmd *cmd, t_mish *meta)
 {
 	int	i = 0;
@@ -36,6 +37,27 @@ void	ft_printnodes(t_cmd *cmd, t_mish *meta)
 		printf("\nNEEXT\n");
 		cmd = cmd->next;
 	}
+}*/
+/* ft_printnodes(meta->cmd, meta); */
+
+static void	ft_skip_cmd(t_mish *meta, int *i)
+{
+	while (meta->line[*i] && meta->line[*i] != '|')
+	{
+		if (meta->line[*i] && meta->line[*i] == SQUT)
+		{
+			*i += 1;
+			while (meta->line[*i] && meta->line[*i] != SQUT)
+				*i += 1;
+		}
+		if (meta->line[*i] && meta->line[*i] == DQUT)
+		{
+			*i += 1;
+			while (meta->line[*i] && meta->line[*i] != DQUT)
+				*i += 1;
+		}
+		*i += 1;
+	}
 }
 
 void	ft_handle_line(t_mish *meta)
@@ -44,8 +66,6 @@ void	ft_handle_line(t_mish *meta)
 	char	**mat;
 
 	i = 0;
-	// if dopo spazi subito | allora exit with error 2
-	// bash: syntax error near unexpected token `|'
 	meta->flag = 1;
 	while (meta->flag)
 	{
@@ -55,23 +75,7 @@ void	ft_handle_line(t_mish *meta)
 		mat = ft_splitermux(&meta->line[i], meta);
 		ft_cmdlst_addfront(&meta->cmd, ft_cmdlst_new(mat));
 		meta->cmd->red = ft_splitered(&meta->line[i], meta);
-		while (meta->line[i] && meta->line[i] != '|')
-		{
-			if (meta->line[i] && meta->line[i] == SQUT)
-			{
-				i++;
-				while (meta->line[i] && meta->line[i] != SQUT)
-					i++;
-			}
-			if  (meta->line[i] && meta->line[i] == DQUT)
-			{
-				i++;
-				while (meta->line[i] && meta->line[i] != DQUT)
-					i++;
-			}
-			i++;
-		}
+		ft_skip_cmd(meta, &i);
 	}
 	ft_cmdlst_iterstr(meta->cmd, ft_parse_word, ft_parse_red, meta);
 }
-/* ft_printnodes(meta->cmd, meta); */

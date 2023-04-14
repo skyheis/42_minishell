@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:24:53 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 19:15:56 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:43:58 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_getpath(char *full_path, t_mish *meta, t_cmd *node)
 	(void) meta;
 	i = 0;
 	if (!access(node->pot[0], X_OK))
-		return(NULL);
+		return (NULL);
 	path_mat = ft_split(full_path, ':');
 	while (path_mat[i])
 	{
@@ -94,7 +94,7 @@ int	ft_execbin(t_mish *meta, t_cmd *node)
 		execve(node->pot[0], node->pot, meta->env);
 		if (WEXITSTATUS(EXIT_FAILURE) != 1)
 		{
-			ft_putstr_fd(&node->pot[0][ft_endpath(node->pot[0])],2 );
+			ft_putstr_fd(&node->pot[0][ft_endpath(node->pot[0])], 2);
 			ft_putstr_fd(": command not found\n", 2);
 			ft_free_shell(meta);
 			exit(127);

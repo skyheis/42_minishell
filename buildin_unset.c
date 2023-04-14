@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 19:27:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 19:27:55 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:54:18 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,11 @@ void	ft_unset_list(t_mish *meta, t_cmd *node)
 	k = 0;
 	while (++k)
 	{
-		ino  = meta->ext_env;
+		ino = meta->ext_env;
 		while (ino)
 		{
-			if (!ft_strncmp(ino->key, node->pot[k], ft_findchar(node->pot[k], '='))
+			if (!ft_strncmp(ino->key, node->pot[k],
+					ft_findchar(node->pot[k], '='))
 				&& !ft_strncmp(ino->key, node->pot[k], ft_strlen(ino->key)))
 			{
 				ft_free((void **) &(ino->key));

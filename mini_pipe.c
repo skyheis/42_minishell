@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 16:23:16 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 17:41:56 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:43:15 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_pipe_or_not(t_mish *meta, t_cmd *node)
 {
 	signal(SIGINT, ft_sign_handler_exec);
 	if (node->next)
-		return (ft_mini_pipe(meta, node, 1)); 
+		return (ft_mini_pipe(meta, node, 1));
 	else
 	{
 		meta->exit_code = ft_do_red(meta, node);

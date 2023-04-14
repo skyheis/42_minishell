@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 18:31:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:28:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ typedef struct	s_spl
 
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
 int		ft_free_shell(t_mish *meta);
-void	ft_print_file(t_mish *meta, char *filename);
 int	ft_duck(t_mish *meta);
 
 
@@ -155,6 +154,12 @@ char	*ft_getpath(char *full_path, t_mish *meta, t_cmd *node);
 void	ft_getcmd(t_mish *meta, t_cmd *node);
 int		ft_execbin(t_mish *meta, t_cmd *node);
 
+/* free n history */
+void	ft_set_history(t_mish *meta);
+void	ft_fill_history(t_mish *meta);
+void	ft_reset_line(t_mish *meta);
+int		ft_free_shell(t_mish *meta);
+
 /* mini_pipe & utils*/
 int		ft_mini_pipe(t_mish *meta, t_cmd *node, int fd_write);
 int		ft_pipe_or_not(t_mish *meta, t_cmd *node);
@@ -185,5 +190,8 @@ int		ft_iscut(char c);
 char	**ft_splitered(char *s, t_mish *meta);
 int		ft_strred_pez(char *s, int *f);
 int		ft_count_word_red(char *str);
+
+/* print file */
+void	ft_print_file(t_mish *meta, char *filename);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:42:33 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 12:22:26 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/14 09:53:19 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_isasetenv(char *str)
 
 	i = 0;
 	while (str && ft_isenv(str[i]))
-			i++;
+		i++;
 	if (i == 0)
 		return (0);
 	if (str && str[i] == '=')
@@ -37,9 +37,23 @@ void	ft_env_rbracket(char **vake)
 		return ;
 	key = ft_strdup(*vake);
 	key[eq + 1] = '\0';
-	tmp = ft_linejoin(key, &((*vake)[eq + 2]), ft_strlen(&((*vake)[eq + 2])) - 1);
+	tmp = ft_linejoin(key, &((*vake)[eq + 2]),
+			ft_strlen(&((*vake)[eq + 2])) - 1);
 	ft_free((void **) vake);
 	*vake = tmp;
+}
+
+static void	ft_handle_setenv_list(t_mish *meta, t_cmd *node, char *key)
+{
+	if (ft_envlst_statusvalue(meta->ext_env, key) == 1)
+	{
+		meta->env = ft_replace_add_env(meta->env, strdup(node->pot[0]));
+		ft_envlst_nullnode(meta->ext_env, key);
+	}
+	else if (ft_envlst_statusvalue(meta->ext_env, key) == 2)
+		ft_envlst_newvalue(meta->ext_env, key, node->pot[0]);
+	else
+		ft_envlst_addfront(&(meta->ext_env), ft_envlst_new(node->pot[0]));
 }
 
 void	ft_handle_setenv(t_mish *meta, t_cmd *node)
@@ -53,7 +67,8 @@ void	ft_handle_setenv(t_mish *meta, t_cmd *node)
 	ft_env_rbracket(&(node->pot[0]));
 	while (meta->env[i])
 	{
-		if (!ft_strncmp(meta->env[i], key, ft_strlen(key)) && meta->env[i][ft_strlen(key)] == '=')
+		if (!ft_strncmp(meta->env[i], key, ft_strlen(key))
+			&& meta->env[i][ft_strlen(key)] == '=')
 		{
 			ft_free((void **) &(key));
 			ft_free((void **) &(meta->env[i]));
@@ -62,14 +77,6 @@ void	ft_handle_setenv(t_mish *meta, t_cmd *node)
 		}
 		i++;
 	}
-	if (ft_envlst_statusvalue(meta->ext_env, key) == 1)
-	{
-		meta->env = ft_replace_add_env(meta->env, strdup(node->pot[0]));
-		ft_envlst_nullnode(meta->ext_env, key);
-	}
-	else if (ft_envlst_statusvalue(meta->ext_env, key) == 2)
-		ft_envlst_newvalue(meta->ext_env, key, node->pot[0]);
-	else
-		ft_envlst_addfront(&(meta->ext_env), ft_envlst_new(node->pot[0]));
+	ft_handle_setenv_list(meta, node, key);
 	ft_free((void **) &(key));
 }
