@@ -102,6 +102,15 @@ t_cmd	*ft_cmdlst_new(char **pot);
 char	*ft_linejoin(char *line, char *piece, int n);
 char	*ft_env_value(char	*line_key, char **env, t_mish *meta, int i);
 char	*ft_parse_word(char *line, t_mish *meta);
+void	ft_parse_word_else_1(char **newline, t_prs *prs,
+			t_mish *meta);
+void	ft_parse_word_else_2(char *line, t_mish *meta,
+			char **newline, t_prs *prs);
+void	ft_parse_word_else_dquot(char *line, t_mish *meta,
+			char **newline, t_prs *prs);
+void	ft_parse_word_2_1(char *line, t_mish *meta,
+			char **newline, t_prs *prs);
+void	ft_parse_word_else_3(char *line, char **newline, t_prs *prs);
 char	*ft_parse_red(char *line, t_mish *meta);
 
 /* handle_readline */
@@ -182,12 +191,10 @@ void	ft_rev_redirect(t_mish *meta);
 int		ft_do_red(t_mish *meta, t_cmd *node);
 int		ft_red_error(t_mish *meta);
 int		ft_in_heredoc(t_mish *meta, char *delimiter);
-void	ft_parse_red_else_1(char *line, int *n,
-			char *newline, t_prs *prs);
+void	ft_parse_red_else_1(char *line, char **newline, t_prs *prs);
 void	ft_parse_red_else_2(char *line, t_mish *meta,
-			char *newline, t_prs *prs);
-void	ft_parse_red_else_3(char *line, int *n,
-			char *newline, t_prs *prs);
+			char **newline, t_prs *prs);
+void	ft_parse_red_else_3(char *line, char **newline, t_prs *prs);
 
 /* sign_handler */
 void	ft_sign_ecode(t_mish *meta, int ecode);
