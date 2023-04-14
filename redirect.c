@@ -35,7 +35,6 @@ int	ft_in_file(t_mish *meta, char *filename)
 		return (0);
 	}
 	if (meta->infile != -2 && meta->infile != -1)
-	if (meta->infile != -2)
 		close(meta->infile);
 	meta->infile = open(filename, O_RDONLY);
 	if (meta->infile <= 0)
