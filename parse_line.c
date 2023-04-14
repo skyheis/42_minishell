@@ -12,17 +12,13 @@
 
 #include "minishell.h"
 
-/* parse_word verra' usata ogni volta che viene creato un nodo, tramite
- * la funzione ft_cmdlst_iterstr
- * */
-
 char	*ft_linejoin(char *line, char *piece, int n)
 {
 	int		i;
 	int		j;
 	char	*newline;
 
-	newline = ft_calloc(ft_strlen(line) + n + 3, sizeof(char)); // prima era +1
+	newline = ft_calloc(ft_strlen(line) + n + 3, sizeof(char));
 	if (!newline)
 		return (NULL);
 	i = 0;
@@ -44,13 +40,11 @@ char	*ft_linejoin(char *line, char *piece, int n)
 	return (newline);
 }
 
-char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
+char	*ft_env_value(char	*line_key, char **env, t_mish *meta, int i)
 {
-	int		i;
 	char	*key;
 	char	*value;
 
-	i = 0;
 	value = NULL;
 	key = ft_strdup(line_key);
 	while (key && ft_isenv(key[i]))
@@ -60,11 +54,11 @@ char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
 	while (env && env[++i])
 	{
 		if (!ft_strncmp(env[i], key, ft_strlen(key))
-				&& env[i][ft_strlen(key)] == '=')
+			&& env[i][ft_strlen(key)] == '=')
 		{
 			value = ft_substr(env[i], ft_strlen(key) + 1, ft_strlen(env[i]));
 			ft_free((void **) &key);
-			return(value);
+			return (value);
 		}
 	}
 	value = ft_strdup(ft_envlst_retvalue(meta->ext_env, key));
@@ -76,25 +70,21 @@ char	*ft_env_value(char	*line_key, char **env, t_mish *meta)
 
 char	*ft_parse_word(char *line, t_mish *meta)
 {
-	//itera, se trova '' fa cose, se trova "" fa cose, se trova $ fa cose
 	int		i;
 	int		n;
 	char	*newline;
 
 	i = 0;
 	newline = NULL;
-	if (line[0] == '~' && !line[1] )//forse gestibile interno
+	if (line[0] == '~' && !line[1] )
 	{
-		newline = ft_env_value("HOME", meta->env, meta);
-		//newline = ft_linejoin(NULL, newline, ft_strlen(newline));
-		//newline = ft_strdup(newline);
+		newline = ft_env_value("HOME", meta->env, meta, 0);
 		ft_free((void **) &line);
 		return (newline);
 	}
 	if (line[0] == '~' && line[1] == '/')
 	{
-		newline = ft_env_value("HOME", meta->env, meta);
-		//newline = ft_linejoin(NULL, newline, ft_strlen(newline));
+		newline = ft_env_value("HOME", meta->env, meta, 0);
 		newline = ft_linejoin(newline, "/", 1);
 		i += 2;
 	}
@@ -108,11 +98,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 		if (!line[i + n])
 			break ;
 		i += n;
-
-		//ft_parse_word_cond(int *i, char *line, char **newline)
-		//int	n;
 		char	*value;
-		//
 		n = 0;
 		if (line[i] == '$' && line[i + 1] == '?')
 		{
@@ -127,7 +113,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 			i++;
 			if (line[i] == '{')
 				i++;
-			value = ft_env_value(&line[i], meta->env, meta);
+			value = ft_env_value(&line[i], meta->env, meta, 0);
 			newline = ft_linejoin(newline, value, ft_strlen(value)); 
 			ft_free((void **) &value);
 			while (line[i] && ft_isenv(line[i]))
@@ -166,7 +152,7 @@ char	*ft_parse_word(char *line, t_mish *meta)
 					i++;
 					if (line[i] == '{')
 						i++;
-					value = ft_env_value(&line[i], meta->env, meta);
+					value = ft_env_value(&line[i], meta->env, meta, 0);
 					newline = ft_linejoin(newline, value, ft_strlen(value));
 					ft_free((void **) &value);
 					while (line[i] && ft_isenv(line[i]))
@@ -179,26 +165,8 @@ char	*ft_parse_word(char *line, t_mish *meta)
 			i += (n + 1);
 		}
 		else
-			newline = ft_linejoin(newline, &line[i++], 1); //risky
-			//i++;
-		//endfun
+			newline = ft_linejoin(newline, &line[i++], 1);
 	}
-	ft_free((void **) &line); //occhio per test
+	ft_free((void **) &line);
 	return (newline);
 }
-
-/*
-int main(int argc, char **argv, char **envp)
-{
-	char *lol;
-
-	while (1)
-	{
-		lol = readline("suca: ");
-		add_history(lol);
-		printf("%s\n", ft_parse_word(lol, envp));
-	}
-	//printf("%s\n", ft_parse_line(lol, envp));
-	return 0;
-}
-*/

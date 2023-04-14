@@ -33,21 +33,21 @@
 # define SQUT 39
 # define DQUT 34
 
-typedef struct	s_cmd
+typedef struct s_cmd
 {
 	char			**pot;
 	char			**red;
 	struct s_cmd	*next;
 }				t_cmd;
 
-typedef struct	s_exenv
+typedef struct s_exenv
 {
 	char			*key;
 	char			*value;
 	struct s_exenv	*next;
 }				t_exenv;
 
-typedef struct	s_mish
+typedef struct s_mish
 {
 	char	*line;
 	char	*user;
@@ -71,7 +71,7 @@ typedef struct	s_mish
 	char	*duckpath;
 }				t_mish;
 
-typedef struct	s_spl
+typedef struct s_spl
 {
 	size_t	i;
 	int		j;
@@ -80,21 +80,27 @@ typedef struct	s_spl
 	char	**new;
 }				t_spl;
 
+typedef struct s_prs
+{
+	int		i;
+	int		n;
+	char	*value;
+}				t_prs;
+
 void	ft_printnodes(t_cmd *cmd, t_mish *meta);
 int		ft_free_shell(t_mish *meta);
-int	ft_duck(t_mish *meta);
-
+int		ft_duck(t_mish *meta);
 
 /* cmd_list */
 void	ft_cmdlst_iterstr(t_cmd *cmd, char *(*parse1)(char *, t_mish *),
-		char *(*parse2)(char *, t_mish *), t_mish *meta);
+			char *(*parse2)(char *, t_mish *), t_mish *meta);
 void	ft_cmdlst_clear(t_cmd **cmd);
 void	ft_cmdlst_addfront(t_cmd **cmd, t_cmd *new);
 t_cmd	*ft_cmdlst_new(char **pot);
 
 /* parse_line */
 char	*ft_linejoin(char *line, char *piece, int n);
-char	*ft_env_value(char	*line_key, char **env, t_mish *meta);
+char	*ft_env_value(char	*line_key, char **env, t_mish *meta, int i);
 char	*ft_parse_word(char *line, t_mish *meta);
 char	*ft_parse_red(char *line, t_mish *meta);
 
@@ -119,6 +125,10 @@ int		ft_pre_slash(t_mish *meta, t_cmd *node);
 void	ft_cd_slash2(t_mish *meta, t_cmd *node);
 void	ft_cd_pre(t_mish *meta);
 void	ft_slash(t_mish *meta);
+void	ft_next_slash(t_mish *meta, char *str);
+int		len_slash(char *str);
+void	ft_pre_slash_2(t_mish *meta, t_cmd *node, int i);
+void	ft_cd_slash2_2(t_mish *meta, t_cmd *node, int i, int k);
 void	ft_unset(t_mish *meta, t_cmd *node);
 int		ft_cd_slash(t_mish *meta, t_cmd *node);
 void	ft_abs_path(t_mish *meta);
@@ -172,6 +182,12 @@ void	ft_rev_redirect(t_mish *meta);
 int		ft_do_red(t_mish *meta, t_cmd *node);
 int		ft_red_error(t_mish *meta);
 int		ft_in_heredoc(t_mish *meta, char *delimiter);
+void	ft_parse_red_else_1(char *line, int *n,
+			char *newline, t_prs *prs);
+void	ft_parse_red_else_2(char *line, t_mish *meta,
+			char *newline, t_prs *prs);
+void	ft_parse_red_else_3(char *line, int *n,
+			char *newline, t_prs *prs);
 
 /* sign_handler */
 void	ft_sign_ecode(t_mish *meta, int ecode);

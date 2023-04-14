@@ -43,51 +43,61 @@ void	ft_cd_pre(t_mish *meta)
 	ft_free((void **) &cwd);
 }
 
-int	ft_cd2(t_mish *meta, t_cmd *node)
+static void	ft_cd2_2_2(t_mish *meta, t_cmd *node, int flag)
 {
 	int	i;
 
-	i = 2;
-	if (!ft_strncmp(node->pot[1], "..", 2))
+	i = 0;
+	if (!flag)
 	{
-		while (node->pot[1][i])
-		{
-			if (node->pot[1][i] && node->pot[1][i] != '/'
-				&& (!ft_strncmp(&node->pot[1][i], "../", 3) ||
-					node->pot[1][i] == '.'))
-				return (ft_pre_slash(meta, node));
-			else if (node->pot[1][i] && ((ft_isalpha(node->pot[1][i + 3]) || ft_isdigit(node->pot[1][i + 3])) ||
-			(!ft_strncmp(&node->pot[1][i + 1], "./", 2) && (ft_isalpha(node->pot[1][i + 3])
-				|| ft_isdigit(node->pot[1][i + 3])))))
-				return (ft_pre_slash(meta, node));
-			else if (node->pot[1][i] && node->pot[1][i] != '/')
-				return (1);
-			i++;
-		}
-		i = 0;
 		ft_free((void **) &(meta->olddir));
 		meta->olddir = ft_strdup(meta->curdir);
 		ft_find_path(meta->home_path, &i);
 		chdir(&meta->home_path[i]);
 		ft_cd_pre(meta);
+		return ;
+	}
+	chdir(node->pot[1]);
+	ft_pre_slash(meta, node);
+}
+
+int	ft_cd2(t_mish *meta, t_cmd *node)
+{
+	int	i;
+
+	i = 1;
+	if (!ft_strncmp(node->pot[1], "..", 2))
+	{
+		while (node->pot[1][++i])
+		{
+			if (node->pot[1][i] && node->pot[1][i] != '/'
+				&& (!ft_strncmp(&node->pot[1][i], "../", 3) ||
+					node->pot[1][i] == '.'))
+				return (ft_pre_slash(meta, node));
+			else if (node->pot[1][i] && ((ft_isalpha(node->pot[1][i + 3])
+				|| ft_isdigit(node->pot[1][i + 3])) ||
+					(!ft_strncmp(&node->pot[1][i + 1], "./", 2)
+						&& (ft_isalpha(node->pot[1][i + 3])
+							|| ft_isdigit(node->pot[1][i + 3])))))
+				return (ft_pre_slash(meta, node));
+			else if (node->pot[1][i] && node->pot[1][i] != '/')
+				return (1);
+		}
+		ft_cd2_2_2(meta, node, 0);
 	}
 	else
-	{
-		chdir(node->pot[1]);
-		ft_pre_slash(meta, node);
-		return (0);
-	}
+		ft_cd2_2_2(meta, node, -42);
 	return (0);
 }
 
 int	ft_cd(t_mish *meta, t_cmd *node)
 {
-	if (!node->pot[1]) // home path
+	if (!node->pot[1])
 	{
 		chdir(meta->home_path);
 		ft_abs_path(meta);
 	}
-	else if (node->pot[1][0] != '-' && chdir(node->pot[1]) != 0) // no path available
+	else if (node->pot[1][0] != '-' && chdir(node->pot[1]) != 0)
 	{
 		perror("Error");
 		return (1);

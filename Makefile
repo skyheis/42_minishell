@@ -28,6 +28,7 @@ FLSRCS = main.c handle_readline.c free_n_history.c print_file.c \
 		 buildin_cd.c buildin_cd2.c buildin_cd_utils.c \
 		 env_list.c custom_env.c env_utils.c \
 		 handle_commands.c handle_setenv.c cmd_list.c \
+		 buildin_cd2_utils.c parse_red_utils.c\
 		 mini_pipe.c mini_pipe_utils.c \
 		 splitered.c splitered_utils.c \
 		 splitermux.c splitermux_utils_0.c splitermux_utils_1.c \
