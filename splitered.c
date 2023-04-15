@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 17:32:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 16:38:57 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/15 17:55:22 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	ft_splitered_bwhile_2(char *s, t_spl *x)
 {
 	while (s[x->i] == 32)
-		x->new[x->k][x->j++] = s[x->i++];
+		x->i++;
 	while (!ft_iscut(s[x->i]))
 	{
 		if (s[x->i] && s[x->i] == SQUT)
