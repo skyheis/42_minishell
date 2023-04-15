@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/14 09:36:30 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/15 18:31:37 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,30 +107,6 @@ re: fclean all
 
 valgrind:
 	valgrind --leak-check=full --show-leak-kinds=all --suppressions=./readline.supp ./minishell
-
-cool:
-# coool Script #
-	clear
-	for i in 1 2 3 ; do \
-	echo "$(YELLOW)音Welcome to Minishell音$(DEF_COLOR)" \
-	&& sleep 0.4 \
-	&& clear \
-	&& echo "$(GREEN)音Welcome to Minishell音$(DEF_COLOR)" \
-	&& sleep 0.4 \
-	&& clear ; done
-	echo "READY"
-	sleep 0.3
-	echo "-"
-	sleep 0.2
-	echo "--"
-	sleep 0.2
-	echo "---"
-	sleep 0.5
-	clear
-	echo "ᕙ( ︡’︡ 益 ’︠)ง▬▬█"
-	sleep 2.05
-	clear
-
 
 .PHONY: all clean fclean re starting .c.o cool libft libftclean libftfclean valgrind
 .SUFFIXES: .c .o

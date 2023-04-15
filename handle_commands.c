@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 19:31:36 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/15 18:28:53 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	ft_chad(t_mish *meta)
 {
 	static int	i = 0;
 
+	chdir(meta->duckpath);
 	if (i > 5)
 		i = 0;
 	if (i == 0)
@@ -50,6 +51,7 @@ void	ft_chad(t_mish *meta)
 		ft_print_file(meta, "badge/younow.bdg");
 	else if (i == 5)
 		ft_print_file(meta, "badge/sponge.bdg");
+	chdir(meta->curdir);
 	i++;
 }
 
