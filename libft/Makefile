@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/08 19:27:52 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/17 13:03:01 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ INCLUDE = ../include
 
 ###### VARIABLE ######
 
-CC = cc
+#CC = clang
+CC = gcc
 AR = ar
 RM = rm -f
 CFLAGS = -Wall -Wextra -Werror -g

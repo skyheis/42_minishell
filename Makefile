@@ -6,7 +6,7 @@
 #    By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/07 17:49:20 by ggiannit          #+#    #+#              #
-#    Updated: 2023/04/15 18:31:37 by ggiannit         ###   ########.fr        #
+#    Updated: 2023/04/17 13:02:37 by ggiannit         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ ARUSDDIR = archive/
 
 ARINC = $(addprefix $(ARUSDDIR),$(ARUSD))
 
-CC = cc
+#CC = clang
+CC = gcc
 AR = ar
 RM = rm -f
 CFLAGS = -g -Wall -Wextra -Werror

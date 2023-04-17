@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:56:09 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/15 17:56:10 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 10:12:55 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ int	ft_cd_meno(t_mish *meta)
 
 int	ft_cd_slash(t_mish *meta, t_cmd *node)
 {
-	int	i;
-
-	i = 0;
 	if (node->pot[1][0] != '-')
 	{
 		ft_cd_slash2(meta, node);

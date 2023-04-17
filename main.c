@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 09:49:24 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 09:43:05 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_init_duckshell(t_mish *meta, char **envp)
 {
-	meta->context = ft_strjoin(getenv("USER"), "@duckshell: ");
+	meta->context = ft_strjoin(getenv("USER"), "🦆duckshell: \033[0;39m");
 	meta->curdir = ft_strdup(getenv("PWD"));
 	if (getenv("OLDPWD"))
 		meta->olddir = ft_strdup(getenv("OLDPWD"));
@@ -33,6 +33,7 @@ void	ft_init_duckshell(t_mish *meta, char **envp)
 	meta->outfile = -2;
 	meta->duckpath = getenv("PWD");
 	ft_sign_ecode(meta, 0);
+	write(1, "\033[0;97m", 7);
 	ft_print_file(meta, "badge/badge.bdg");
 	printf("\nWelcome %s\n\n", getenv("USER"));
 	ft_set_history(meta);
@@ -65,6 +66,7 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGQUIT, ft_sign_handler_rl);
 		signal(SIGINT, ft_sign_handler_rl);
+		write(1, "\033[0;97m", 7);
 		meta.line = readline(meta.context);
 		if (!meta.line)
 			break ;

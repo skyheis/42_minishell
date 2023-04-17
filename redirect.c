@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:29:27 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 14:47:24 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 09:53:24 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	ft_in_file(t_mish *meta, char *filename)
 {
 	if (!filename[0])
 	{
-		printf("duckshell: syntax error near unexpected token `newline'");
+		ft_putstr_fd("duckshell: syntax error near \
+				unexpected token `newline'", 2);
 		meta->exit_code = 2;
 		return (0);
 	}

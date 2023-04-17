@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 16:28:42 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 18:49:53 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 09:42:00 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	ft_sign_handler_rl(int sig)
 	{
 		ft_sign_ecode(NULL, 130);
 		write(1, "\n", 1);
+		write(1, "\033[0;97m", 7);
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

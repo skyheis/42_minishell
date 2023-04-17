@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 17:55:57 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/15 17:55:59 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 09:49:51 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ int	ft_cd(t_mish *meta, t_cmd *node)
 	{
 		chdir(meta->home_path);
 		ft_abs_path(meta);
+	}
+	else if (node->pot[1] && node->pot[2])
+	{
+		ft_putstr_fd("duckshell: cd: too many arguments\n", 2);
+		return (1);
 	}
 	else if (node->pot[1][0] != '-' && chdir(node->pot[1]) != 0)
 	{

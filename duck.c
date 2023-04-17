@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/07 10:57:41 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/13 10:19:15 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 11:12:45 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	ft_duck(t_mish *meta)
 {
 	signal(SIGINT, ft_sign_handler_duck);
 	chdir(meta->duckpath);
+	write(1, "\033[0;97m", 7);
 	ft_ducktime(meta);
 	chdir(meta->curdir);
 	signal(SIGINT, ft_sign_handler_exec);

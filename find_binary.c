@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/30 10:24:53 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 09:43:58 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 10:10:07 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	ft_getcmd(t_mish *meta, t_cmd *node)
 
 	full_path = ft_getenv("PATH", meta->env);
 	full_path = ft_getpath(full_path, meta, node);
+	if (!ft_strncmp(node->pot[0], "ls", 3))
+		node->pot = ft_matrixadd(node->pot, ft_strdup("--color=tty"));
 	if (full_path)
 	{
 		ft_free((void **) &(node->pot[0]));

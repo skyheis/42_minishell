@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 16:19:39 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/15 18:28:53 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 10:01:46 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_chad(t_mish *meta)
 	chdir(meta->duckpath);
 	if (i > 5)
 		i = 0;
+	write(1, "\033[0;91m", 7);
 	if (i == 0)
 		ft_print_file(meta, "badge/chad3.bdg");
 	else if (i == 1)
