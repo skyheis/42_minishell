@@ -6,11 +6,22 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/14 09:27:27 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 14:49:05 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:32:51 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*ft_set_context(void)
+{
+	char	*tmp;
+	char	*context;
+
+	tmp = ft_strjoin(getenv("USER"), "🦆duckshell: \033[0;39m");
+	context = ft_strjoin("\033[0;97m", tmp);
+	ft_free((void **) &tmp);
+	return (context);
+}
 
 void	ft_set_history(t_mish *meta)
 {

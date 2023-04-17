@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:16:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 09:28:55 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:15:27 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ void	ft_getcmd(t_mish *meta, t_cmd *node);
 int		ft_execbin(t_mish *meta, t_cmd *node);
 
 /* free n history */
+char	*ft_set_context(void);
 void	ft_set_history(t_mish *meta);
 void	ft_fill_history(t_mish *meta);
 void	ft_reset_line(t_mish *meta);

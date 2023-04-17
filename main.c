@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/17 09:43:05 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 15:15:00 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_init_duckshell(t_mish *meta, char **envp)
 {
-	meta->context = ft_strjoin(getenv("USER"), "🦆duckshell: \033[0;39m");
+	meta->context = ft_set_context();
 	meta->curdir = ft_strdup(getenv("PWD"));
 	if (getenv("OLDPWD"))
 		meta->olddir = ft_strdup(getenv("OLDPWD"));
@@ -66,7 +66,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		signal(SIGQUIT, ft_sign_handler_rl);
 		signal(SIGINT, ft_sign_handler_rl);
-		write(1, "\033[0;97m", 7);
 		meta.line = readline(meta.context);
 		if (!meta.line)
 			break ;

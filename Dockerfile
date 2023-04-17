@@ -11,6 +11,7 @@
 FROM gcc:10.3.0
 
 ENV USER=root
+ENV PWD=/root/duckshell
 
 RUN mkdir /root/duckshell
 
