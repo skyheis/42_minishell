@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 19:27:21 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/14 09:54:18 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:57:00 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_unset_list(t_mish *meta, t_cmd *node)
 	t_exenv	*ino;
 
 	k = 0;
-	while (++k)
+	while (node->pot[++k])
 	{
 		ino = meta->ext_env;
 		while (ino)

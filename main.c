@@ -6,7 +6,7 @@
 /*   By: ggiannit <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 14:15:26 by ggiannit          #+#    #+#             */
-/*   Updated: 2023/04/17 15:15:00 by ggiannit         ###   ########.fr       */
+/*   Updated: 2023/04/17 21:49:52 by ggiannit         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int ac, char **av, char **envp)
 	ft_init_duckshell(&meta, envp);
 	while (1)
 	{
-		signal(SIGQUIT, ft_sign_handler_rl);
+		signal(SIGQUIT, SIG_IGN);
 		signal(SIGINT, ft_sign_handler_rl);
 		meta.line = readline(meta.context);
 		if (!meta.line)
