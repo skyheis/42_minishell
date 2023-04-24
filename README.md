@@ -1,19 +1,43 @@
 
-<!DOCTYPE HTML>
-<html>
-<header> # 42_minishell </header>
-<body>
-<h4> w/ my boyz nbordoni (:-DDD) </h4>
-<h5> link utili: </h5>
-<ul>
-<li> https://stackoverflow.com/questions/66723454/how-to-write-to-input-part-in-c : link utile per vedere come utilizzare funzioni come tcsetattr o tcsgetattr e per sapere come UTILIZZARE LE FRECCE SUL NOSTRO TERMINALE </li>
-<li> tcsetattr : https://www.ibm.com/docs/en/zos/2.2.0?topic=functions-tcsetattr-set-attributes-terminal </li>
-<li> tcgetattr : https://www.ibm.com/docs/en/zos/2.1.0?topic=functions-tcgetattr-get-attributes-terminal </li>
-<li> tgetent e tgetnum esempio pratico: https://www.badprog.com/unix-gnu-linux-system-calls-using-tgetent </li>
+<h1 align="center">
+	Duckshell
+</h1>
+
+<p align="center">
+	<b><i>A simply shell for "minishell" 42's project, named duckshell :D</i></b><br>
+</p>
+<p align="center">
+	<img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ailopez-o/42Barcelona-FdF?color=lightblue" />
+	<img alt="Number of lines of code" src="https://img.shields.io/tokei/lines/github/ailopez-o/42Barcelona-FdF?color=critical" />
+	<img alt="Code language count" src="https://img.shields.io/github/languages/count/ailopez-o/42Barcelona-FdF?color=yellow" />
+	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ailopez-o/42Barcelona-FdF?color=blue" />
+	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ailopez-o/42Barcelona-FdF?color=green" />
+</p>
 
 
-pid_t wait3(int* status, int options, struct rusage* rusage);
-pid_t wait4(pid_t pid, int* status, int options, struct rusage* rusage);
+---
 
+
+<p align="center">
+	<img src="https://github.com/skyheis/42_minishell/blob/main/duckshema.jpg" />
+
+</p>
+
+
+To pull files ↙️
+```bash
+git clone
+```
+To compile the program ↙️
+
+```bash
+$ make
+```
+To load you have to launch the program with a valid map as parameter 🗺️
+```bash
+$ ./minishell
+```
+
+## Utilites
 
 The WIFEXITED and WEXITSTATUS macros are used to check whether the child process terminated normally and to retrieve its exit status, respectively.
