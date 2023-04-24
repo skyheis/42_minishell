@@ -18,7 +18,7 @@
 ---
 
 <h2 align="center">
-	Map of the project
+	🦆 Map of the project
 </h2>
 <p align="center">
 	<b><i>Thanks to <a href="https://github.com/marzianegro">@marzianegro</a> for prettifying my map :)</i></b><br>
@@ -29,21 +29,32 @@
 
 </p>
 
+---
 
-To pull files ↙️
+## 🐳 Installation or Docker usage
+
+This shell uses 'readline', so the library has to be installed. For simple testing you can build the image with Docker.
+
+To pull files
 ```bash
-git clone
+git clone git@github.com:skyheis/42_minishell.git
 ```
-To compile the program ↙️
+To compile the duckshell
 
 ```bash
 $ make
 ```
-To load you have to launch the program with a valid map as parameter 🗺️
+To load just run the binary
 ```bash
 $ ./minishell
 ```
 
-## Utilites
+You can build and run in docker with the following commands (soon it will be added in my dockerhub profile)
 
-The WIFEXITED and WEXITSTATUS macros are used to check whether the child process terminated normally and to retrieve its exit status, respectively.
+```bash
+$ docker build -t duckshell .
+$ docker run -it --name duckshell --rm duckshell
+```
+
+## ⚖️ License
+See [LICENSE](LICENSE)
