@@ -8,8 +8,10 @@
 </p>
 <p align="center">
 	<img alt="Code size in bytes" src="https://img.shields.io/github/languages/code-size/skyheis/42_minishell" />
+    <img alt="Contributors" src="https://img.shields.io/github/contributors/skyheis/42_minishell?color=orange" />
 	<img alt="GitHub top language" src="https://img.shields.io/github/languages/top/skyheis/42_minishell?label=C&style=plastic" />
 	<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/skyheis/42_minishell?color=green" />
+    <img alt="42 school" src="https://img.shields.io/badge/42-Florence-9cf" />
 </p>
 
 
