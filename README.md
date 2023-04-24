@@ -18,9 +18,7 @@
 <h3 align="center">
 	Map of the project
 </h3>
-<p align="center">
-	<b><i>Thanks to [@marzianegro](https://github.com/marzianegro) for prettifying my map :)</i></b><br>
-</p>
+Thanks to [@marzianegro](https://github.com/marzianegro) for prettifying my map :)
 <p align="center">
 	<img src="https://github.com/skyheis/42_minishell/blob/main/duckmap.jpg" />
 
