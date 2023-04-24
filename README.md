@@ -15,7 +15,12 @@
 
 ---
 
-Credit to [@marzianegro](https://github.com/marzianegro) for the prettyfication of my map :D
+<h3 align="center">
+	Map of the project
+</h3>
+<p align="center">
+	<b><i>Thanks to [@marzianegro](https://github.com/marzianegro) for prettifying my map :)</i></b><br>
+</p>
 <p align="center">
 	<img src="https://github.com/skyheis/42_minishell/blob/main/duckmap.jpg" />
 
