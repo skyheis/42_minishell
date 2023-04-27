@@ -49,7 +49,7 @@ To load just run the binary
 $ ./minishell
 ```
 
-You can download the image abd run in docker with the following command
+You can download the image and run in docker with the following command
 
 ```bash
 $ docker run -it --name duckshell --rm skyheis/duckshell:latest
